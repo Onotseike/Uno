@@ -3,16 +3,21 @@
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
 
+using SQLite;
+
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 using Windows.UI.Xaml.Controls;
+using File = System.IO.File;
 
 #if NETFX_CORE
 using _Popup = Windows.UI.Xaml.Controls.Primitives.Popup;
+
 #else
 using _Popup = Windows.UI.Xaml.Controls.Popup;
 #endif
@@ -21,12 +26,16 @@ namespace DemoApp.Services.CloudProviders
 {
     public class OneDrive : BaseCloudProvider, ICloudProvider
     {
+        #region OAuthSettings
+
         protected static class OAuthenticationSettings
         {
             public const string ApplicationId = "4f554894-133f-44c9-92fe-bdcb164ddaa0";
             public const string RedirectUri = "soloApp://redirect";
-            public readonly static string[] Scopes = new string[] { "Files.ReadWrite.AppFolder", "User.Read" };
+            public readonly static string[] Scopes = new string[] { "Files.ReadWrite.AppFolder", "User.Read", "Device.Read" };
         }
+
+        #endregion
 
         #region Property(ies)
 
@@ -41,31 +50,7 @@ namespace DemoApp.Services.CloudProviders
 
         // Microsoft Graph client
         private GraphServiceClient GraphClient { get; set; }
-
-        private bool isSignedIn;
-        public bool IsSignedIn
-        {
-            get => isSignedIn;
-            set => SetProperty(ref isSignedIn, value);
-        }
-
-        // The user's display name
-        private string userName;
-        public string Username
-        {
-            get => userName;
-            set => SetProperty(ref userName, value);
-        }
-
-        // The user's email
-        private string userEmail;
-        public string UserEmail
-        {
-            get => userEmail;
-            set => SetProperty(ref userEmail, value);
-        }
-
-
+                
         #endregion
 
         #region Constructor(s)
@@ -86,14 +71,32 @@ namespace DemoApp.Services.CloudProviders
 
         #region ICloudProvider Implementation(s)
 
-        public Task<bool> BackUp(string databaseName)
+        public async Task<bool> BackUp(string databaseName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await BackupDatabase(databaseName);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }            
         }
 
-        public Task<bool> Restore(string databaseName)
+        public async Task<bool> Restore(string databaseName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await RestoreDatabase(databaseName);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public async Task<bool> SignInAsync()
@@ -256,6 +259,51 @@ namespace DemoApp.Services.CloudProviders
 
             Username = account.DisplayName;
             UserEmail = String.IsNullOrEmpty(account.Mail) ? account.UserPrincipalName : account.Mail;
+        }
+
+        #endregion
+
+        #region Sync Method(s)
+
+        private async Task RestoreDatabase(string databaseName)
+        {
+            try
+            {
+                Stream stream = null;
+                var databasePath = await GraphClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Request().GetAsync();
+
+                if (databasePath != null)
+                {
+                    stream = await GraphClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Content.Request().GetAsync();
+
+                    var destinationPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName));
+                    using (var databaseDriveItem = File.Create(destinationPath))
+                    {
+                        stream.Seek(0, SeekOrigin.Begin);
+                        await stream.CopyToAsync(databaseDriveItem);
+                    }
+                }
+            }
+            catch ( Exception exception)
+            {
+                // await DisplayAlert();
+            }            
+        }
+
+        private async Task BackupDatabase(string databaseName)
+        {
+            try
+            {
+                var sourcPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName));
+                var databaseData = await File.ReadAllBytesAsync(sourcPath);
+                var stream = new MemoryStream(databaseData);
+
+                await GraphClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Content.Request().PutAsync<DriveItem>(stream);
+            }
+            catch (Exception exception)
+            {
+                // await DisplayAlert();
+            }
         }
 
         #endregion

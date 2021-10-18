@@ -18,7 +18,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\Account.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\Address.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\Communication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\Invoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\ItemBlob.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Entities\Item.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Enums\AddressType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Enums\ClientType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Enums\InvoiceStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Enums\ItemType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Exceptions\DatabaseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Services\AccountDBService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Services\AddressDBService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Services\BaseDBService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Services\ClientDBService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Services\InvoiceDBService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\Services\ItemDBService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DialogExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BaseNotifyClass.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -41,7 +60,6 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\Databases\" />
   </ItemGroup>
 </Project>

@@ -1,34 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using DemoApp.Helpers;
 
 namespace DemoApp.Services.CloudProviders
 {
-    public class BaseCloudProvider : INotifyPropertyChanged
+    public class BaseCloudProvider : BaseNotifyClass
     {
-        #region INotifyPropertyChanged Implementation(s)
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        private bool isSignedIn;
+        public bool IsSignedIn
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => isSignedIn;
+            set => SetProperty(ref isSignedIn, value);
         }
 
-        protected bool SetProperty<T>(ref T backingStore, T value,
-           [CallerMemberName] string propertyName = "",
-           Action onChanged = null)
+        private bool isBackedUp;
+        public bool IsBackedUp
         {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
-            backingStore = value;
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-            return true;
+            get => isBackedUp;
+            set => SetProperty(ref isBackedUp, value);
+        }
+        // The user's display name
+        private string userName;
+        public string Username
+        {
+            get => userName;
+            set => SetProperty(ref userName, value);
         }
 
-        #endregion
-    }
+        // The user's email
+        private string userEmail;
+        public string UserEmail
+        {
+            get => userEmail;
+            set => SetProperty(ref userEmail, value);
+        }
+    }   
 }
