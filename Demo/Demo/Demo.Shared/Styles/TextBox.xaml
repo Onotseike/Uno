@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  Common style for Title Entrys  -->
+    <Style x:Key="TitleEntryStyle" TargetType="TextBox">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="{StaticResource Gray-900}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
+    </Style>
+
+    <!--  Common style for Description Entrys  -->
+    <Style x:Key="DescriptionEntryStyle" TargetType="TextBox">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource Gray-700}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
+    </Style>
+
+    <!--  Common style for Icon Entrys  -->
+    <Style x:Key="IconEntryStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource Gray-600}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+    </Style>
+
+    <!--  Common style for Simple Entrys  -->
+    <Style x:Key="SimpleEntryStyle" TargetType="TextBox">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource Gray-700}" />
+        <Setter Property="HorizontalTextAlignment" Value="DetectFromContent" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
+    </Style>
+
+    <!--  Common style for Error Icon Entrys  -->
+    <Style x:Key="ErrorIconEntryStyle" TargetType="TextBox">
+        <Setter Property="Margin" Value="15,0" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalTextAlignment" Value="DetectFromContent" />
+        <Setter Property="Foreground" Value="{StaticResource Red}" />
+    </Style>
+
+</ResourceDictionary>
