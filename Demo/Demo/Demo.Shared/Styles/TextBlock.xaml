@@ -5,7 +5,7 @@
     <!--  Common style for Title labels  -->
     <Style x:Key="TitleLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="Foreground" Value="{StaticResource Gray-900}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-900}" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
         <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
@@ -14,7 +14,7 @@
     <!--  Common style for Description labels  -->
     <Style x:Key="DescriptionLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{StaticResource Gray-700}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-700}" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
         <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
@@ -22,7 +22,7 @@
 
     <!--  Common style for Icon labels  -->
     <Style x:Key="IconLabelStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource Gray-600}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-600}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="FontIcons" />
@@ -31,7 +31,7 @@
     <!--  Common style for Simple labels  -->
     <Style x:Key="SimpleLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Foreground" Value="{StaticResource Gray-700}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-700}" />
         <Setter Property="HorizontalTextAlignment" Value="DetectFromContent" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
         <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
@@ -43,7 +43,7 @@
         <Setter Property="FontFamily" Value="FontIcons" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="HorizontalTextAlignment" Value="DetectFromContent" />
-        <Setter Property="Foreground" Value="{StaticResource Red}" />
+        <Setter Property="Foreground" Value="{ThemeResource Red}" />
     </Style>
 
 </ResourceDictionary>

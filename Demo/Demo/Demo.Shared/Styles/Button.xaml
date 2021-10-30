@@ -8,14 +8,14 @@
             <Setter.Value>
                 <LinearGradientBrush>
                     <LinearGradientBrush.GradientStops>
-                        <GradientStop Offset="0" Color="{StaticResource PrimaryColor}" />
-                        <GradientStop Offset="1" Color="{StaticResource PrimaryGradient}" />
+                        <GradientStop Offset="0" Color="{ThemeResource PrimaryColor}" />
+                        <GradientStop Offset="1" Color="{ThemeResource PrimaryGradient}" />
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
 
-        <Setter Property="Foreground" Value="{StaticResource Gray-White}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-White}" />
         <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="16" />
@@ -30,7 +30,7 @@
 
     <Style x:Key="TransparentButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{StaticResource HyperLink}" />
+        <Setter Property="Foreground" Value="{ThemeResource HyperLink}" />
         <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -41,7 +41,7 @@
     </Style>
 
     <Style x:Key="IconButtonStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource Gray-700}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-700}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontFamily" Value="FontIcons" />
         <Setter Property="FontSize" Value="18" />
@@ -55,12 +55,12 @@
     </Style>
 
     <Style x:Key="SimpleButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource Gray-White}" />
+        <Setter Property="Background" Value="{ThemeResource Gray-White}" />
         <Setter Property="Width" Value="155" />
         <Setter Property="CornerRadius" Value="1" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="Foreground" Value="{ThemeResource PrimaryColor}" />
         <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
