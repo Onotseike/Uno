@@ -5,10 +5,17 @@
     xmlns:local="using:Demo.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid>
+    <GridView HorizontalContentAlignment="Center">
+        
+        <GridView.ItemTemplate>
+            <DataTemplate>
+                <Border CornerRadius="2">
+                    
+                </Border>
+            </DataTemplate>
+        </GridView.ItemTemplate>
 
-    </Grid>
+    </GridView>
 </Page>

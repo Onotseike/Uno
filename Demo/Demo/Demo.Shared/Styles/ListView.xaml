@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="TransparentSelectionListView" TargetType="ListView">
-        <Setter Property="Background" Value="{ThemeResource Gray-Bg}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ShowsScrollingPlaceholders" Value="False"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
