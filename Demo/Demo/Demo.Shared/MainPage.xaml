@@ -5,9 +5,74 @@
     xmlns:local="using:Demo"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:vm="using:Demo.ViewModels"
+    xmlns:pages="using:Demo.Pages"
     mc:Ignorable="d">
 
+
+    <Page.DataContext>
+        <vm:MainVM/>
+    </Page.DataContext>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<TextBlock Text="Hello, world!" Margin="20" FontSize="30" />
+        <winui:TabView IsAddTabButtonVisible="False"
+                    x:Name="tabView"
+                    CanDragTabs="False"
+                    CanReorderTabs="False" 
+                    CornerRadius="2,2,2,2"
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch"
+                    TabWidthMode="Equal"
+                    TabFocusNavigation="Cycle"
+                    SelectionChanged="tabView_SelectionChanged">
+
+            <winui:TabView.TabItems>
+                <winui:TabViewItem IsClosable="False"
+                                   Header="Home"
+                                   Tag="Home">
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="Home"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Home DataContext="{Binding HomeVM}" />
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
+
+                <winui:TabViewItem IsClosable="False"
+                                   Header="Invoices"
+                                   Tag="Invoices">
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="Document"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Invoices DataContext="{Binding InvoicesVM}" />
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
+
+                <winui:TabViewItem IsClosable="False"
+                                   Header="Clients"
+                                   Tag="Clients">
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="People"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Clients DataContext="{Binding ClientsVM}" />
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
+
+                <winui:TabViewItem IsClosable="False"
+                                   Header="Settings"
+                                   Tag="Settings">
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="Setting"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Settings DataContext="{Binding SettingsVM}" />
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
+            </winui:TabView.TabItems>
+            
+        </winui:TabView>
     </Grid>
 </Page>

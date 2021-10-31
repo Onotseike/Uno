@@ -178,6 +178,21 @@
     </ImageAsset>
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="..\Fonts\Montserrat-Bold.ttf">
+      <Link>Resources\Fonts\Montserrat-Bold.ttf</Link>
+    </BundleResource>
+    <BundleResource Include="..\Fonts\Montserrat-Medium.ttf">
+      <Link>Resources\Fonts\Montserrat-Medium.ttf</Link>
+    </BundleResource>
+    <BundleResource Include="..\Fonts\Montserrat-Regular.ttf">
+      <Link>Resources\Fonts\Montserrat-Regular.ttf</Link>
+    </BundleResource>
+    <BundleResource Include="..\Fonts\Montserrat-SemiBold.ttf">
+      <Link>Resources\Fonts\Montserrat-SemiBold.ttf</Link>
+    </BundleResource>
+    <BundleResource Include="..\Fonts\UIFontIcons.ttf">
+      <Link>Resources\Fonts\UIFontIcons.ttf</Link>
+    </BundleResource>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
   </ItemGroup>

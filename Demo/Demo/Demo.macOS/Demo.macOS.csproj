@@ -105,6 +105,21 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="..\Fonts\Montserrat-Bold.ttf">
+      <Link>Resources\Fonts\Montserrat-Bold.ttf</Link>
+    </None>
+    <None Include="..\Fonts\Montserrat-Medium.ttf">
+      <Link>Resources\Fonts\Montserrat-Medium.ttf</Link>
+    </None>
+    <None Include="..\Fonts\Montserrat-Regular.ttf">
+      <Link>Resources\Fonts\Montserrat-Regular.ttf</Link>
+    </None>
+    <None Include="..\Fonts\Montserrat-SemiBold.ttf">
+      <Link>Resources\Fonts\Montserrat-SemiBold.ttf</Link>
+    </None>
+    <None Include="..\Fonts\UIFontIcons.ttf">
+      <Link>Resources\Fonts\UIFontIcons.ttf</Link>
+    </None>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
   </ItemGroup>

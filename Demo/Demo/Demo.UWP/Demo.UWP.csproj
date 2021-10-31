@@ -148,6 +148,21 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="..\Fonts\Montserrat-Bold.ttf">
+      <Link>Assets\Fonts\Montserrat-Bold.ttf</Link>
+    </Content>
+    <Content Include="..\Fonts\Montserrat-Medium.ttf">
+      <Link>Assets\Fonts\Montserrat-Medium.ttf</Link>
+    </Content>
+    <Content Include="..\Fonts\Montserrat-Regular.ttf">
+      <Link>Assets\Fonts\Montserrat-Regular.ttf</Link>
+    </Content>
+    <Content Include="..\Fonts\Montserrat-SemiBold.ttf">
+      <Link>Assets\Fonts\Montserrat-SemiBold.ttf</Link>
+    </Content>
+    <Content Include="..\Fonts\UIFontIcons.ttf">
+      <Link>Assets\Fonts\UIFontIcons.ttf</Link>
+    </Content>
     <None Include="Demo.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

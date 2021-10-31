@@ -85,6 +85,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\uno-fluentui-assets.ttf" />
+    <AndroidAsset Include="..\Fonts\Montserrat-Bold.ttf">
+      <Link>Assets\Fonts\Montserrat-Bold.ttf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Fonts\Montserrat-Medium.ttf">
+      <Link>Assets\Fonts\Montserrat-Medium.ttf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Fonts\Montserrat-Regular.ttf">
+      <Link>Assets\Fonts\Montserrat-Regular.ttf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Fonts\Montserrat-SemiBold.ttf">
+      <Link>Assets\Fonts\Montserrat-SemiBold.ttf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Fonts\UIFontIcons.ttf">
+      <Link>Assets\Fonts\UIFontIcons.ttf</Link>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
