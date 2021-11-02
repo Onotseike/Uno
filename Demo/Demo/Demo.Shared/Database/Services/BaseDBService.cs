@@ -1,10 +1,12 @@
-﻿using Demo.Database.Exceptions;
+﻿using Demo.Database.Entities;
+using Demo.Database.Exceptions;
 using SQLite;
 
 using SQLiteNetExtensions.Extensions;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Demo.Database.Services
@@ -15,6 +17,7 @@ namespace Demo.Database.Services
         #region Properties
 
         public string TypeName { get; set; }
+        protected string databasePath =  Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Demo.db");
 
         #endregion
 
@@ -28,7 +31,7 @@ namespace Demo.Database.Services
 
         public virtual (bool isSuccessful, string operationMessage, object errorObject) AddEntity(T entity)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -44,7 +47,7 @@ namespace Demo.Database.Services
 
         public virtual (bool isSuccessful, string operationMessage, object errorObject) AddEntities(T[] entities)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -64,7 +67,7 @@ namespace Demo.Database.Services
 
         public virtual (bool isSuccessful, string operationMessage, object errorObject) UpdateEntity(T entity)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -80,7 +83,7 @@ namespace Demo.Database.Services
 
         public virtual (bool isSuccessful, string operationMessage, object errorObject) UpdateEntities(T[] entities)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {

@@ -17,7 +17,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, Account entity) GetEntity(Guid accountId)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -33,7 +33,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, List<Account> entities) GetEntities(Guid[] accountIds = null)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -49,7 +49,7 @@ namespace Demo.Database.Services
 
         public (bool isSuccessful, string operationMessage, List<Account> entities) GetUserEntities()
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -69,7 +69,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) DeleteEntity(Account account)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -85,7 +85,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) DeleteEntities(Account[] accounts)
         {
-            using (var connection = new SQLiteConnection("./database/DemoDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {

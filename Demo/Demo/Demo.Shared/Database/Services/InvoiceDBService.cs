@@ -17,7 +17,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) AddEntity(Invoice entity)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -36,7 +36,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) AddEntities(Invoice[] entities)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -56,7 +56,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) UpdateEntity(Invoice entity)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -72,7 +72,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) UpdateEntities(Invoice[] entities)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -98,7 +98,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, Invoice entity) GetEntity(Guid invoiceId)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -114,7 +114,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, List<Invoice> entities) GetEntities(Guid[] invoiceIds = null)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -134,7 +134,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) DeleteEntity(Invoice invoice)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
@@ -150,7 +150,7 @@ namespace Demo.Database.Services
 
         public override (bool isSuccessful, string operationMessage, object errorObject) DeleteEntities(Invoice[] invoices)
         {
-            using (var connection = new SQLiteConnection("./database/SoloDB.db"))
+            using (var connection = new SQLiteConnection(databasePath))
             {
                 try
                 {
