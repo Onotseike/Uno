@@ -100,9 +100,13 @@ namespace Demo.ViewModels
         private async void LoadEntities()
         {
             var fetchClients = ClientDBService.GetEntities();
-            var fetch
-            Clients = new ObservableCollection<Client>(fetchClients.entities);
+            var fetchInvoices = InvoiceDBService.GetEntities();
+            var fetchAccount = AccountDBService.GetUserEntities();
+            var fetchAddress = AddressDBService.GetUserEntities();
 
+            Clients = new ObservableCollection<Client>(fetchClients.entities);
+            Invoices = new ObservableCollection<Invoice>(fetchInvoices.entities);
+            UserAccount = fetch
         }
         #endregion
     }
