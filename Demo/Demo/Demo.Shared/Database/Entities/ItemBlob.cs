@@ -8,8 +8,6 @@ namespace Demo.Database.Entities
     {
         public string ItemType { get; set; }
         public string Description { get; set; }
-        public string Currency { get; set; }
         public double Price { get; set; }
-        public double Discount { get; set; }
     }
 }

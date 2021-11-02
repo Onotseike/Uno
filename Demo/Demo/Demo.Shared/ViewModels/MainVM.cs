@@ -1,4 +1,5 @@
 ﻿using Demo.Database.Entities;
+using Demo.Database.Enums;
 using Demo.Database.Services;
 using Demo.Helpers;
 
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Demo.ViewModels
@@ -19,7 +21,7 @@ namespace Demo.ViewModels
         public ObservableCollection<Client> Clients { get; set; }
         public ObservableCollection<Invoice> Invoices { get; set; }
         public Account UserAccount { get; set; }
-        public Address UserAddress { get; set; }        
+        public Address UserAddress { get; set; }
 
         private readonly string databasePath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Demo.db");
 
@@ -59,6 +61,17 @@ namespace Demo.ViewModels
 
         #endregion
 
+        #region Summary Properties
+
+        public List<(InvoiceStatus status, double amount, string currency)> GroupedByStatus { get; set; }
+        public List<(Client client, List<(InvoiceStatus status, double amount, string currency)> statusAmount)> GroupedByClient { get; set; }
+
+        public List<(Client client, double amount)> TopPaid { get; set; }
+        public List<(Client client, double amount)> TopDue { get; set; }
+        public List<(Client client, double amount)> TopVoid { get; set; }
+
+        #endregion
+
         #region DBServices
 
         public ClientDBService ClientDBService { get; set; }
@@ -73,11 +86,15 @@ namespace Demo.ViewModels
         public MainVM()
         {
             InitializeDatabase();
-            ClientDBService = new ClientDBService();
-            InvoiceDBService = new InvoiceDBService();
-            AccountDBService = new AccountDBService();
-            AddressDBService = new AddressDBService();
+            InitializeServices();
+            LoadEntities();
+            Summarize();
+            Console.WriteLine(databasePath);
         }
+
+        #endregion
+
+        #region DB Services
 
         private async void InitializeDatabase()
         {
@@ -97,7 +114,15 @@ namespace Demo.ViewModels
             }
         }
 
-        private async void LoadEntities()
+        private void InitializeServices()
+        {
+            ClientDBService = new ClientDBService();
+            InvoiceDBService = new InvoiceDBService();
+            AccountDBService = new AccountDBService();
+            AddressDBService = new AddressDBService();
+        }
+
+        private void LoadEntities()
         {
             var fetchClients = ClientDBService.GetEntities();
             var fetchInvoices = InvoiceDBService.GetEntities();
@@ -106,8 +131,45 @@ namespace Demo.ViewModels
 
             Clients = new ObservableCollection<Client>(fetchClients.entities);
             Invoices = new ObservableCollection<Invoice>(fetchInvoices.entities);
-            UserAccount = fetch
+            UserAccount = fetchAccount.entities.FirstOrDefault();
+            UserAddress = fetchAddress.entities.FirstOrDefault();
         }
+
+        #endregion
+        
+        #region Helper method(s)
+
+        private void Summarize()
+        {
+            if (Invoices != null)
+            {
+                GroupedByStatus = Invoices.GroupBy(invoice => invoice.Status, (_status, invoices) =>
+                 (
+                     status: _status,
+                     amount :invoices.Select(invoice => invoice.Items.Sum(item => item.Price)).Sum(),
+                     currency : invoices.Select(invoice => invoice.Currency).FirstOrDefault()
+                )).ToList();
+
+                GroupedByClient = Invoices.GroupBy(invoice => invoice.Client, (_client, invoices) =>
+                (
+                    client: _client,
+                    statusAmount: invoices.GroupBy(invoice => invoice.Status, (_status, _invoices) => (
+                       _status: _status,
+                       amount : _invoices.Select(invoice => invoice.Items.Sum(item => item.Price)).Sum(),
+                       currency : _invoices.Select(invoice => invoice.Currency).FirstOrDefault()
+                   )).ToList()
+                )).ToList(); 
+
+                var topPaid = GroupedByClient.Select(group => new { client = group.client, amount = group.statusAmount.FirstOrDefault(item => item.status == InvoiceStatus.Paid).amount });
+                var topDue = GroupedByClient.Select(group => new { client = group.client, amount = group.statusAmount.FirstOrDefault(item => item.status == InvoiceStatus.Due).amount });
+                var topVoid = GroupedByClient.Select(group => new { client = group.client, amount = group.statusAmount.FirstOrDefault(item => item.status == InvoiceStatus.Void).amount });
+
+                TopPaid = topPaid.Select(item => (item.client, item.amount)).ToList();
+                TopDue = topDue.Select(item => (item.client, item.amount)).ToList();
+                TopVoid = topVoid.Select(item => (item.client, item.amount)).ToList();
+            }
+        }
+
         #endregion
     }
 }

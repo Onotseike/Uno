@@ -6,6 +6,6 @@ namespace Demo.Database.Enums
 {
     public enum InvoiceStatus
     {
-        Issued, Paid, Overdue, Void, WrittenOff, Draft
+        Paid, Due, Void
     }
 }

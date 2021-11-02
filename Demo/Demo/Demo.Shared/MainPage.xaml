@@ -13,7 +13,7 @@
 
 
     <Page.DataContext>
-        <vm:MainVM/>
+        <vm:MainVM x:Name="BaseVM"/>
     </Page.DataContext>
 
     <winui:TabView x:Name="tabView"
@@ -28,7 +28,7 @@
                     <winui:SymbolIconSource Symbol="Home"/>
                 </winui:TabViewItem.IconSource>
                 <winui:TabViewItem.Content>
-                    <pages:Home DataContext="{Binding HomeVM}" />
+                    <pages:Home DataContext="{x:Bind BaseVM}" />
                 </winui:TabViewItem.Content>
             </winui:TabViewItem>
 
@@ -39,7 +39,7 @@
                     <winui:SymbolIconSource Symbol="Document"/>
                 </winui:TabViewItem.IconSource>
                 <winui:TabViewItem.Content>
-                    <pages:Invoices DataContext="{Binding InvoicesVM}" />
+                    <pages:Invoices DataContext="{x:Bind BaseVM}" />
                 </winui:TabViewItem.Content>
             </winui:TabViewItem>
 
@@ -50,7 +50,7 @@
                     <winui:SymbolIconSource Symbol="People"/>
                 </winui:TabViewItem.IconSource>
                 <winui:TabViewItem.Content>
-                    <pages:Clients DataContext="{Binding ClientsVM}" />
+                    <pages:Clients DataContext="{x:Bind BaseVM}" />
                 </winui:TabViewItem.Content>
             </winui:TabViewItem>
 
