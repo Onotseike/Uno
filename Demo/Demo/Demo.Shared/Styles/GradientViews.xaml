@@ -19,21 +19,28 @@
     <LinearGradientBrush EndPoint="1,1" StartPoint="0,0" x:Key="PrimaryGradientStyle">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0.0" Color="{ThemeResource PrimaryColor}"/>
-            <GradientStop Offset="1.0" Color="{ThemeResource PrimaryGradient}"/>
+            <GradientStop Offset="1.0" Color="{ThemeResource Secondary}"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
     <LinearGradientBrush EndPoint="1,1" StartPoint="0,0" x:Key="SecondaryGradientStyle">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0.0" Color="{ThemeResource Secondary}"/>
-            <GradientStop Offset="1.0" Color="{ThemeResource SecondaryGradient}"/>
+            <GradientStop Offset="0.0" Color="{ThemeResource SecondaryGradient}"/>
+            <GradientStop Offset="1.0" Color="{ThemeResource PrimaryGradient}"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0" x:Key="PinkGradientStyle">
+    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0" x:Key="MossGradientStyle">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0.0" Color="#d54381"/>
-            <GradientStop Offset="1.0" Color="#7644ad"/>
+            <GradientStop Offset="0.0" Color="#6e45e1"/>
+            <GradientStop Offset="1.0" Color="#89d4cf"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0" x:Key="OffWhiteGradientStyle">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.0" Color="#e8dbfc"/>
+            <GradientStop Offset="1.0" Color="#f8f9d2"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 

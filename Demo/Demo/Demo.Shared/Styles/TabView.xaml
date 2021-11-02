@@ -5,7 +5,9 @@
 
     <Style x:Key="TabViewStyle" TargetType="winui:TabView">
         <Setter Property="CanDragTabs" Value="False"/>
-        <Setter Property="CornerRadius" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Gray-100}"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="TabWidthMode" Value="Equal"/>
