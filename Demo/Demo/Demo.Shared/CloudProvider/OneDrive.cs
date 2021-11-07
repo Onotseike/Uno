@@ -240,11 +240,11 @@ namespace Demo.CloudProvider
 
                 }
 
-                var databasePath = await graphServiceClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Request().GetAsync();
+                var databasePath = await graphServiceClient.Me.Drive.Special.AppRoot.Children[databaseName].Request().GetAsync();
 
                 if (databasePath != null)
                 {
-                    stream = await graphServiceClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Content.Request().GetAsync();
+                    stream = await graphServiceClient.Me.Drive.Special.AppRoot.Children[databaseName].Content.Request().GetAsync();
 
                     var destinationPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName));
                     using (var databaseDriveItem = File.Create(destinationPath))
