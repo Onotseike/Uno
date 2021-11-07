@@ -38,8 +38,10 @@ namespace Demo.Database.Entities
 
 
         #endregion
+
         #region ForeignKey(s)
         #endregion
+
         #region OneToOne Linking(s)
         /// <summary>
         /// Communication details attached to this Client record.

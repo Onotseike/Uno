@@ -26,5 +26,12 @@ namespace Demo.Pages
         {
             this.InitializeComponent();
         }
+
+        public static string EnumToString(Enum enumObject) => enumObject.ToString();
+
+        private void ItemTemplate_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
