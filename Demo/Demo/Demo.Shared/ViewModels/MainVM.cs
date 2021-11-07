@@ -98,8 +98,9 @@ namespace Demo.ViewModels
             LoadEntities();
             Summarize();
             Debug.WriteLine(databasePath);
+            
 
-            OneDriveSetupAsync().ConfigureAwait(false);
+            //OneDriveSetupAsync().ConfigureAwait(false);
         }
 
         #endregion
@@ -141,10 +142,47 @@ namespace Demo.ViewModels
             Invoices = new ObservableCollection<Invoice>(fetchInvoices.entities);
             UserAccount = fetchAccount.entities.FirstOrDefault();
             UserAddress = fetchAddress.entities.FirstOrDefault();
+
+            if (UserAccount == null)
+            {
+                UserAccount = new Account();
+                UserAccount.IsUser = true;
+            }
+            if (UserAddress == null)
+            {
+                UserAddress = new Address();
+                UserAddress.IsUser = true;
+            }
+        }
+
+        public async Task SaveAccount(Account account)
+        {
+            if (account.BankName != null && account.Holder != null && account.Currency != null)
+            {
+                var result = AccountDBService.UpdateEntity(account);
+                if (!result.isSuccessful)
+                {
+                    await Dialogs.GenericDialogAsync("Account Save Failed", result.operationMessage, "OK");
+                }
+                await Dialogs.GenericDialogAsync($"Account Saved", result.operationMessage, "OK");
+            }
+        }
+
+        public async Task SaveAddress(Address address)
+        {
+            if (address.AddressOne != null && address.City != null && address.Country != null && address.PostalCode != null)
+            {
+                var result = AddressDBService.UpdateEntity(address);
+                if (!result.isSuccessful)
+                {
+                    await Dialogs.GenericDialogAsync("Account Save Failed", result.operationMessage, "OK");
+                }
+                await Dialogs.GenericDialogAsync($"Account Saved", result.operationMessage, "OK");
+            }
         }
 
         #endregion
-        
+
         #region Helper method(s)
 
         private void Summarize()
@@ -193,6 +231,10 @@ namespace Demo.ViewModels
                     result = await OneDrive.InitializeWithInteractiveProviderAsync();
                 }
                 await OneDrive.InitializeGraphClientAsync(result);
+                var user  = await OneDrive.AccountInfo();
+                Username = user.Value.username;
+                UserEmail = user.Value.email;
+                IsSignedIn = user.Value.isSignedIn;
             }            
             catch (Exception exception)
             {
@@ -200,20 +242,15 @@ namespace Demo.ViewModels
             }
         }
 
-        public async Task LogOutAsync()
-        {
-            var driveItem = await OneDrive.GetAppFolderAsync();
-            Debug.WriteLine(JObject.FromObject(driveItem));
-            
-            //await OneDrive.RemoveAccountsAsync();
-
-        }
+        public async Task LogOutAsync() => await OneDrive.RemoveAccountsAsync();
 
         public async Task Restore()
         {
             try
             {
                 await OneDrive.Restore("Demo.db");
+                LoadEntities();
+                await Dialogs.GenericDialogAsync($"Databased Restored", "Database was successfully restored.", "OK");
             }
             catch (Exception exception)
             {
@@ -226,6 +263,7 @@ namespace Demo.ViewModels
             try
             {
                 await OneDrive.BackUp("Demo.db");
+                await Dialogs.GenericDialogAsync($"Databased Backed up", "Database was successfully backed up.", "OK");
             }
             catch (Exception exception)
             {

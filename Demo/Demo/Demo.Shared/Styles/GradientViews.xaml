@@ -39,7 +39,7 @@
 
     <LinearGradientBrush EndPoint="1,1" StartPoint="0,0" x:Key="OffWhiteGradientStyle">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0.0" Color="#e8dbfc"/>
+            <GradientStop Offset="0.0" Color="#EBEDEF"/>
             <GradientStop Offset="1.0" Color="#f8f9d2"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>

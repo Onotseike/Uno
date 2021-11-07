@@ -17,6 +17,7 @@
     </Page.DataContext>
 
     <winui:TabView x:Name="tabView"
+                   Margin="0,40"
                     Style="{StaticResource TabViewStyle}"
                     SelectionChanged="tabView_SelectionChanged">
 
@@ -61,7 +62,7 @@
                     <winui:SymbolIconSource Symbol="Setting"/>
                 </winui:TabViewItem.IconSource>
                 <winui:TabViewItem.Content>
-                    <pages:Settings DataContext="{Binding SettingsVM}" />
+                    <pages:Settings DataContext="{x:Bind BaseVM}" />
                 </winui:TabViewItem.Content>
             </winui:TabViewItem>
         </winui:TabView.TabItems>

@@ -33,53 +33,21 @@
         <!-- Light Theme -->
         <ResourceDictionary x:Key="Light">
 
-            <Color x:Key="PrimaryColor">#2a2a72</Color>
-            <Color x:Key="PrimaryDarkColor">#2a2a7a</Color>
-            <Color x:Key="PrimaryDarkenColor">#09203f</Color>
-            <Color x:Key="PrimaryLighterColor">#009ffd</Color>
-            <Color x:Key="PrimaryGradient">#009ffd</Color>
-            <Color x:Key="PrimaryLight">#83eaf1</Color>
-            <Color x:Key="SecondaryGradient">#fb8085</Color>
-            <Color x:Key="Secondary">#fc575e</Color>
+            <Color x:Key="PrimaryColor">#002456</Color>
+            <Color x:Key="PrimaryDarkColor">#001c4a</Color>
+            <Color x:Key="PrimaryDarkenColor">#000a32</Color>
+            <Color x:Key="PrimaryLighterColor">#00407f</Color>
+            <Color x:Key="PrimaryGradient">#00143e</Color>
+            <Color x:Key="PrimaryLight">#004a8d</Color>
+
+            <Color x:Key="SecondaryGradient">#ff8362</Color>
+            <Color x:Key="Secondary">#fda673</Color>
+            
             <Color x:Key="Green">#20bf55</Color>
             <Color x:Key="Red">#ff4a4a</Color>
             <Color x:Key="Orange">#ff844a</Color>
             <Color x:Key="Blue">#4acaff</Color>
             <Color x:Key="HyperLink">#567cd7</Color>
-
-            <Color x:Key="Gray-100">#f6f7f8</Color>
-            <Color x:Key="Gray-200">#ebecef</Color>
-            <Color x:Key="Gray-300">#ced2d9</Color>
-            <Color x:Key="Gray-400">#b2b8c2</Color>
-            <Color x:Key="Gray-500">#959eac</Color>
-            <Color x:Key="Gray-600">#788396</Color>
-            <Color x:Key="Gray-700">#606a7b</Color>
-            <Color x:Key="Gray-800">#4a515e</Color>
-            <Color x:Key="Gray-900">#333942</Color>
-            <Color x:Key="Gray-Black">#000000</Color>
-            <Color x:Key="Gray-White">#ffffff</Color>
-            <Color x:Key="Gray-Bg">#ffffff</Color>
-            <Color x:Key="GrayShadowColor">#ffffff</Color>
-            <Color x:Key="GrayShadowBackgroundColor">#f6f7f8</Color>
-            
-        </ResourceDictionary>
-        
-        <!-- Dark Theme -->
-        <ResourceDictionary x:Key="Dark">
-
-            <Color x:Key="PrimaryColor">#fc575e</Color>
-            <Color x:Key="PrimaryDarkColor">#fb8085</Color>
-            <Color x:Key="PrimaryDarkenColor">#fb8085</Color>
-            <Color x:Key="PrimaryLighterColor">#fb8085</Color>
-            <Color x:Key="PrimaryGradient">#ff844a</Color>
-            <Color x:Key="PrimaryLight">#fb8085</Color>
-            <Color x:Key="SecondaryGradient">#09203f</Color>
-            <Color x:Key="Secondary">#2a2a7a</Color>
-            <Color x:Key="Green">#7ED321</Color>
-            <Color x:Key="Red">#FF4A4A</Color>
-            <Color x:Key="Orange">#FF844A</Color>
-            <Color x:Key="Blue">#4ACAFF</Color>
-            <Color x:Key="HyperLink">#3EAFFF</Color>
 
             <Color x:Key="Gray-100">#333942</Color>
             <Color x:Key="Gray-200">#454D59</Color>
@@ -90,7 +58,44 @@
             <Color x:Key="Gray-700">#9BA3B1</Color>
             <Color x:Key="Gray-800">#BDC3CB</Color>
             <Color x:Key="Gray-900">#EBEDEF</Color>
-            <Color x:Key="Gray-Bg">#2F343C</Color>
+            <Color x:Key="Gray-Black">#000000</Color>
+            <Color x:Key="Gray-White">#ffffff</Color>
+            <Color x:Key="Gray-Bg">#010101</Color>
+            <Color x:Key="GrayShadowColor">#ffffff</Color>
+            <Color x:Key="GrayShadowBackgroundColor">#f6f7f8</Color>
+            
+        </ResourceDictionary>
+        
+        <!-- Dark Theme -->
+        <ResourceDictionary x:Key="Dark">
+
+            <Color x:Key="PrimaryColor">#fda673</Color>
+            <Color x:Key="PrimaryDarkColor">#fa8b67</Color>
+            <Color x:Key="PrimaryDarkenColor">#ff7e60</Color>
+            <Color x:Key="PrimaryLighterColor">#fdac77</Color>
+            <Color x:Key="PrimaryGradient">#ff8362</Color>
+            <Color x:Key="PrimaryLight">#fcb17a</Color>
+
+            <Color x:Key="SecondaryGradient">#00143e</Color>
+            <Color x:Key="Secondary">#002456</Color>
+            
+            <Color x:Key="Green">#7ED321</Color>
+            <Color x:Key="Red">#FF4A4A</Color>
+            <Color x:Key="Orange">#FF844A</Color>
+            <Color x:Key="Blue">#4ACAFF</Color>
+            <Color x:Key="HyperLink">#3EAFFF</Color>
+
+
+            <Color x:Key="Gray-100">#f6f7f8</Color>
+            <Color x:Key="Gray-200">#ebecef</Color>
+            <Color x:Key="Gray-300">#ced2d9</Color>
+            <Color x:Key="Gray-400">#b2b8c2</Color>
+            <Color x:Key="Gray-500">#959eac</Color>
+            <Color x:Key="Gray-600">#788396</Color>
+            <Color x:Key="Gray-700">#606a7b</Color>
+            <Color x:Key="Gray-800">#4a515e</Color>
+            <Color x:Key="Gray-900">#333942</Color>
+            <Color x:Key="Gray-Bg">#ffffff</Color>
             <Color x:Key="Gray-Black">#000000</Color>
             <Color x:Key="Gray-White">#ffffff</Color>
             <Color x:Key="GrayShadowColor">#333942</Color>

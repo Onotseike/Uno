@@ -35,7 +35,7 @@ namespace Demo
             var vm = DataContext as MainVM;
             //await vm.LogOutAsync();
             //await vm.BackUp();
-            await vm.Restore();
+           // await vm.Restore();
         }
     }
 }

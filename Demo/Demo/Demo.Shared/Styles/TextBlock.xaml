@@ -5,19 +5,19 @@
     <!--  Common style for Title labels  -->
     <Style x:Key="TitleLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="Foreground" Value="{ThemeResource Gray-900}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-Bg}" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
-        <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
     </Style>
 
     <!--  Common style for Description labels  -->
     <Style x:Key="DescriptionLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{ThemeResource Gray-700}" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-Bg}" />
+        <Setter Property="HorizontalTextAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
-        <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
     </Style>
 
     <!--  Common style for Icon labels  -->
@@ -31,10 +31,10 @@
     <!--  Common style for Simple labels  -->
     <Style x:Key="SimpleLabelStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Foreground" Value="{ThemeResource Gray-700}" />
+        <Setter Property="Foreground" Value="{ThemeResource Gray-Bg}" />
         <Setter Property="HorizontalTextAlignment" Value="DetectFromContent" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
-        <!--<Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />-->
+        <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
     <!--  Common style for Error Icon labels  -->
