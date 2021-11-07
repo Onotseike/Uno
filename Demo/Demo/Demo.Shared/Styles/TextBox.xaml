@@ -46,4 +46,9 @@
         <Setter Property="Foreground" Value="{ThemeResource Red}" />
     </Style>
 
+    <Style x:Key="EntryStyle" TargetType="TextBox">
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource PrimaryDarkColor}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
 </ResourceDictionary>

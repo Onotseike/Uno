@@ -1,10 +1,19 @@
-﻿using Microsoft.Extensions.Logging;
+﻿#if __IOS__
+
+using Foundation;
+using UIKit;
+
+#endif
+using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
+
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -17,6 +26,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Demo
 {
@@ -26,6 +36,9 @@ namespace Demo
     public sealed partial class App : Application
     {
         private Window _window;
+
+        public static object AuthenticationUiParent { get; set; }
+        public string iOSKeychainSecurityGroup { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -178,5 +191,25 @@ namespace Demo
 
             global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
         }
+
+#if __IOS__
+
+        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        {
+            // Specify the Keychain access group
+            iOSKeychainSecurityGroup = NSBundle.MainBundle.BundleIdentifier;            
+
+            return base.FinishedLaunching(app, options);
+        }
+
+        // Handling redirect URL
+        // See: https://docs.microsoft.com/azure/active-directory/develop/msal-net-xamarin-ios-considerations
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
+            return true;
+        }
+
+#endif
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Demo.ViewModels;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,9 +30,11 @@ namespace Demo
             this.InitializeComponent();
         }
 
-        private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var vm = DataContext as MainVM;
+            //await vm.LogOutAsync();
+            await vm.BackUp();
         }
     }
 }

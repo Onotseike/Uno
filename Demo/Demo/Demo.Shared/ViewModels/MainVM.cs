@@ -1,16 +1,23 @@
-﻿using Demo.Database.Entities;
+﻿using Demo.CloudProvider;
+using Demo.Database.Entities;
 using Demo.Database.Enums;
 using Demo.Database.Services;
 using Demo.Helpers;
+
+using Microsoft.Identity.Client;
+
+using Newtonsoft.Json.Linq;
 
 using SQLite;
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Demo.ViewModels
 {
@@ -23,7 +30,8 @@ namespace Demo.ViewModels
         public Account UserAccount { get; set; }
         public Address UserAddress { get; set; }
 
-        private readonly string databasePath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Demo.db");
+        private readonly string databasePath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Demo.db"));
+        //Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Demo.db");
 
         #endregion
 
@@ -89,17 +97,17 @@ namespace Demo.ViewModels
             InitializeServices();
             LoadEntities();
             Summarize();
-            Console.WriteLine(databasePath);
+            Debug.WriteLine(databasePath);
+
+            OneDriveSetupAsync().ConfigureAwait(false);
         }
 
         #endregion
 
         #region DB Services
 
-        private async void InitializeDatabase()
+        private void InitializeDatabase()
         {
-            await Windows.Storage.StorageFolder.GetFolderFromPathAsync(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
-
             var dbExists = File.Exists(databasePath);
             if (!dbExists)
             {
@@ -170,6 +178,60 @@ namespace Demo.ViewModels
             }
         }
 
+        #endregion
+
+        #region OneDrive Methods
+
+        public async Task OneDriveSetupAsync()
+        {
+            try
+            {
+                OneDrive.BuildPublicClientApplication();
+                var result = await OneDrive.InitializeWithSilentProviderAsync();
+                if (result == null)
+                {
+                    result = await OneDrive.InitializeWithInteractiveProviderAsync();
+                }
+                await OneDrive.InitializeGraphClientAsync(result);
+            }            
+            catch (Exception exception)
+            {
+                await Dialogs.ExceptionDialogAsync(exception);
+            }
+        }
+
+        public async Task LogOutAsync()
+        {
+            var driveItem = await OneDrive.GetAppFolderAsync();
+            Debug.WriteLine(JObject.FromObject(driveItem));
+            
+            //await OneDrive.RemoveAccountsAsync();
+
+        }
+
+        public async Task Restore()
+        {
+            try
+            {
+                await OneDrive.Restore("Demo.db");
+            }
+            catch (Exception exception)
+            {
+                await Dialogs.ExceptionDialogAsync(exception);
+            }
+        }
+
+        public async Task BackUp()
+        {
+            try
+            {
+                await OneDrive.BackUp("Demo.db");
+            }
+            catch (Exception exception)
+            {
+                await Dialogs.ExceptionDialogAsync(exception);
+            }
+        }
         #endregion
     }
 }

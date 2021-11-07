@@ -1,4 +1,6 @@
-﻿using Microsoft.Graph;
+﻿using Demo.Helpers;
+
+using Microsoft.Graph;
 using Microsoft.Identity.Client;
 
 using System;
@@ -8,13 +10,11 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-using Windows.UI.Xaml.Controls;
-
 using File = System.IO.File;
 
 namespace Demo.CloudProvider
 {
-    public class OneDrive : BaseCloudProvider, ICloudProvider
+    public class OneDrive
     {
 
         #region OAuthSettings
@@ -22,51 +22,133 @@ namespace Demo.CloudProvider
         protected static class OAuthenticationSettings
         {
             public const string ApplicationId = "4f554894-133f-44c9-92fe-bdcb164ddaa0";
-            public const string RedirectUri = "soloApp://redirect";
-            public readonly static string[] Scopes = new string[] { "Files.ReadWrite.AppFolder", "User.Read", "Device.Read" };
+            public const string RedirectUri = "soloApp://redirect";//"msal4f554894-133f-44c9-92fe-bdcb164ddaa0://auth";
+            public static readonly string[] Scopes = new string[] { AppConstants.FilesReadWriteAppFolder, AppConstants.UserRead, AppConstants.DeviceRead };
+
+            public static Uri Authority = new Uri("https://login.microsoftonline.com/consumers/oauth2/v2.0/");
         }
 
         #endregion
 
         #region Property(ies)
 
-        // Microsoft Authentication client for native/mobile apps
-        private IPublicClientApplication PCA { get; set; }
+        private static GraphServiceClient graphServiceClient;
+
+        private static IPublicClientApplication pca;
 
         // UIParent used by Android version of the app
-        public object AuthenticationUIParent { get; private set; }
+        public static object AuthenticationUIParent { get; private set; }
 
         // Keychain security group used by iOS version of the app
-        public string IOSKeychainSecurityGroup { get; private set; }
-
-        // Microsoft Graph client
-        private GraphServiceClient GraphClient { get; set; }        
+        public static string IOSKeychainSecurityGroup { get; private set; }
 
         #endregion
 
-        #region Constructor(s)
+        #region Graph Initiialization(s)
 
-        public OneDrive()
+        public static void BuildPublicClientApplication()
         {
-            var builder = PublicClientApplicationBuilder.Create(OAuthenticationSettings.ApplicationId).WithRedirectUri(OAuthenticationSettings.RedirectUri);
+            var builder = PublicClientApplicationBuilder.Create(OAuthenticationSettings.ApplicationId).WithAuthority(OAuthenticationSettings.Authority).WithRedirectUri(OAuthenticationSettings.RedirectUri);
+
 
             if (!string.IsNullOrEmpty(IOSKeychainSecurityGroup))
             {
                 builder = builder.WithIosKeychainSecurityGroup(IOSKeychainSecurityGroup);
             }
 
-            PCA = builder.Build();
+            pca = builder.Build();
+            
+        }
+
+        public static async Task<AuthenticationResult> InitializeWithInteractiveProviderAsync()
+        {
+
+            var accounts = await pca.GetAccountsAsync();
+
+            try
+            {
+                var builder = pca.AcquireTokenInteractive(OAuthenticationSettings.Scopes)
+                         .WithAccount(accounts.FirstOrDefault())
+                         .WithPrompt(Microsoft.Identity.Client.Prompt.SelectAccount);
+
+                if (App.AuthenticationUiParent != null)
+                {
+                    builder = builder
+                        .WithParentActivityOrWindow(App.AuthenticationUiParent);
+                }
+
+
+
+#if NETFX_CORE || __ANDROID__ || __IOS__
+                builder.WithUseEmbeddedWebView(true);
+#endif
+
+                var result = await builder.ExecuteAsync();
+
+                return result;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+                //await Dialogs.ExceptionDialogAsync(exception);
+                //return null;
+            }
+        }
+
+        public static async Task<AuthenticationResult> InitializeWithSilentProviderAsync()
+        {
+            var accounts = await pca.GetAccountsAsync();
+
+            try
+            {
+                var result = await pca.AcquireTokenSilent(OAuthenticationSettings.Scopes, accounts.FirstOrDefault())
+                .ExecuteAsync().ConfigureAwait(false);
+
+                return result;
+            }
+            catch (Exception exception)
+            {
+                //await Dialogs.ExceptionDialogAsync(exception);
+                return null;
+            }
+        }
+
+        public static async Task InitializeGraphClientAsync(AuthenticationResult authenticationResult)
+        {
+            try
+            {
+                graphServiceClient = new GraphServiceClient(new DelegateAuthenticationProvider(
+                async (requestMessage) =>
+                {
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authenticationResult.AccessToken);
+                }));
+            }
+            catch (Exception exception)
+            {
+                await Dialogs.ExceptionDialogAsync(exception);
+            }
+
+        }
+
+        public static async Task RemoveAccountsAsync()
+        {
+            var accounts = await pca.GetAccountsAsync();
+            while (accounts.Any())
+            {
+                await pca.RemoveAsync(accounts.First());
+                accounts = await pca.GetAccountsAsync();
+            }           
         }
 
         #endregion
 
-        #region ICloudProvider Implementation(s)
+        #region BackUp & Restoration Implementation(s)
 
-        public async Task<bool> BackUp(string databaseName)
+        public static async Task<bool> BackUp(string databaseName)
         {
             try
             {
-                await BackupDatabase(databaseName);
+                await BackupDatabaseAsync(databaseName);
                 return true;
             }
             catch (Exception)
@@ -76,11 +158,11 @@ namespace Demo.CloudProvider
             }
         }
 
-        public async Task<bool> Restore(string databaseName)
+        public static async Task<bool> Restore(string databaseName)
         {
             try
             {
-                await RestoreDatabase(databaseName);
+                await RestoreDatabaseAsync(databaseName);
                 return true;
             }
             catch (Exception)
@@ -88,186 +170,81 @@ namespace Demo.CloudProvider
 
                 return false;
             }
-        }
-
-        public async Task<bool> SignInAsync()
-        {
-            // First, attempt silent sign in
-            // If the user's information is already in the app's cache,
-            // they won't have to sign in again.
-
-            try
-            {
-                var accounts = await PCA.GetAccountsAsync();
-
-                var enumerable = accounts.ToList();
-                if (enumerable.Any())
-                {
-                    var silentAuthResult = await PCA
-                        .AcquireTokenSilent(OAuthenticationSettings.Scopes, enumerable.FirstOrDefault())
-                        .ExecuteAsync();
-
-                    Debug.WriteLine("User already signed in.");
-                    Debug.WriteLine($"Access token: {silentAuthResult.AccessToken}");
-                    // AccessToken = silentAuthResult.AccessToken;
-                }
-
-                IsSignedIn = true;
-                return IsSignedIn;
-            }
-            catch (MsalUiRequiredException exception)
-            {
-                Debug.WriteLine("Silent token request failed, user needs to sign-in: " + exception.Message);
-                // Prompt the user to sign-in
-
-                var interactiveRequest = PCA.AcquireTokenInteractive(OAuthenticationSettings.Scopes);
-
-                if (AuthenticationUIParent != null)
-                {
-                    interactiveRequest = interactiveRequest
-                        .WithParentActivityOrWindow(AuthenticationUIParent);
-                }
-
-                var authResult = await interactiveRequest.ExecuteAsync();
-                Debug.WriteLine($"Successful interactive authentication for: {authResult.Account.Username}");
-                Debug.WriteLine($"Access token: {authResult.AccessToken}");
-                //AccessToken = authResult.AccessToken;
-                IsSignedIn = true;
-                return IsSignedIn;
-
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Silent token request failed, user needs to sign-in");
-                Debug.WriteLine("Sign In Error: " + ex.Message);
-                var alert = new ContentDialog
-                {
-                    Title = "OnedDrive Sign-In Error",
-                    Content = "Silent token request failed, user needs to sign-in",
-                    CloseButtonText = "OK"
-                };
-                await alert.ShowAsync();
-                IsSignedIn = false;
-                return false;
-            }
-        }
-
-        public async Task<bool> SignOutAsync()
-        {
-            // Get all cached accounts for the app
-            // (Should only be one)
-            var accounts = await PCA.GetAccountsAsync();
-            var enumerable = accounts.ToList();
-            while (enumerable.Any())
-            {
-                // Remove the account info from the cache
-                await PCA.RemoveAsync(enumerable.First());
-                accounts = await PCA.GetAccountsAsync();
-            }
-
-            Username = string.Empty;
-            UserEmail = string.Empty;
-            IsSignedIn = false;
-            return IsSignedIn;
         }
 
         #endregion
 
         #region Helper Method(s)
 
-        public async void InitializeGraphClient()
-        {
-            var accounts = await PCA.GetAccountsAsync();
-
-            try
-            {
-                if (accounts.Count() > 0)
-                {
-                    // Initialize Graph client
-                    GraphClient = new GraphServiceClient(new DelegateAuthenticationProvider(
-                        async (requestMessage) =>
-                        {
-                            var result = await PCA.AcquireTokenSilent(OAuthenticationSettings.Scopes, accounts.FirstOrDefault()).ExecuteAsync();
-
-                            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
-                        }));
-
-                    await AccountInfo();
-
-                    IsSignedIn = true;
-                }
-                else
-                {
-                    IsSignedIn = false;
-                }
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine("Failed to initialized graph client.");
-                Debug.WriteLine($"Accounts in the msal cache: {accounts.Count()}.");
-                Debug.WriteLine($"See exception message for details: {exception.Message}");
-            }
-
-        }
-
-        private async Task<DriveItem> GetAppFolderAsync()
+        public static async Task<DriveItem> GetAppFolderAsync()
         {
             try
             {
-                if (GraphClient != null)
+                if (graphServiceClient == null)
                 {
-                    return await GraphClient.Me.Drive.Special.AppRoot.Request().GetAsync();
-                }
-                else
-                {
-                    InitializeGraphClient();
-                    return await GraphClient.Me.Drive.Special.AppRoot.Request().GetAsync();
+                    var authResult = await InitializeWithSilentProviderAsync();
+                    await InitializeGraphClientAsync(authResult);
+
                 }
 
-
+                return await graphServiceClient.Me.Drive.Special.AppRoot.Request().GetAsync();
             }
             catch (Exception exception)
             {
-                Debug.Write("GetAppsFolder Error: " + exception.Message);
-                var alert = new ContentDialog
-                {
-                    Title = "OneDrive GetAppsFolder Error",
-                    Content = exception.Message,
-                    CloseButtonText = "OK"
-                };
-                await alert.ShowAsync();
+                Debug.WriteLine("GetAppsFolder Error: " + exception.Message);
+                await Dialogs.GenericDialogAsync("OneDrive GetAppsFolder Error", exception.Message, "OK");
                 return null;
             }
         }
 
-        private async Task AccountInfo()
+        public static  async Task<(string username, string email, bool isSignedIn)?> AccountInfo()
         {
-            var account = await GraphClient.Me.Request().Select(user => new
+            try
             {
-                user.DisplayName,
-                user.Mail,
-                user.UserPrincipalName
-            }).GetAsync();
+                if (graphServiceClient == null)
+                {
+                    var authResult = await InitializeWithSilentProviderAsync();
+                    await InitializeGraphClientAsync(authResult);
+                }
 
-            Username = account.DisplayName;
-            UserEmail = String.IsNullOrEmpty(account.Mail) ? account.UserPrincipalName : account.Mail;
+                var account = await graphServiceClient.Me.Request().Select(user => new
+                {
+                    user.DisplayName,
+                    user.Mail,
+                    user.UserPrincipalName
+                }).GetAsync();
+
+                return (username: account.DisplayName, email: string.IsNullOrEmpty(account.Mail) ? account.UserPrincipalName : account.Mail, isSignedIn: true);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Account Info Error: " + exception.Message);
+                await Dialogs.GenericDialogAsync("OneDrive GetAppsFolder Error", exception.Message, "OK");
+                return null;
+            }            
         }
 
         #endregion
 
         #region Sync Method(s)
 
-        private async Task RestoreDatabase(string databaseName)
+        private static async Task RestoreDatabaseAsync(string databaseName)
         {
             try
             {
                 Stream stream = null;
-                var databasePath = await GraphClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Request().GetAsync();
+                if (graphServiceClient == null)
+                {
+                    var authResult = await InitializeWithSilentProviderAsync();
+                    await InitializeGraphClientAsync(authResult);
+
+                }
+
+                var databasePath = await graphServiceClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Request().GetAsync();
 
                 if (databasePath != null)
                 {
-                    stream = await GraphClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Content.Request().GetAsync();
+                    stream = await graphServiceClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Content.Request().GetAsync();
 
                     var destinationPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName));
                     using (var databaseDriveItem = File.Create(destinationPath))
@@ -279,11 +256,11 @@ namespace Demo.CloudProvider
             }
             catch (Exception exception)
             {
-                // await DisplayAlert();
+                await Dialogs.ExceptionDialogAsync(exception);
             }
         }
 
-        private async Task BackupDatabase(string databaseName)
+        private static async Task BackupDatabaseAsync(string databaseName)
         {
             try
             {
@@ -291,11 +268,18 @@ namespace Demo.CloudProvider
                 var databaseData = await File.ReadAllBytesAsync(sourcPath);
                 var stream = new MemoryStream(databaseData);
 
-                await GraphClient.Me.Drive.Special.AppRoot.ItemWithPath(databaseName).Content.Request().PutAsync<DriveItem>(stream);
+                if (graphServiceClient == null)
+                {
+                    var authResult = await InitializeWithSilentProviderAsync();
+                    await InitializeGraphClientAsync(authResult);
+
+                }
+
+                await graphServiceClient.Me.Drive.Special.AppRoot.Children[databaseName].Content.Request().PutAsync<DriveItem>(stream);
             }
             catch (Exception exception)
             {
-                // await DisplayAlert();
+                await Dialogs.ExceptionDialogAsync(exception);
             }
         }
 
