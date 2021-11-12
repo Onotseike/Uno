@@ -9,63 +9,65 @@
     xmlns:vm="using:Demo.ViewModels"
     xmlns:pages="using:Demo.Pages"
     mc:Ignorable="d"
-    Background="{ThemeResource SecondaryGradientStyle}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
-    <Page.DataContext>
+    <!--<Page.DataContext>
         <vm:MainVM x:Name="BaseVM"/>
-    </Page.DataContext>
+    </Page.DataContext>-->
 
-    <winui:TabView x:Name="tabView"
-                   Margin="0,25"
+    <Grid>
+        <winui:TabView x:Name="tabView"
+                    Margin="0,35"
                     Style="{StaticResource TabViewStyle}"
                     SelectionChanged="tabView_SelectionChanged">
 
-        <winui:TabView.TabItems>
-            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
+            <winui:TabView.TabItems>
+                <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Home"
                                    Tag="Home">
-                <winui:TabViewItem.IconSource>
-                    <winui:SymbolIconSource Symbol="Home"/>
-                </winui:TabViewItem.IconSource>
-                <winui:TabViewItem.Content>
-                    <pages:Home DataContext="{x:Bind BaseVM}" />
-                </winui:TabViewItem.Content>
-            </winui:TabViewItem>
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="Home"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Home DataContext="{x:Bind ViewModel.HomeVM}" x:Name="home"/>
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
 
-            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
+                <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Invoices"
                                    Tag="Invoices">
-                <winui:TabViewItem.IconSource>
-                    <winui:SymbolIconSource Symbol="Document"/>
-                </winui:TabViewItem.IconSource>
-                <winui:TabViewItem.Content>
-                    <pages:Invoices DataContext="{x:Bind BaseVM}" />
-                </winui:TabViewItem.Content>
-            </winui:TabViewItem>
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="Document"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Invoices DataContext="{x:Bind ViewModel.InvoicesVM}"  x:Name="invoices"/>
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
 
-            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
+                <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Clients"
                                    Tag="Clients">
-                <winui:TabViewItem.IconSource>
-                    <winui:SymbolIconSource Symbol="People"/>
-                </winui:TabViewItem.IconSource>
-                <winui:TabViewItem.Content>
-                    <pages:Clients DataContext="{x:Bind BaseVM}" />
-                </winui:TabViewItem.Content>
-            </winui:TabViewItem>
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="People"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Clients DataContext="{x:Bind ViewModel.ClientsVM}" x:Name="clients"/>
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
 
-            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
+                <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Settings"
                                    Tag="Settings">
-                <winui:TabViewItem.IconSource>
-                    <winui:SymbolIconSource Symbol="Setting"/>
-                </winui:TabViewItem.IconSource>
-                <winui:TabViewItem.Content>
-                    <pages:Settings DataContext="{x:Bind BaseVM}" />
-                </winui:TabViewItem.Content>
-            </winui:TabViewItem>
-        </winui:TabView.TabItems>
+                    <winui:TabViewItem.IconSource>
+                        <winui:SymbolIconSource Symbol="Setting"/>
+                    </winui:TabViewItem.IconSource>
+                    <winui:TabViewItem.Content>
+                        <pages:Settings DataContext="{x:Bind ViewModel.SettingsVM}" x:Name="settings"/>
+                    </winui:TabViewItem.Content>
+                </winui:TabViewItem>
+            </winui:TabView.TabItems>
 
-    </winui:TabView>
+        </winui:TabView>
+    </Grid>
 </Page>

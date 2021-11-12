@@ -1,5 +1,8 @@
 ﻿using Demo.ViewModels;
 
+using Microsoft.Graph.TermStore;
+using Microsoft.UI.Xaml.Controls;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,15 +30,29 @@ namespace Demo
     {
         public MainPage()
         {
+            ViewModel = new MainVM();
             this.InitializeComponent();
+
+        }
+
+        public MainVM ViewModel { get; private set; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (ViewModel == null)
+            {
+                ViewModel = new MainVM();
+            }
+
+            ViewModel.SettingsVM = new SettingsVM();
+            base.OnNavigatedTo(e);
+
         }
 
         private async void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var vm = DataContext as MainVM;
-            //await vm.LogOutAsync();
-            //await vm.BackUp();
-           // await vm.Restore();
+            
+            
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Graph;
+﻿
+using Demo.Database.Enums;
+
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 

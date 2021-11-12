@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Demo.Database.Entities;
+using Demo.ViewModels;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +28,42 @@ namespace Demo.Pages
         public Invoices()
         {
             this.InitializeComponent();
+        }
+
+        public static string PriceOfItems(List<ItemBlob> items, string currency) => $"{currency} {items.Sum(item => item.Price)}";
+
+        public static string EnumToString(Enum enumObject) => enumObject.ToString();
+
+        public static string DateFormat(DateTime dateTime, bool isIssueDate) => isIssueDate ? $"Issued : {dateTime.ToString("d")}" : $"Due : {dateTime.ToString("d")}";
+
+        public static string IndexOf(Invoice invoice)
+        {
+            return "";
+        }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void ViewClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var invoice = button.DataContext as Invoice;
+        }
+
+        private void EditClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var invoice = button.DataContext as Invoice;
+        }
+
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var invoice = button.DataContext as Invoice;
+            var vm = DataContext as InvoicesVM;
+            vm.Invoices.Remove(invoice);
         }
     }
 }

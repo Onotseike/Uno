@@ -63,7 +63,7 @@
                                   Toggled="ToggleSwitch_Toggled"
                                   IsOn="{Binding IsSignedIn}"/>
 
-                        <TextBlock Text="Onedrive User Details "
+                        <TextBlock Text="OneDrive User Details "
                                Margin="0,10"
                            Style="{StaticResource TitleLabelStyle}"/>
 

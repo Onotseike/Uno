@@ -1,19 +1,8 @@
 ﻿using Demo.Database.Enums;
 using Demo.ViewModels;
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -25,7 +14,7 @@ namespace Demo.Pages
     /// </summary>
     public sealed partial class Settings : Page
     {
-        public MainVM ViewModel { get; set; }
+        public SettingsVM ViewModel { get; set; }
         
         public Settings()
         {
@@ -34,16 +23,16 @@ namespace Demo.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
-            }            
+                ViewModel = new SettingsVM();
+            }
+            base.OnNavigatedTo(e);
         }
 
         private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            ViewModel = DataContext as MainVM;
+            ViewModel = DataContext as SettingsVM;
             var toggleSwitch = sender as ToggleSwitch;
 
             if (toggleSwitch?.IsOn == true)
@@ -60,7 +49,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 
             await ViewModel.BackUp();
@@ -71,7 +60,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 
             await ViewModel.Restore();
@@ -81,7 +70,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 
             await ViewModel.SaveAccount(ViewModel.UserAccount);
@@ -91,7 +80,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 
             await ViewModel.SaveAddress(ViewModel.UserAddress);
@@ -101,7 +90,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 #if NETFX_CORE
             if(ViewModel == null) { return; }
@@ -113,7 +102,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 #if NETFX_CORE
             if (ViewModel == null) { return; }
@@ -125,7 +114,7 @@ namespace Demo.Pages
         {
             if (ViewModel == null)
             {
-                ViewModel = DataContext as MainVM;
+                ViewModel = DataContext as SettingsVM;
             }
 #if NETFX_CORE
             if (ViewModel == null) { return; }

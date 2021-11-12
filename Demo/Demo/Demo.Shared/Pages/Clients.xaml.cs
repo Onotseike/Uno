@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Demo.ViewModels;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,9 +31,31 @@ namespace Demo.Pages
 
         public static string EnumToString(Enum enumObject) => enumObject.ToString();
 
+        
         private void ItemTemplate_Checked(object sender, RoutedEventArgs e)
         {
 
         }
+
+        private void clientsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void ViewClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+        }
+
+        private void EditClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
