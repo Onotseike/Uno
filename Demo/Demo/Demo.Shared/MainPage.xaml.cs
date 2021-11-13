@@ -1,4 +1,6 @@
-﻿using Demo.ViewModels;
+﻿using Demo.Database.Entities;
+using Demo.Pages;
+using Demo.ViewModels;
 
 using Microsoft.Graph.TermStore;
 using Microsoft.UI.Xaml.Controls;
@@ -39,13 +41,16 @@ namespace Demo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            //Frame.Navigate(typeof(CUInvoice), new Invoice());
             if (ViewModel == null)
             {
                 ViewModel = new MainVM();
             }
 
             ViewModel.SettingsVM = new SettingsVM();
-            base.OnNavigatedTo(e);
+            
 
         }
 

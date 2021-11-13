@@ -164,15 +164,13 @@
             </GridViewItem>
         </DataTemplate>
     </Page.Resources>
-    <Page.DataContext>
-        <vm:InvoicesVM />
-    </Page.DataContext>
+
 
     <ScrollViewer HorizontalScrollMode="Auto"
                   VerticalScrollMode="Auto">
 
         <GridView x:Name="invoicesGridView"
-                  ItemsSource="{Binding Invoices}"
+                  ItemsSource="{Binding Invoices, Mode=TwoWay}"
                   ItemTemplate="{StaticResource ClientDataTemplate}"
                   IsItemClickEnabled="True"
                   SelectionMode="Single"

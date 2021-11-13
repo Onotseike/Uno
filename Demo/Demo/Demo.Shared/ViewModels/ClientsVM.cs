@@ -36,8 +36,6 @@ namespace Demo.ViewModels
 
         private void LoadEntities()
         {
-            var fetchClients = ClientDBService.GetEntities();
-            Clients = new ObservableCollection<Client>(fetchClients.entities);            
             var clientA = new Client
             {
                 Type = ClientType.Individual,
@@ -93,14 +91,22 @@ namespace Demo.ViewModels
                 }
             };
 
-            Clients.Add(clientA);
-            Clients.Add(clientB);
-            Clients.Add(clientB);
-            Clients.Add(clientB);
-            Clients.Add(clientB);
-            Clients.Add(clientB);
+            ClientDBService.AddEntities(new Client[] { clientA, clientB });
+
+            var fetchClients = ClientDBService.GetEntities();
+            Clients = new ObservableCollection<Client>(fetchClients.entities); 
+            
         }
 
+        public void DeleteEntity(Client client)
+        {
+            var result = ClientDBService.DeleteEntity(client);
+            if (result.isSuccessful)
+            {
+                //Clients.Clear()
+                Clients.Remove(client);
+            }
+        }
         #endregion
 
         public ClientsVM()

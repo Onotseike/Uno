@@ -61,7 +61,7 @@
             <Color x:Key="Gray-Black">#000000</Color>
             <Color x:Key="Gray-White">#ffffff</Color>
             <Color x:Key="Gray-Bg">#010101</Color>
-            <Color x:Key="GrayShadowColor">#ffffff</Color>
+            <Color x:Key="GrayShadowColor">#fafafa</Color>
             <Color x:Key="GrayShadowBackgroundColor">#f6f7f8</Color>
             
         </ResourceDictionary>

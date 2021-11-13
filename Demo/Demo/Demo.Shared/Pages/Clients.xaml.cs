@@ -1,4 +1,5 @@
-﻿using Demo.ViewModels;
+﻿using Demo.Database.Entities;
+using Demo.ViewModels;
 
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,12 @@ namespace Demo.Pages
     /// </summary>
     public sealed partial class Clients : Page
     {
+        //public ClientsVM ViewModel { get; set; }
         public Clients()
         {
+            //ViewModel = new ClientsVM();
             this.InitializeComponent();
+            
         }
 
         public static string EnumToString(Enum enumObject) => enumObject.ToString();
@@ -54,7 +58,10 @@ namespace Demo.Pages
 
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
-
+            var button = sender as Button;
+            var client = button.DataContext as Client;
+            var vm = DataContext as ClientsVM;
+            vm.DeleteEntity(client);
         }
 
     }

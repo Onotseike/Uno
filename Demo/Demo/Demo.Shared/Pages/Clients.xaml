@@ -11,8 +11,11 @@
     xmlns:vm="using:Demo.ViewModels"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <DataTemplate x:Key="ClientDataTemplate" x:DataType="entities:Client">
+    <!--<Page.DataContext>
+        <vm:ClientsVM x:Name="BaseVM"/>
+    </Page.DataContext>-->
+    
+    <Page.Resources>        <DataTemplate x:Key="ClientDataTemplate" x:DataType="entities:Client">
             <toolkit:ElevatedView Grid.Row="1"
                               Elevation="10"
                               Margin="5"
@@ -114,13 +117,14 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>                       
+                        </Grid.ColumnDefinitions>
 
                         <StackPanel Padding="15,5"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Grid.Column="1">
-                            <Button Style="{StaticResource TransparentButtonStyle}">
+                            <Button Style="{StaticResource TransparentButtonStyle}"
+                                    Click="ViewClick">
                                 <Button.ContentTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -131,7 +135,8 @@
                                 </Button.ContentTemplate>
                             </Button>
 
-                            <Button Style="{StaticResource TransparentButtonStyle}">
+                            <Button Style="{StaticResource TransparentButtonStyle}"
+                                    Click="EditClick">
                                 <Button.ContentTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -142,7 +147,8 @@
                                 </Button.ContentTemplate>
                             </Button>
 
-                            <Button Style="{StaticResource TransparentButtonStyle}">
+                            <Button Style="{StaticResource TransparentButtonStyle}"
+                                    Click="DeleteClick">
                                 <Button.ContentTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -160,15 +166,13 @@
             </toolkit:ElevatedView>
         </DataTemplate>
     </Page.Resources>
-    <Page.DataContext>
-        <vm:ClientsVM />
-    </Page.DataContext>
+    
 
     <ScrollViewer HorizontalScrollMode="Auto"
                   VerticalScrollMode="Auto">
 
         <GridView x:Name="clientsGridView"
-                  ItemsSource="{Binding Clients}"
+                  ItemsSource="{Binding Clients, Mode=TwoWay}"
                   ItemTemplate="{StaticResource ClientDataTemplate}"
                   IsItemClickEnabled="True"
                   SelectionMode="Single"

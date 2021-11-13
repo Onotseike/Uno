@@ -40,6 +40,7 @@
     <None Include="wwwroot\web.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Countries.Standard" Version="1.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="4.10.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.37.0" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />

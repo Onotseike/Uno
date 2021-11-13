@@ -3,13 +3,10 @@ using Demo.Database.Enums;
 using Demo.Database.Services;
 using Demo.Helpers;
 
-using SQLite;
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
-using System.Text;
+using System.Linq;
 
 namespace Demo.ViewModels
 {
@@ -18,12 +15,16 @@ namespace Demo.ViewModels
         #region Properties
 
         public ObservableCollection<Invoice> Invoices { get; set; }
+        public Account UserAccount { get; set; }
+        public Address UserAddress { get; set; }
 
         #endregion     
 
         #region DBServices
 
         public InvoiceDBService InvoiceDBService { get; set; }
+        public AccountDBService AccountDBService { get; set; }
+        public AddressDBService AddressDBService { get; set; }
 
         #endregion
 
@@ -32,13 +33,17 @@ namespace Demo.ViewModels
         private void InitializeServices()
         {
             InvoiceDBService = new InvoiceDBService();
+            AccountDBService = new AccountDBService();
+            AddressDBService = new AddressDBService();
         }
 
         private void LoadEntities()
         {
-            var fetchInvoices = InvoiceDBService.GetEntities();
-            Invoices = new ObservableCollection<Invoice>(fetchInvoices.entities);
+            var fetchAccount = AccountDBService.GetUserEntities();
+            var fetchAddress = AddressDBService.GetUserEntities();
 
+            UserAccount = fetchAccount.entities.FirstOrDefault();
+            UserAddress = fetchAddress.entities.FirstOrDefault();
             var itemA = new ItemBlob
             {
                 ItemType = "Service",
@@ -81,19 +86,26 @@ namespace Demo.ViewModels
                 DueDate = DateTime.Now.AddDays(30),
                 Status = InvoiceStatus.Due,
                 Client = clientA,
-                FullName = "User",
-                UserAddress = new Address(),
+                FullName = UserAccount.Holder,
+                UserAddressId = UserAddress.Id,
                 Items = new List<ItemBlob> { itemA, itemA, itemA, itemA}
             };
 
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
-            Invoices.Add(invoiceA);
+            InvoiceDBService.AddEntities(new Invoice[] {invoiceA });
+
+
+            var fetchInvoices = InvoiceDBService.GetEntities();
+            Invoices = new ObservableCollection<Invoice>(fetchInvoices.entities);
+
+        }
+
+        public void DeleteEntity(Invoice invoice )
+        {
+            var result = InvoiceDBService.DeleteEntity(invoice);
+            if (result.isSuccessful)
+            {
+                Invoices.Remove(invoice);
+            }
         }
 
         #endregion

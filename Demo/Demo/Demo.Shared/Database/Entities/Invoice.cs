@@ -59,7 +59,8 @@ namespace Demo.Database.Entities
         /// <summary>
         /// User Address Id of Human attached to the Invoice record.
         /// </summary>
-        [Column("user_address"), NotNull]
+        [Column("user_address")]
+        [ForeignKey(typeof(Address)), NotNull]
         public Guid UserAddressId { get; set; }
 
         /// <summary>

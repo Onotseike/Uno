@@ -77,8 +77,7 @@ namespace Demo.ViewModels
                 using (var connection = new SQLiteConnection(databasePath))
                 {
                     connection.CreateTable<Account>();
-                    connection.CreateTable<Address>();
-                    //connection.DropTable<Client>();
+                    connection.CreateTable<Address>();                    
                     connection.CreateTable<Client>();
                     connection.CreateTable<Communication>();
                     connection.CreateTable<Invoice>();

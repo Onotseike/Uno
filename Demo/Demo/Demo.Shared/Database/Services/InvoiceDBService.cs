@@ -23,7 +23,7 @@ namespace Demo.Database.Services
                 {
                     connection.InsertWithChildren(entity);
                     //var itemsInsert = AddInvoiceItem(connection, entity, entity.Items);
-                    connection.GetChildren<Invoice>(entity);
+                    connection.GetChildren(entity);
 
                     return (true, $"Insert of type : {nameof(Invoice)} with Children was Successful.", null);
                 }

@@ -3,19 +3,11 @@ using Demo.ViewModels;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Demo.Pages
@@ -30,6 +22,8 @@ namespace Demo.Pages
             this.InitializeComponent();
         }
 
+        
+        
         public static string PriceOfItems(List<ItemBlob> items, string currency) => $"{currency} {items.Sum(item => item.Price)}";
 
         public static string EnumToString(Enum enumObject) => enumObject.ToString();
@@ -56,6 +50,8 @@ namespace Demo.Pages
         {
             var button = sender as Button;
             var invoice = button.DataContext as Invoice;
+            
+            Frame.Navigate(typeof(CUInvoice), invoice);
         }
 
         private void DeleteClick(object sender, RoutedEventArgs e)
@@ -63,7 +59,7 @@ namespace Demo.Pages
             var button = sender as Button;
             var invoice = button.DataContext as Invoice;
             var vm = DataContext as InvoicesVM;
-            vm.Invoices.Remove(invoice);
+            vm.DeleteEntity(invoice);
         }
     }
 }
