@@ -21,17 +21,7 @@
                     Style="{StaticResource TabViewStyle}"
                     SelectionChanged="tabView_SelectionChanged">
 
-        <winui:TabView.TabItems>
-            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
-                                   Header="Home"
-                                   Tag="Home">
-                <winui:TabViewItem.IconSource>
-                    <winui:SymbolIconSource Symbol="Home"/>
-                </winui:TabViewItem.IconSource>
-                <winui:TabViewItem.Content>
-                    <pages:Home DataContext="{x:Bind ViewModel.HomeVM}" x:Name="home"/>
-                </winui:TabViewItem.Content>
-            </winui:TabViewItem>
+        <winui:TabView.TabItems>           
 
             <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Invoices"

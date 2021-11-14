@@ -2,9 +2,7 @@
 using Demo.Database.Services;
 using Demo.Helpers;
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Demo.ViewModels
 {
@@ -39,16 +37,27 @@ namespace Demo.ViewModels
 
         #region Method(s)
 
-        public (bool isSuccessful, string operationMessage, object errorObject) SaveEntity()
+        public void SaveEntity()
         {
-            if (isNew)
+            var userAccount = new AccountDBService().GetUserEntities().entities.FirstOrDefault();
+            if (userAccount != null) 
             {
-                return  Service.AddEntity(Entity);
+                Entity.UserBankAccount = userAccount;
+                Entity.UserAddress = userAccount.Address;
+                Entity.FullName = userAccount.Holder;
+
+                if (isNew)
+                {
+                    var result = Service.AddEntity(Entity);
+                }
+                else
+                {
+                    var result = Service.UpdateEntity(Entity);
+                }
             }
-            else
-            {
-                return Service.UpdateEntity(Entity);
-            }
+
+            
+            
         }        
 
         #endregion

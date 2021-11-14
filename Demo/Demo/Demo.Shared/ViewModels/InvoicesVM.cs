@@ -1,4 +1,5 @@
-﻿using Demo.Database.Entities;
+﻿using Demo.Database;
+using Demo.Database.Entities;
 using Demo.Database.Enums;
 using Demo.Database.Services;
 using Demo.Helpers;
@@ -42,56 +43,7 @@ namespace Demo.ViewModels
             var fetchAccount = AccountDBService.GetUserEntities();
             var fetchAddress = AddressDBService.GetUserEntities();
 
-            UserAccount = fetchAccount.entities.FirstOrDefault();
-            UserAddress = fetchAddress.entities.FirstOrDefault();
-            var itemA = new ItemBlob
-            {
-                ItemType = "Service",
-                Description = "Web Application Development",
-                Price = 500
-            };
-            var clientA = new Client
-            {
-                Type = ClientType.Individual,
-                Name = "Anne Fabrics",
-                Communication = new Communication
-                {
-                    WorkEmail = "anne.fabrics@fabby.com",
-                    WorkPhone = "+2348033116328"
-                },
-                BankAccount = new Account
-                {
-                    BankName = "GTB Bank",
-                    Holder = "Anne Fabrics LTD",
-                    Number = "6012532365",
-                    Iban = "NGGT 1000 1110 2222 4444",
-                    Currency = "NGN"
-                },
-                BillingAddress = new Address
-                {
-                    AddressOne = "Industrial Avenue",
-                    City = "Federal Capital Territory",
-                    State = "Abuja",
-                    Country = "Nigeria",
-                    PostalCode = "9000108",
-                    Type = AddressType.Both
-                }
-            };
-
-
-            var invoiceA = new Invoice
-            {
-                Currency = "EUR",
-                IssueDate = DateTime.Now,
-                DueDate = DateTime.Now.AddDays(30),
-                Status = InvoiceStatus.Due,
-                Client = clientA,
-                FullName = UserAccount.Holder,
-                UserAddressId = UserAddress.Id,
-                Items = new List<ItemBlob> { itemA, itemA, itemA, itemA}
-            };
-
-            InvoiceDBService.AddEntities(new Invoice[] {invoiceA });
+            InvoiceDBService.AddEntities(new Invoice[] {MockData.invoiceA, MockData.invoiceB, MockData.invoiceA, MockData.invoiceB  });
 
 
             var fetchInvoices = InvoiceDBService.GetEntities();

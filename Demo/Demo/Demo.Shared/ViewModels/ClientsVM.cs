@@ -1,4 +1,5 @@
-﻿using Demo.Database.Entities;
+﻿using Demo.Database;
+using Demo.Database.Entities;
 using Demo.Database.Enums;
 using Demo.Database.Services;
 using Demo.Helpers;
@@ -35,63 +36,9 @@ namespace Demo.ViewModels
         }
 
         private void LoadEntities()
-        {
-            var clientA = new Client
-            {
-                Type = ClientType.Individual,
-                Name = "Anne Fabrics",
-                Communication = new Communication
-                {
-                    WorkEmail = "anne.fabrics@fabby.com",
-                    WorkPhone = "+2348033116328"
-                },
-                BankAccount = new Account
-                {
-                    BankName = "GTB Bank",
-                    Holder = "Anne Fabrics LTD",
-                    Number = "6012532365",
-                    Iban = "NGGT 1000 1110 2222 4444",
-                    Currency = "NGN"
-                },
-                BillingAddress = new Address
-                {
-                    AddressOne = "Industrial Avenue",
-                    City = "Federal Capital Territory",
-                    State = "Abuja",
-                    Country = "Nigeria",
-                    PostalCode = "9000108",
-                    Type = AddressType.Both
-                }
-            };
+        {          
 
-            var clientB = new Client
-            {
-                Type = ClientType.Individual,
-                Name = "Mio Communications",
-                Communication = new Communication
-                {
-                    WorkEmail = "info@miocommunication.co.uk",
-                    WorkPhone = "+2348044116328"
-                },
-                BankAccount = new Account
-                {
-                    BankName = "Monzo Bank",
-                    Holder = "Mio Communication LTD",
-                    Number = "4089456377",
-                    Iban = "GBMZ 2000 3110 3322 4444",
-                    Currency = "GBP"
-                },
-                BillingAddress = new Address
-                {
-                    AddressOne = "High Street Avenue",
-                    City = "London",
-                    Country = "United Kingdom",
-                    PostalCode = "L12 3Dt",
-                    Type = AddressType.Billing
-                }
-            };
-
-            ClientDBService.AddEntities(new Client[] { clientA, clientB });
+            ClientDBService.AddEntities(new Client[] { MockData.clientA, MockData.clientB });
 
             var fetchClients = ClientDBService.GetEntities();
             Clients = new ObservableCollection<Client>(fetchClients.entities); 

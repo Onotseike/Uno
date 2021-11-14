@@ -1,8 +1,10 @@
 ﻿using Demo.Database.Entities;
+using Demo.Helpers;
 using Demo.ViewModels;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 using Windows.UI.Xaml;
@@ -24,36 +26,27 @@ namespace Demo.Pages
 
         
         
-        public static string PriceOfItems(List<ItemBlob> items, string currency) => $"{currency} {items.Sum(item => item.Price)}";
+        public static string PriceOfItems(ObservableCollection<ItemBlob> items, string currency) => $"{currency} {items?.Sum(item => item.Price)}";
 
         public static string EnumToString(Enum enumObject) => enumObject.ToString();
 
         public static string DateFormat(DateTime dateTime, bool isIssueDate) => isIssueDate ? $"Issued : {dateTime.ToString("d")}" : $"Due : {dateTime.ToString("d")}";
 
-        public static string IndexOf(Invoice invoice)
-        {
-            return "";
-        }
-
+       
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }
 
-        private void ViewClick(object sender, RoutedEventArgs e)
+        private async void ViewClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var invoice = button.DataContext as Invoice;
+            var details = $"Client : {invoice.Client.Name}, {Environment.NewLine}Items : {invoice.ItemsBlob}, {Environment.NewLine}Due Date : {invoice.DueDate.ToString("d")}, {Environment.NewLine}Issued Date : {invoice.IssueDate.ToString("d")}";
+            await Dialogs.GenericDialogAsync($"Invoice Details", details, "Close");
         }
 
-        private void EditClick(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var invoice = button.DataContext as Invoice;
-            
-            Frame.Navigate(typeof(CUInvoice), invoice);
-        }
-
+        
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;

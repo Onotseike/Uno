@@ -5,6 +5,7 @@ using SQLiteNetExtensions.Attributes;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Demo.Database.Entities
@@ -107,7 +108,7 @@ namespace Demo.Database.Entities
         /// Collection of Items attached to the Invoice record.
         /// </summary>
         [TextBlob("ItemsBlob")]
-        public List<ItemBlob> Items { get; set; }
+        public ObservableCollection<ItemBlob> Items { get; set; }
 
         public string ItemsBlob { get; set; }
         #endregion

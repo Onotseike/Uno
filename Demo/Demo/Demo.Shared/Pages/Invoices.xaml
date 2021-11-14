@@ -131,19 +131,7 @@
                                         </DataTemplate>
                                     </Button.ContentTemplate>
                                 </Button>
-
-                                <Button Style="{StaticResource TransparentButtonStyle}"
-                                    Click="EditClick">
-                                    <Button.ContentTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <SymbolIcon Symbol="Edit" Tag="Edit"/>
-                                                <TextBlock Text="Edit"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </Button.ContentTemplate>
-                                </Button>
-
+                                
                                 <Button Style="{StaticResource TransparentButtonStyle}"
                                     Click="DeleteClick">
                                     <Button.ContentTemplate>

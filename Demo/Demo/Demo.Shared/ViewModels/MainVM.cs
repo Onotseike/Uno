@@ -1,4 +1,5 @@
 ﻿using Demo.CloudProvider;
+using Demo.Database;
 using Demo.Database.Entities;
 using Demo.Database.Enums;
 using Demo.Database.Services;
@@ -28,7 +29,6 @@ namespace Demo.ViewModels
         #region Properties
 
         public ClientsVM ClientsVM { get; set; }
-        public HomeVM HomeVM { get; set; }
         public InvoicesVM InvoicesVM { get; set; }
         public SettingsVM SettingsVM { get; set; }
 
@@ -60,7 +60,6 @@ namespace Demo.ViewModels
            
             SettingsVM = new SettingsVM();
             ClientsVM = new ClientsVM();
-            HomeVM = new HomeVM();
             InvoicesVM = new InvoicesVM();
 
         }
@@ -82,6 +81,8 @@ namespace Demo.ViewModels
                     connection.CreateTable<Communication>();
                     connection.CreateTable<Invoice>();
                 }
+                var userService = new AccountDBService();
+                userService.AddEntity(MockData.UserAccount);
             }
         }
         

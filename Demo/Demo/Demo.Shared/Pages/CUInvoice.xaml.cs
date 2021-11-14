@@ -2,19 +2,12 @@
 using Demo.ViewModels;
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,8 +21,9 @@ namespace Demo.Pages
         public InvoiceVM ViewModel { get; set; }
         public CUInvoice()
         {
-            
+            ViewModel = new InvoiceVM(new Invoice());
             this.InitializeComponent();
+            itemsList.Items.Add(new ItemBlob());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -37,33 +31,57 @@ namespace Demo.Pages
             base.OnNavigatedTo(e);
             if (ViewModel == null)
             {
-                var invoice = e.Parameter as Invoice;
-                ViewModel = new InvoiceVM(invoice, false);
+                ViewModel = new InvoiceVM(new Invoice());
             }
         }
 
         public static DateTimeOffset GetDateFromNow(double days = 0) => new DateTimeOffset(DateTime.UtcNow.AddDays(days));
 
+        public void SetIssuedDate(DateTimeOffset? date)
+        {
+            if (date != null)
+            {
+                ViewModel.Entity.IssueDate = date.Value.DateTime;
+            }
+
+        }
+
+        public void SetDueDate(DateTimeOffset? date)
+        {
+            if (date != null)
+            {
+                ViewModel.Entity.DueDate = date.Value.DateTime;
+            }
+            
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
+            SetIssuedDate(issuedDate.SelectedDate);
+            SetDueDate(dueDate.SelectedDate);
+            //ViewModel.Items = itemsList.Items
+            ViewModel.SaveEntity();
             
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-
+            itemsList.Items.Clear();
+            ViewModel.Entity = new Invoice();
+            itemsList.Items.Add(new ItemBlob());
         }
 
         private void Additem_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
+            itemsList.Items.Add(new ItemBlob());
 
         }
         private void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-
+            itemsList.Items.RemoveAt(itemsList.Items.Count - 1);
         }
 
     }

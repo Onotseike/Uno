@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Database\Enums\ClientType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database\Enums\InvoiceStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database\Exceptions\DatabaseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database\MockData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database\Services\AccountDBService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database\Services\AddressDBService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database\Services\BaseDBService.cs" />
@@ -46,9 +47,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\CUInvoice.xaml.cs">
       <DependentUpon>CUInvoice.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Invoices.xaml.cs">
       <DependentUpon>Invoices.xaml</DependentUpon>
     </Compile>
@@ -56,7 +54,6 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ClientsVM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\InvoicesVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\InvoiceVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainVM.cs" />
@@ -72,10 +69,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\CUInvoice.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Pages\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
