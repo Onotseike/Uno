@@ -46,7 +46,7 @@
   <ItemGroup>
     <PackageReference Include="Countries.Standard" Version="1.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="4.10.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.37.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.38.0" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

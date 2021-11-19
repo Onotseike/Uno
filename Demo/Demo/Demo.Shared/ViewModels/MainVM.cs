@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Bogus.Extensions;
+using Uno.Extensions;
 
 namespace Demo.ViewModels
 {
@@ -56,7 +57,7 @@ namespace Demo.ViewModels
         public MainVM()
         {
             InitializeDatabase();
-            
+            InitializeServices();
             Summarize();
            
             SettingsVM = new SettingsVM();
@@ -64,6 +65,15 @@ namespace Demo.ViewModels
             InvoicesVM = new InvoicesVM();
 
         }
+
+        #endregion
+
+        #region DBServices
+
+        public InvoiceDBService InvoiceDBService { get; set; }
+        public AccountDBService AccountDBService { get; set; }
+        public AddressDBService AddressDBService { get; set; }
+        public ClientDBService ClientDBService { get; set; }
 
         #endregion
 
@@ -84,13 +94,49 @@ namespace Demo.ViewModels
                 }
                 var userService = new AccountDBService();
                 var userAddressService = new AddressDBService();
-                
-                userService.AddEntity(MockData.UserAccount);
-                userAddressService.AddEntity(MockData.UserAddressFaker.GenerateBetween());
+                var mockData = new MockData();
+                userService.AddEntity(mockData.UserAccount);
+                userAddressService.AddEntity(mockData.UserAddressFaker.Generate());
 
             }
         }
-        
+
+        private void InitializeServices()
+        {
+            InvoiceDBService = new InvoiceDBService();
+            AccountDBService = new AccountDBService();
+            AddressDBService = new AddressDBService();
+            ClientDBService = new ClientDBService();
+
+            var mockData = new MockData();
+            var clients = mockData.ClientFaker.Generate(count: 20);
+            clients.ForEach(client =>
+            {
+                client.Communication = mockData.CommunicationFaker.Generate();
+                client.BankAccount = mockData.AccountFaker.Generate();
+                client.BillingAddress = mockData.AddressFaker.Generate();
+            });
+            ClientDBService.AddEntities(clients.ToArray());
+
+            var fetchAccount = AccountDBService.GetUserEntities().entities.FirstOrDefault();
+            var fetchAddress = AddressDBService.GetUserEntities().entities.FirstOrDefault();
+            var fetchClients = new ClientDBService().GetEntities().entities;
+            var random = new Random();
+            var invoices = mockData.InvoiceFaker.Generate(20);
+            invoices.ForEach(invoice =>
+            {
+                invoice.Items = mockData.ItemBlobFaker.Generate(10).ToObservableCollection(); ;
+                invoice.FullName = fetchAccount.Holder;
+                invoice.UserAddress = fetchAddress;
+                invoice.UserBankAccount = fetchAccount;
+                invoice.Client = fetchClients[random.Next(fetchClients.Count)];
+            });
+            InvoiceDBService.AddEntities(invoices.ToArray());
+
+
+
+        }
+
         #endregion
 
         #region Helper method(s)

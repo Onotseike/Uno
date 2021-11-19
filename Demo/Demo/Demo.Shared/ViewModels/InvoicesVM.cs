@@ -1,14 +1,12 @@
 ﻿using Demo.Database;
 using Demo.Database.Entities;
-using Demo.Database.Enums;
 using Demo.Database.Services;
 using Demo.Helpers;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Newtonsoft.Json.Serialization;
+
 using Uno.Extensions;
 
 namespace Demo.ViewModels
@@ -42,14 +40,7 @@ namespace Demo.ViewModels
 
         private void LoadEntities()
         {
-            var fetchAccount = AccountDBService.GetUserEntities();
-            var fetchAddress = AddressDBService.GetUserEntities();
-            var items = MockData.ItemBlobFaker.Generate(10).ToObservableCollection();
-            var invoices = MockData.InvoiceFaker.Generate(20);
-            invoices.ForEach(invoice => invoice.Items = items);
-            InvoiceDBService.AddEntities(invoices.ToArray());
-
-
+            
             var fetchInvoices = InvoiceDBService.GetEntities();
             Invoices = new ObservableCollection<Invoice>(fetchInvoices.entities);
 

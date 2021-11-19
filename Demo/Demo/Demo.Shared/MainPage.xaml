@@ -21,18 +21,7 @@
                     Style="{StaticResource TabViewStyle}"
                     SelectionChanged="tabView_SelectionChanged">
 
-        <winui:TabView.TabItems>           
-
-            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
-                                   Header="Invoices"
-                                   Tag="Invoices">
-                <winui:TabViewItem.IconSource>
-                    <winui:SymbolIconSource Symbol="Document"/>
-                </winui:TabViewItem.IconSource>
-                <winui:TabViewItem.Content>
-                    <pages:Invoices DataContext="{x:Bind ViewModel.InvoicesVM}"  x:Name="invoices"/>
-                </winui:TabViewItem.Content>
-            </winui:TabViewItem>
+        <winui:TabView.TabItems>
 
             <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Clients"
@@ -45,6 +34,17 @@
                 </winui:TabViewItem.Content>
             </winui:TabViewItem>
 
+            <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
+                                   Header="Invoices"
+                                   Tag="Invoices">
+                <winui:TabViewItem.IconSource>
+                    <winui:SymbolIconSource Symbol="Document"/>
+                </winui:TabViewItem.IconSource>
+                <winui:TabViewItem.Content>
+                    <pages:Invoices DataContext="{x:Bind ViewModel.InvoicesVM}"  x:Name="invoices"/>
+                </winui:TabViewItem.Content>
+            </winui:TabViewItem>
+            
             <winui:TabViewItem Style="{StaticResource TabViewItemStyle}"
                                    Header="Settings"
                                    Tag="Settings">

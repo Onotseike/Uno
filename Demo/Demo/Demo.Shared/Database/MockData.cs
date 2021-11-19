@@ -9,10 +9,11 @@ using Bogus.Extensions.UnitedKingdom;
 
 namespace Demo.Database
 {
-    public static class MockData
+    public class MockData
     {
-        public static Faker<Address> AddressFaker = new Faker<Address>()
-            .StrictMode(true)
+        public MockData()
+        {
+            AddressFaker = new Faker<Address>()
             .RuleFor(address => address.AddressOne, faker => faker.Address.StreetAddress())
             .RuleFor(address => address.AddressTwo, faker => faker.Address.SecondaryAddress())
             .RuleFor(address => address.City, faker => faker.Address.City())
@@ -22,8 +23,8 @@ namespace Demo.Database
             .RuleFor(address => address.IsUser, false)
             .RuleFor(address => address.Type, faker => faker.PickRandom<AddressType>());
 
-        public static Faker<Account> AccountFaker = new Faker<Account>()
-            .StrictMode(true)
+            AccountFaker = new Faker<Account>()
+            .CustomInstantiator(faker => new Account())
             .RuleFor(account => account.IsUser, false)
             .RuleFor(account => account.BankName, faker => $"{faker.Company.CompanyName()} BANK")
             .RuleFor(account => account.Holder, faker => faker.Person.FullName)
@@ -32,11 +33,22 @@ namespace Demo.Database
             .RuleFor(account => account.RoutingNumber, faker => faker.Finance.RoutingNumber())
             .RuleFor(account => account.SwiftNumber, faker => faker.Finance.SortCode())
             .RuleFor(account => account.Currency, faker => faker.Finance.Currency().Code)
-            .RuleFor(account => account.Address, AddressFaker.Generate())
-            .RuleFor(account => account.Client, ClientFaker.Generate());
-        
-        public static Faker<Address> UserAddressFaker = new Faker<Address>()
-            .StrictMode(true)
+            .RuleFor(account => account.Address, AddressFaker.Generate());
+            
+            CommunicationFaker = new Faker<Communication>()
+            .RuleFor(communication => communication.HomeEmail, faker => faker.Person.Email)
+            .RuleFor(communication => communication.WorkEmail, faker => faker.Person.Email)
+            .RuleFor(communication => communication.HomePhone, faker => faker.Person.Phone)
+            .RuleFor(communication => communication.WorkPhone, faker => faker.Phone.PhoneNumber())
+            .RuleFor(communication => communication.Website, faker => faker.Person.Website)
+            .RuleFor(communication => communication.IsUser, false);
+
+            ClientFaker = new Faker<Client>()
+            .RuleFor(client => client.Type, faker => faker.PickRandom<ClientType>())
+            .RuleFor(client => client.Name, faker => faker.Company.CompanyName());
+
+
+            UserAddressFaker = new Faker<Address>()
             .RuleFor(address => address.AddressOne, faker => faker.Address.StreetAddress())
             .RuleFor(address => address.AddressTwo, faker => faker.Address.SecondaryAddress())
             .RuleFor(address => address.City, faker => faker.Address.City())
@@ -45,10 +57,8 @@ namespace Demo.Database
             .RuleFor(address => address.PostalCode, faker => faker.Address.ZipCode())
             .RuleFor(address => address.IsUser, true)
             .RuleFor(address => address.Type, faker => faker.PickRandom<AddressType>());
-            
-        
-        public static Faker<Account> UserAccountFaker = new Faker<Account>()
-            .StrictMode(true)
+
+            UserAccountFaker = new Faker<Account>()
             .RuleFor(account => account.IsUser, true)
             .RuleFor(account => account.BankName, faker => $"{faker.Company.CompanyName()} BANK")
             .RuleFor(account => account.Holder, faker => faker.Person.FullName)
@@ -59,49 +69,53 @@ namespace Demo.Database
             .RuleFor(account => account.Currency, faker => faker.Finance.Currency().Code)
             .RuleFor(account => account.Address, UserAddressFaker.Generate());
 
-        public static Faker<ItemBlob> ItemBlobFaker = new Faker<ItemBlob>()
-            .RuleFor(itemBlob => itemBlob.Description, faker => faker.Commerce.ProductDescription())
-            .RuleFor(itemBlob => itemBlob.Price, faker => Double.Parse(faker.Commerce.Price()))
-            .RuleFor(itemBlob => itemBlob.ItemType, faker => faker.Commerce.ProductAdjective());
+            UserCommunicationFaker = new Faker<Communication>()
+           .RuleFor(communication => communication.HomeEmail, faker => faker.Person.Email)
+           .RuleFor(communication => communication.WorkEmail, faker => faker.Person.Email)
+           .RuleFor(communication => communication.HomePhone, faker => faker.Person.Phone)
+           .RuleFor(communication => communication.WorkPhone, faker => faker.Phone.PhoneNumber())
+           .RuleFor(communication => communication.Website, faker => faker.Person.Website)
+           .RuleFor(communication => communication.IsUser, true);
 
-        public static Faker<Client> ClientFaker = new Faker<Client>()
-            .RuleFor(client => client.Type, faker => faker.PickRandom<ClientType>())
-            .RuleFor(client => client.Name, faker => faker.Company.CompanyName())
-            .RuleFor(client => client.Communication, CommunicationFaker.Generate())
-            .RuleFor(client => client.BankAccount, AccountFaker.Generate())
-            .RuleFor(client => client.BillingAddress, AddressFaker.Generate());
+            UserAccount = UserAccountFaker.Generate();
 
-        public static Faker<Communication> CommunicationFaker = new Faker<Communication>()
-            .RuleFor(communication => communication.HomeEmail, faker => faker.Person.Email)
-            .RuleFor(communication => communication.WorkEmail, faker => faker.Person.Email)
-            .RuleFor(communication => communication.HomePhone, faker => faker.Person.Phone)
-            .RuleFor(communication => communication.WorkPhone, faker => faker.Phone.PhoneNumber())
-            .RuleFor(communication => communication.Website, faker => faker.Person.Website)
-            .RuleFor(communication => communication.Client, ClientFaker.Generate())
-            .RuleFor(communication => communication.IsUser, false);
-        
-        public static Faker<Communication> UserCommunicationFaker = new Faker<Communication>()
-            .RuleFor(communication => communication.HomeEmail, faker => faker.Person.Email)
-            .RuleFor(communication => communication.WorkEmail, faker => faker.Person.Email)
-            .RuleFor(communication => communication.HomePhone, faker => faker.Person.Phone)
-            .RuleFor(communication => communication.WorkPhone, faker => faker.Phone.PhoneNumber())
-            .RuleFor(communication => communication.Website, faker => faker.Person.Website)
-            .RuleFor(communication => communication.IsUser, true);
+            UserCommunication = UserCommunicationFaker.Generate();
 
-        public static Faker<Invoice> InvoiceFaker = new Faker<Invoice>()
+            InvoiceFaker = new Faker<Invoice>()
             .RuleFor(invoice => invoice.Currency, faker => faker.Finance.Currency().Code)
             .RuleFor(invoice => invoice.IssueDate, faker => faker.Date.Recent())
             .RuleFor(invoice => invoice.DueDate, faker => faker.Date.Soon(30))
-            .RuleFor(invoice => invoice.Status, faker => faker.PickRandom<InvoiceStatus>())
-            .RuleFor(invoice => invoice.UserAddress, UserAccount.Address)
-            .RuleFor(invoice => invoice.UserBankAccount, UserAccount)
-            .RuleFor(invoice => invoice.Client, ClientFaker.Generate());
+            .RuleFor(invoice => invoice.Status, faker => faker.PickRandom<InvoiceStatus>());
 
-        public static Account UserAccount = UserAccountFaker.Generate();
 
-        public static Communication UserCommunication = UserCommunicationFaker.Generate();
-        
-        
+            ItemBlobFaker = new Faker<ItemBlob>()
+           .RuleFor(itemBlob => itemBlob.Description, faker => faker.Commerce.ProductDescription())
+           .RuleFor(itemBlob => itemBlob.Price, faker => Double.Parse(faker.Commerce.Price()))
+           .RuleFor(itemBlob => itemBlob.ItemType, faker => faker.Commerce.ProductAdjective());           
+
+        }
+
+        public  Faker<Address> AddressFaker { get; set; }
+        public  Faker<Account> AccountFaker { get; set; }
+
+        public  Faker<Address> UserAddressFaker { get; set; }
+
+        public  Faker<Account> UserAccountFaker { get; set; }
+
+        public  Faker<ItemBlob> ItemBlobFaker { get; set; }
+
+        public  Faker<Client> ClientFaker { get; set; }
+        public  Faker<Communication> CommunicationFaker { get; set; }
+
+        public  Faker<Communication> UserCommunicationFaker { get; set; }
+
+        public  Faker<Invoice> InvoiceFaker { get; set; }
+
+        public  Account UserAccount { get; set; }
+
+        public  Communication UserCommunication { get; set; }
+
+
 
     }
 }
