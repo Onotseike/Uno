@@ -29,6 +29,10 @@
     <LinkerDescriptor Include="LinkerConfig.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Bogus" />
+    <None Remove="CountryData.Bogus" />
+  </ItemGroup>
+  <ItemGroup>
     <!--
 		This item group is required by the project template because of the
 		new SDK-Style project, otherwise some files are not added automatically.
@@ -52,6 +56,8 @@
     <PackageReference Include="Uno.UI.RemoteControl" Version="3.11.6" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="3.0.0" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="3.0.0" />
+    <PackageReference Include="Bogus" Version="33.1.1" />
+    <PackageReference Include="CountryData.Bogus" Version="3.63.0" />
   </ItemGroup>
   <Import Project="..\Demo.Shared\Demo.Shared.projitems" Label="Shared" Condition="Exists('..\Demo.Shared\Demo.Shared.projitems')" />
 </Project>

@@ -37,8 +37,8 @@ namespace Demo.ViewModels
 
         private void LoadEntities()
         {          
-
-            ClientDBService.AddEntities(new Client[] { MockData.clientA, MockData.clientB });
+            
+            ClientDBService.AddEntities(MockData.ClientFaker.Generate(count:20).ToArray());
 
             var fetchClients = ClientDBService.GetEntities();
             Clients = new ObservableCollection<Client>(fetchClients.entities); 

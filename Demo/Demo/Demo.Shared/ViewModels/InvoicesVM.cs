@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Newtonsoft.Json.Serialization;
+using Uno.Extensions;
 
 namespace Demo.ViewModels
 {
@@ -42,8 +44,10 @@ namespace Demo.ViewModels
         {
             var fetchAccount = AccountDBService.GetUserEntities();
             var fetchAddress = AddressDBService.GetUserEntities();
-
-            InvoiceDBService.AddEntities(new Invoice[] {MockData.invoiceA, MockData.invoiceB, MockData.invoiceA, MockData.invoiceB  });
+            var items = MockData.ItemBlobFaker.Generate(10).ToObservableCollection();
+            var invoices = MockData.InvoiceFaker.Generate(20);
+            invoices.ForEach(invoice => invoice.Items = items);
+            InvoiceDBService.AddEntities(invoices.ToArray());
 
 
             var fetchInvoices = InvoiceDBService.GetEntities();

@@ -21,6 +21,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Bogus.Extensions;
 
 namespace Demo.ViewModels
 {
@@ -82,7 +83,11 @@ namespace Demo.ViewModels
                     connection.CreateTable<Invoice>();
                 }
                 var userService = new AccountDBService();
+                var userAddressService = new AddressDBService();
+                
                 userService.AddEntity(MockData.UserAccount);
+                userAddressService.AddEntity(MockData.UserAddressFaker.GenerateBetween());
+
             }
         }
         

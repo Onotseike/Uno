@@ -1,130 +1,107 @@
 ﻿using Demo.Database.Entities;
 using Demo.Database.Enums;
-
+using Bogus;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Bogus.Extensions.UnitedKingdom;
 
 namespace Demo.Database
 {
     public static class MockData
     {
+        public static Faker<Address> AddressFaker = new Faker<Address>()
+            .StrictMode(true)
+            .RuleFor(address => address.AddressOne, faker => faker.Address.StreetAddress())
+            .RuleFor(address => address.AddressTwo, faker => faker.Address.SecondaryAddress())
+            .RuleFor(address => address.City, faker => faker.Address.City())
+            .RuleFor(address => address.State, faker => faker.Address.State())
+            .RuleFor(address => address.Country, faker => faker.Address.Country())
+            .RuleFor(address => address.PostalCode, faker => faker.Address.ZipCode())
+            .RuleFor(address => address.IsUser, false)
+            .RuleFor(address => address.Type, faker => faker.PickRandom<AddressType>());
 
-        public static Account UserAccount = new Account
-        {
-            Holder = "Jane Doe",
-            BankName = "Bank of the World",
-            Number = "1234567890",
-            Iban = "NIL",
-            RoutingNumber = "NIL",
-            IsUser = true,
-            Currency = "EUR",
-            Address = new Address
-            {
-                AddressOne = "House 123, Street 456, Off 789 Crescent",
-                AddressTwo = "NIL",
-                City = "Earth's City",
-                State = "Earth's State",
-                Country = "Earth's Country",
-                PostalCode = "Earth's POST/ZIP Code",
-                IsUser = true
-            }    
-        };
+        public static Faker<Account> AccountFaker = new Faker<Account>()
+            .StrictMode(true)
+            .RuleFor(account => account.IsUser, false)
+            .RuleFor(account => account.BankName, faker => $"{faker.Company.CompanyName()} BANK")
+            .RuleFor(account => account.Holder, faker => faker.Person.FullName)
+            .RuleFor(account => account.Number, faker => faker.Finance.Account())
+            .RuleFor(account => account.Iban, faker => faker.Finance.Iban())
+            .RuleFor(account => account.RoutingNumber, faker => faker.Finance.RoutingNumber())
+            .RuleFor(account => account.SwiftNumber, faker => faker.Finance.SortCode())
+            .RuleFor(account => account.Currency, faker => faker.Finance.Currency().Code)
+            .RuleFor(account => account.Address, AddressFaker.Generate())
+            .RuleFor(account => account.Client, ClientFaker.Generate());
+        
+        public static Faker<Address> UserAddressFaker = new Faker<Address>()
+            .StrictMode(true)
+            .RuleFor(address => address.AddressOne, faker => faker.Address.StreetAddress())
+            .RuleFor(address => address.AddressTwo, faker => faker.Address.SecondaryAddress())
+            .RuleFor(address => address.City, faker => faker.Address.City())
+            .RuleFor(address => address.State, faker => faker.Address.State())
+            .RuleFor(address => address.Country, faker => faker.Address.Country())
+            .RuleFor(address => address.PostalCode, faker => faker.Address.ZipCode())
+            .RuleFor(address => address.IsUser, true)
+            .RuleFor(address => address.Type, faker => faker.PickRandom<AddressType>());
+            
+        
+        public static Faker<Account> UserAccountFaker = new Faker<Account>()
+            .StrictMode(true)
+            .RuleFor(account => account.IsUser, true)
+            .RuleFor(account => account.BankName, faker => $"{faker.Company.CompanyName()} BANK")
+            .RuleFor(account => account.Holder, faker => faker.Person.FullName)
+            .RuleFor(account => account.Number, faker => faker.Finance.Account())
+            .RuleFor(account => account.Iban, faker => faker.Finance.Iban())
+            .RuleFor(account => account.RoutingNumber, faker => faker.Finance.RoutingNumber())
+            .RuleFor(account => account.SwiftNumber, faker => faker.Finance.SortCode())
+            .RuleFor(account => account.Currency, faker => faker.Finance.Currency().Code)
+            .RuleFor(account => account.Address, UserAddressFaker.Generate());
 
-        public static ItemBlob itemA = new ItemBlob
-        {
-            ItemType = "Service",
-            Description = "Web Application Development",
-            Price = 500
-        };
+        public static Faker<ItemBlob> ItemBlobFaker = new Faker<ItemBlob>()
+            .RuleFor(itemBlob => itemBlob.Description, faker => faker.Commerce.ProductDescription())
+            .RuleFor(itemBlob => itemBlob.Price, faker => Double.Parse(faker.Commerce.Price()))
+            .RuleFor(itemBlob => itemBlob.ItemType, faker => faker.Commerce.ProductAdjective());
 
-        public static ItemBlob itemB = new ItemBlob
-        {
-            ItemType = "Product",
-            Description = "Web Application Development",
-            Price = 500
-        };
+        public static Faker<Client> ClientFaker = new Faker<Client>()
+            .RuleFor(client => client.Type, faker => faker.PickRandom<ClientType>())
+            .RuleFor(client => client.Name, faker => faker.Company.CompanyName())
+            .RuleFor(client => client.Communication, CommunicationFaker.Generate())
+            .RuleFor(client => client.BankAccount, AccountFaker.Generate())
+            .RuleFor(client => client.BillingAddress, AddressFaker.Generate());
 
-        public static Client clientA = new Client
-        {
-            Type = ClientType.Individual,
-            Name = "Tessel Fabrics",
-            Communication = new Communication
-            {
-                WorkEmail = "jane.fabrics@fabby.com",
-                WorkPhone = "+2342774566262626"
-            },
-            BankAccount = new Account
-            {
-                BankName = "GTB Bank",
-                Holder = "Tessel Fabrics LTD",
-                Number = "6012532365",
-                Iban = "NGGT 1000 1110 2222 4444",
-                Currency = "NLD"
-            },
-            BillingAddress = new Address
-            {
-                AddressOne = "Industrial Avenue",
-                City = "Tessel",
-                State = "Zuid Hold",
-                Country = "Netherlads",
-                PostalCode = "562234",
-                Type = AddressType.Both
-            }
-        };
+        public static Faker<Communication> CommunicationFaker = new Faker<Communication>()
+            .RuleFor(communication => communication.HomeEmail, faker => faker.Person.Email)
+            .RuleFor(communication => communication.WorkEmail, faker => faker.Person.Email)
+            .RuleFor(communication => communication.HomePhone, faker => faker.Person.Phone)
+            .RuleFor(communication => communication.WorkPhone, faker => faker.Phone.PhoneNumber())
+            .RuleFor(communication => communication.Website, faker => faker.Person.Website)
+            .RuleFor(communication => communication.Client, ClientFaker.Generate())
+            .RuleFor(communication => communication.IsUser, false);
+        
+        public static Faker<Communication> UserCommunicationFaker = new Faker<Communication>()
+            .RuleFor(communication => communication.HomeEmail, faker => faker.Person.Email)
+            .RuleFor(communication => communication.WorkEmail, faker => faker.Person.Email)
+            .RuleFor(communication => communication.HomePhone, faker => faker.Person.Phone)
+            .RuleFor(communication => communication.WorkPhone, faker => faker.Phone.PhoneNumber())
+            .RuleFor(communication => communication.Website, faker => faker.Person.Website)
+            .RuleFor(communication => communication.IsUser, true);
 
-        public static Client clientB = new Client
-        {
-            Type = ClientType.Individual,
-            Name = "John Comma",
-            Communication = new Communication
-            {
-                WorkEmail = "info@johncomma.co.uk",
-                WorkPhone = "+23484747372718"
-            },
-            BankAccount = new Account
-            {
-                BankName = "Mugu Bank",
-                Holder = "John Comma LTD",
-                Number = "4089456377",
-                Iban = "GBMZ 2000 3110 3322 4444",
-                Currency = "GBP"
-            },
-            BillingAddress = new Address
-            {
-                AddressOne = "High Street Avenue",
-                City = "London",
-                Country = "United Kingdom",
-                PostalCode = "L12 3Dt",
-                Type = AddressType.Billing
-            }
-        };
+        public static Faker<Invoice> InvoiceFaker = new Faker<Invoice>()
+            .RuleFor(invoice => invoice.Currency, faker => faker.Finance.Currency().Code)
+            .RuleFor(invoice => invoice.IssueDate, faker => faker.Date.Recent())
+            .RuleFor(invoice => invoice.DueDate, faker => faker.Date.Soon(30))
+            .RuleFor(invoice => invoice.Status, faker => faker.PickRandom<InvoiceStatus>())
+            .RuleFor(invoice => invoice.UserAddress, UserAccount.Address)
+            .RuleFor(invoice => invoice.UserBankAccount, UserAccount)
+            .RuleFor(invoice => invoice.Client, ClientFaker.Generate());
 
-        public static Invoice invoiceA = new Invoice
-        {
-            Currency = "EUR",
-            IssueDate = DateTime.Now,
-            DueDate = DateTime.Now.AddDays(30),
-            Status = InvoiceStatus.Due,
-            Client = clientA,
-            FullName = UserAccount.Holder,
-            UserAddress = UserAccount.Address,
-            Items = new ObservableCollection<ItemBlob> { itemA, itemB, itemA, itemB }
-        };
+        public static Account UserAccount = UserAccountFaker.Generate();
 
-
-        public static Invoice invoiceB = new Invoice
-        {
-            Currency = "GBP",
-            IssueDate = DateTime.Now,
-            DueDate = DateTime.Now.AddDays(60),
-            Status = InvoiceStatus.Due,
-            Client = clientB,
-            FullName = UserAccount.Holder,
-            UserAddress = UserAccount.Address,
-            Items = new ObservableCollection<ItemBlob> { itemA, itemB, itemA, itemB }
-        };
+        public static Communication UserCommunication = UserCommunicationFaker.Generate();
+        
+        
 
     }
 }
