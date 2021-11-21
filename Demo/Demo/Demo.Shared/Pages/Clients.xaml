@@ -9,7 +9,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:vm="using:Demo.ViewModels"
-    mc:Ignorable="d">
+    xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:android ="http://uno.ui.android"
+    xmlns:ios="http://uno.ui.ios"
+    xmlns:macos="http://uno.ui/macos"
+    xmlns:wasm="http://uno.ui/wasm"
+    mc:Ignorable="d android ios macos wasm">
 
     <!--<Page.DataContext>
         <vm:ClientsVM x:Name="BaseVM"/>
@@ -21,7 +26,7 @@
                               Margin="5"
                               ShadowColor="{ThemeResource Gray-800}"
                               CornerRadius="15"
-                              Width="350"
+                              Width="400"
                               Height="250"
                               Background="{ThemeResource SecondaryGradientStyle}">
                 <Grid>
@@ -187,7 +192,8 @@
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid x:Name="MaxItemsWrapGrid"
-                                   MaximumRowsOrColumns="4"
+                                   ios:MaximumRowsOrColumns="3"
+                                   android:MaximumRowsOrColumns="3"
                                    Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
