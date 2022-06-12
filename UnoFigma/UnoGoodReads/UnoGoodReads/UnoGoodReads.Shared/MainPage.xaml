@@ -9,17 +9,22 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<NavigationView SelectionFollowsFocus="Enabled"
-					IsBackButtonVisible="Collapsed">
+					IsBackButtonVisible="Collapsed"
+					SelectionChanged="NavigationView_SelectionChanged"
+					ItemInvoked="NavigationView_ItemInvoked">
 		<NavigationView.MenuItems>
 			<NavigationViewItem Icon="Home"
 								Content="Home"
-								Tag="Home" />
+								Tag="Home" 
+								x:Name="Home"/>
 			<NavigationViewItem Icon="People"
 								Content="Author Profile"
-								Tag="Author" />
+								Tag="Author" 
+								x:Name="Author"/>
 			<NavigationViewItem Icon="Document"
 								Content="Book Details"
-								Tag="Book" />
+								Tag="Book" 
+								x:Name="Document"/>
 		</NavigationView.MenuItems>
 		<Frame x:Name="contentFrame" />
 

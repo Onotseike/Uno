@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
+
+using UnoGoodReads.Views;
 
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,5 +30,31 @@ namespace UnoGoodReads
         {
             this.InitializeComponent();
         }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            var item = args.InvokedItem as NavigationViewItem;
+            
+        }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            var item = sender.SelectedItem as NavigationViewItem;
+            Type pageType = typeof(HomePage);
+            if (item.Tag.Equals("Home"))
+            {
+                pageType = typeof(HomePage);
+            }
+            else if (item.Tag.Equals("Author"))
+            {
+                pageType = typeof(AuthorPage);
+            }
+            else if (item.Tag.Equals("Book"))
+            {
+                pageType = typeof(BookPage);
+            }
+            contentFrame.Navigate(pageType, null);
+        }
     }
 }
+
