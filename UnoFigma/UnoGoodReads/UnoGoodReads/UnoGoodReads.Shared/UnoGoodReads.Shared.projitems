@@ -18,9 +18,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\GenreConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Author.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Book.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SeedData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BookViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\AuthorPage.xaml.cs">
       <DependentUpon>AuthorPage.xaml</DependentUpon>
     </Compile>

@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 
+using UnoGoodReads.Models;
+
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -26,6 +28,7 @@ namespace UnoGoodReads
     public sealed partial class App : Application
     {
         private Window _window;
+        public static SeedData DataSeeder { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -33,6 +36,7 @@ namespace UnoGoodReads
         /// </summary>
         public App()
         {
+            DataSeeder = new SeedData();
             InitializeLogging();
 
             this.InitializeComponent();

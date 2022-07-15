@@ -11,6 +11,13 @@
   <Import Project="UnoGoodReads.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
+    <_Globbed_Compile Remove="Converters\GenreConverters.cs" />
+    <_Globbed_Compile Remove="Models\Author.cs" />
+    <_Globbed_Compile Remove="Models\Book.cs" />
+    <_Globbed_Compile Remove="Models\Enums.cs" />
+    <_Globbed_Compile Remove="Models\SeedData.cs" />
+    <_Globbed_Compile Remove="ViewModels\BookViewModel.cs" />
+    <_Globbed_Compile Remove="ViewModels\HomeViewModel.cs" />
     <_Globbed_Compile Remove="Views\AuthorPage.xaml.cs" />
     <_Globbed_Compile Remove="Views\BookPage.xaml.cs" />
     <_Globbed_Compile Remove="Views\HomePage.xaml.cs" />

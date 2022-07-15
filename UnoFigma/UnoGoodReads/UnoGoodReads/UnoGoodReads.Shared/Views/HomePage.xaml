@@ -5,12 +5,22 @@
     xmlns:local="using:UnoGoodReads.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:utu="clr-namespace:Uno.Toolkit.UI;assembly=Uno.Toolkit.UI"
-    mc:Ignorable="d"
-	
+	xmlns:utu="using:Uno.Toolkit.UI"
+	mc:Ignorable="d"
+	xmlns:vm="using:UnoGoodReads.ViewModels"
+	xmlns:converters="using:UnoGoodReads.Converters"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>		
+	<Page.DataContext>
+		<vm:HomeViewModel />
+	</Page.DataContext>
+	<Page.Resources>
+		<converters:GenreConverters x:Name="GenreConverters" />
+		<converters:AuthorConverter x:Name="AuthorConverter" />
+		<converters:StateConverter x:Name="StateConverter" />
+	</Page.Resources>
+
+	<Grid>
 		<utu:AutoLayout Background="{ThemeResource BackgroundBrush}">
 			<utu:AutoLayout.Resources>
 				<x:String x:Key="Icon_Arrow_Drop_Down">F1 M 0 0 L 5 5 L 10 0 L 0 0 Z</x:String>
@@ -37,10 +47,10 @@
 											utu:AutoLayout.CounterAlignment="Center"
 											utu:AutoLayout.PrimaryAlignment="Stretch">
 								<utu:AutoLayout Orientation="Horizontal">
-									<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-											   Text="Title, author or ISBN"
-											   utu:AutoLayout.CounterAlignment="Center"
-											   Style="{StaticResource BodyLarge}" />
+									<TextBox Foreground="{ThemeResource OnSurfaceBrush}"
+											 PlaceholderText="Title, author or ISBN"
+											 utu:AutoLayout.CounterAlignment="Center"
+											 Style="{StaticResource BodyLarge}" />
 								</utu:AutoLayout>
 							</utu:AutoLayout>
 							<PathIcon Data="{StaticResource Icon_Camera_Alt}"
@@ -66,309 +76,101 @@
 				</utu:AutoLayout>
 				<ScrollViewer>
 					<utu:AutoLayout Padding="8,8,8,8">
-						<utu:AutoLayout Spacing="8"
-										PrimaryAxisAlignment="Center"
-										utu:AutoLayout.PrimaryAlignment="Stretch">
-							<utu:AutoLayout>
-								<utu:CardContentControl utu:AutoLayout.CounterAlignment="Start"
-														utu:AutoLayout.CounterLength="374"
-														Style="{StaticResource ElevatedCardContentControlStyle}">
-									<utu:CardContentControl.ContentTemplate>
-										<DataTemplate>
-											<utu:AutoLayout Background="{ThemeResource SurfaceBrush}"
-															Padding="10,10,10,10"
-															CornerRadius="12">
-												<utu:AutoLayout>
-													<TextBlock Text="Popular on Goodreads in Non Fiction"
-															   utu:AutoLayout.CounterAlignment="Start" />
-												</utu:AutoLayout>
-												<utu:AutoLayout Spacing="10"
-																Orientation="Horizontal"
-																utu:AutoLayout.PrimaryAlignment="Stretch">
-													<Image Source="https://picsum.photos/112/260"
-														   Stretch="UniformToFill"
-														   utu:AutoLayout.PrimaryLength="112" />
-													<utu:AutoLayout Spacing="10"
-																	Padding="5,5,5,5"
-																	utu:AutoLayout.PrimaryAlignment="Stretch">
+						<ListView ItemsSource="{Binding Books}"
+								  ScrollViewer.VerticalScrollBarVisibility="Auto"
+								  utu:AutoLayout.PrimaryAlignment="Stretch">
+							<ListView.ItemsPanel>
+								<ItemsPanelTemplate>
+									<ItemsStackPanel Orientation="Vertical" />
+								</ItemsPanelTemplate>
+							</ListView.ItemsPanel>
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<utu:AutoLayout>
+										<utu:CardContentControl utu:AutoLayout.CounterAlignment="Start"
+																utu:AutoLayout.CounterLength="374"
+																Style="{StaticResource ElevatedCardContentControlStyle}">
+											<utu:CardContentControl.ContentTemplate>
+												<DataTemplate>
+													<utu:AutoLayout Background="{ThemeResource SurfaceBrush}"
+																	Padding="10,10,10,10"
+																	CornerRadius="12">
 														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="The Community"
+															<TextBlock Text="{Binding Genre, Converter={StaticResource GenreConverters}}"
 																	   utu:AutoLayout.CounterAlignment="Start" />
 														</utu:AutoLayout>
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="by N. Jamiyla Chisholm"
-																	   utu:AutoLayout.CounterAlignment="Start"
-																	   Style="{StaticResource BodySmall}" />
-														</utu:AutoLayout>
-														<utu:AutoLayout utu:AutoLayout.PrimaryLength="56">
-															<utu:AutoLayout>
+														<utu:AutoLayout Spacing="10"
+																		Orientation="Horizontal"
+																		utu:AutoLayout.PrimaryAlignment="Stretch">
+															<Image Source="{Binding Url}"
+																   Stretch="UniformToFill"
+																   utu:AutoLayout.PrimaryLength="112" />
+															<utu:AutoLayout Spacing="10"
+																			Padding="5,5,5,5"
+																			utu:AutoLayout.PrimaryAlignment="Stretch">
 																<utu:AutoLayout>
-																	<utu:AutoLayout Background="{ThemeResource SecondaryBrush}"
-																					Spacing="16"
-																					Padding="16,8,16,8"
-																					CornerRadius="4"
-																					Orientation="Horizontal"
-																					utu:AutoLayout.CounterAlignment="Start"
-																					utu:AutoLayout.PrimaryLength="40">
-																		<utu:AutoLayout PrimaryAxisAlignment="Center"
-																						utu:AutoLayout.CounterAlignment="Center">
-																			<TextBlock Foreground="{ThemeResource SurfaceBrush}"
-																					   Text="Want to Read"
-																					   utu:AutoLayout.CounterAlignment="Start"
-																					   Style="{StaticResource BodyLarge}" />
+																	<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
+																			   Text="{Binding Title}"
+																			   utu:AutoLayout.CounterAlignment="Start" />
+																</utu:AutoLayout>
+																<utu:AutoLayout>
+																	<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
+																			   Text="{Binding Author, Converter={StaticResource AuthorConverter}}"
+																			   utu:AutoLayout.CounterAlignment="Start"
+																			   Style="{StaticResource BodySmall}" />
+																</utu:AutoLayout>
+																<utu:AutoLayout utu:AutoLayout.PrimaryLength="56">
+																	<utu:AutoLayout>
+																		<utu:AutoLayout>
+																			<utu:AutoLayout Background="{ThemeResource SecondaryBrush}"
+																							Spacing="16"
+																							Padding="16,8,16,8"
+																							CornerRadius="4"
+																							Orientation="Horizontal"
+																							utu:AutoLayout.CounterAlignment="Start"
+																							utu:AutoLayout.PrimaryLength="40">
+																				<utu:AutoLayout PrimaryAxisAlignment="Center"
+																								utu:AutoLayout.CounterAlignment="Center">
+																					<TextBlock Foreground="{ThemeResource SurfaceBrush}"
+																							   Text="{Binding State, Converter={StaticResource StateConverter}}"
+																							   utu:AutoLayout.CounterAlignment="Start"
+																							   Style="{StaticResource BodyLarge}" />
+																				</utu:AutoLayout>
+																				<PathIcon Data="{StaticResource Icon_Arrow_Drop_Down}"
+																						  Foreground="{ThemeResource SurfaceBrush}"
+																						  utu:AutoLayout.CounterAlignment="Center" />
+																			</utu:AutoLayout>
 																		</utu:AutoLayout>
-																		<PathIcon Data="{StaticResource Icon_Arrow_Drop_Down}"
-																				  Foreground="{ThemeResource SurfaceBrush}"
-																				  utu:AutoLayout.CounterAlignment="Center" />
+																	</utu:AutoLayout>
+																</utu:AutoLayout>
+																<utu:AutoLayout Spacing="16"
+																				Orientation="Horizontal">
+																	<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
+																			   Text="Rate this book:"
+																			   utu:AutoLayout.CounterAlignment="Center"
+																			   Style="{StaticResource BodySmall}" />
+																	<utu:AutoLayout Orientation="Horizontal"
+																					utu:AutoLayout.CounterAlignment="Center">
+																		<RatingControl Value="{Binding AverageRating}"
+																					   MaxRating="5" />
 																	</utu:AutoLayout>
 																</utu:AutoLayout>
 															</utu:AutoLayout>
 														</utu:AutoLayout>
-														<utu:AutoLayout Spacing="16"
-																		Orientation="Horizontal">
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="Rate this book:"
-																	   utu:AutoLayout.CounterAlignment="Center"
-																	   Style="{StaticResource BodySmall}" />
-															<utu:AutoLayout Orientation="Horizontal"
-																			utu:AutoLayout.CounterAlignment="Center" />
-														</utu:AutoLayout>
 													</utu:AutoLayout>
-												</utu:AutoLayout>
-											</utu:AutoLayout>
-										</DataTemplate>
-									</utu:CardContentControl.ContentTemplate>
-								</utu:CardContentControl>
-							</utu:AutoLayout>
-							<utu:AutoLayout>
-								<utu:CardContentControl utu:AutoLayout.CounterAlignment="Start"
-														utu:AutoLayout.CounterLength="374"
-														Style="{StaticResource ElevatedCardContentControlStyle}">
-									<utu:CardContentControl.ContentTemplate>
-										<DataTemplate>
-											<utu:AutoLayout Background="{ThemeResource SurfaceBrush}"
-															Padding="10,10,10,10"
-															CornerRadius="12">
-												<utu:AutoLayout>
-													<TextBlock TextWrapping="Wrap"
-															   Text="Popular on Goodreads in Non Fiction" />
-												</utu:AutoLayout>
-												<utu:AutoLayout Spacing="10"
-																Orientation="Horizontal"
-																utu:AutoLayout.PrimaryAlignment="Stretch">
-													<Image Source="https://picsum.photos/112/260"
-														   Stretch="UniformToFill"
-														   utu:AutoLayout.PrimaryLength="112" />
-													<utu:AutoLayout Spacing="10"
-																	Padding="5,5,5,5"
-																	utu:AutoLayout.PrimaryAlignment="Stretch">
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="The Community"
-																	   utu:AutoLayout.CounterAlignment="Start" />
-														</utu:AutoLayout>
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="by N. Jamiyla Chisholm"
-																	   utu:AutoLayout.CounterAlignment="Start"
-																	   Style="{StaticResource BodySmall}" />
-														</utu:AutoLayout>
-														<utu:AutoLayout utu:AutoLayout.PrimaryLength="56">
-															<utu:AutoLayout>
-																<utu:AutoLayout>
-																	<utu:AutoLayout Background="{ThemeResource SecondaryBrush}"
-																					Spacing="16"
-																					Padding="16,8,16,8"
-																					CornerRadius="4"
-																					Orientation="Horizontal"
-																					utu:AutoLayout.CounterAlignment="Start"
-																					utu:AutoLayout.PrimaryLength="40">
-																		<utu:AutoLayout PrimaryAxisAlignment="Center"
-																						utu:AutoLayout.CounterAlignment="Center">
-																			<TextBlock Foreground="{ThemeResource SurfaceBrush}"
-																					   Text="Want to Read"
-																					   utu:AutoLayout.CounterAlignment="Start"
-																					   Style="{StaticResource BodyLarge}" />
-																		</utu:AutoLayout>
-																		<PathIcon Data="{StaticResource Icon_Arrow_Drop_Down}"
-																				  Foreground="{ThemeResource SurfaceBrush}"
-																				  utu:AutoLayout.CounterAlignment="Center" />
-																	</utu:AutoLayout>
-																</utu:AutoLayout>
-															</utu:AutoLayout>
-														</utu:AutoLayout>
-														<utu:AutoLayout Spacing="16"
-																		Orientation="Horizontal">
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="Rate this book:"
-																	   utu:AutoLayout.CounterAlignment="Center"
-																	   Style="{StaticResource BodySmall}" />
-															<utu:AutoLayout Orientation="Horizontal"
-																			utu:AutoLayout.CounterAlignment="Center" />
-														</utu:AutoLayout>
-													</utu:AutoLayout>
-												</utu:AutoLayout>
-											</utu:AutoLayout>
-										</DataTemplate>
-									</utu:CardContentControl.ContentTemplate>
-								</utu:CardContentControl>
-							</utu:AutoLayout>
-							<utu:AutoLayout>
-								<utu:CardContentControl utu:AutoLayout.CounterAlignment="Start"
-														Style="{StaticResource ElevatedCardContentControlStyle}">
-									<utu:CardContentControl.ContentTemplate>
-										<DataTemplate>
-											<!--<utu:AutoLayout Background="{ThemeResource SurfaceBrush}"
-															Padding="10,10,10,10"
-															CornerRadius="12">
-												<utu:AutoLayout>
-													<TextBlock TextWrapping="Wrap"
-															   Text="Popular on Goodreads in Non Fiction" />
-												</utu:AutoLayout>
-												<utu:AutoLayout Spacing="10"
-																Orientation="Horizontal"
-																utu:AutoLayout.CounterAlignment="Start"
-																utu:AutoLayout.PrimaryAlignment="Stretch"
-																utu:AutoLayout.CounterLength="354">
-													<Image Source="https://picsum.photos/112/260"
-														   Stretch="UniformToFill"
-														   utu:AutoLayout.PrimaryLength="112" />
-													<utu:AutoLayout Spacing="10"
-																	Padding="5,5,5,5"
-																	utu:AutoLayout.PrimaryAlignment="Stretch">
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="The Community"
-																	   utu:AutoLayout.CounterAlignment="Start" />
-														</utu:AutoLayout>
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="by N. Jamiyla Chisholm"
-																	   utu:AutoLayout.CounterAlignment="Start"
-																	   Style="{StaticResource BodySmall}" />
-														</utu:AutoLayout>
-														<utu:AutoLayout utu:AutoLayout.PrimaryLength="56">
-															<utu:AutoLayout>
-																<utu:AutoLayout>
-																	<utu:AutoLayout Background="{ThemeResource SecondaryBrush}"
-																					Spacing="16"
-																					Padding="16,8,16,8"
-																					CornerRadius="4"
-																					Orientation="Horizontal"
-																					utu:AutoLayout.CounterAlignment="Start"
-																					utu:AutoLayout.PrimaryLength="40">
-																		<utu:AutoLayout PrimaryAxisAlignment="Center"
-																						utu:AutoLayout.CounterAlignment="Center">
-																			<TextBlock Foreground="{ThemeResource SurfaceBrush}"
-																					   Text="Want to Read"
-																					   utu:AutoLayout.CounterAlignment="Start"
-																					   Style="{StaticResource BodyLarge}" />
-																		</utu:AutoLayout>
-																		<PathIcon Data="{StaticResource Icon_Arrow_Drop_Down}"
-																				  Foreground="{ThemeResource SurfaceBrush}"
-																				  utu:AutoLayout.CounterAlignment="Center" />
-																	</utu:AutoLayout>
-																</utu:AutoLayout>
-															</utu:AutoLayout>
-														</utu:AutoLayout>
-														<utu:AutoLayout Spacing="16"
-																		Orientation="Horizontal">
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="Rate this book:"
-																	   utu:AutoLayout.CounterAlignment="Center"
-																	   Style="{StaticResource BodySmall}" />
-															<utu:AutoLayout Orientation="Horizontal"
-																			utu:AutoLayout.CounterAlignment="Center" />
-														</utu:AutoLayout>
-													</utu:AutoLayout>
-												</utu:AutoLayout>
-											</utu:AutoLayout>-->
-										</DataTemplate>
-									</utu:CardContentControl.ContentTemplate>
-								</utu:CardContentControl>
-							</utu:AutoLayout>
-							<utu:AutoLayout>
-								<utu:CardContentControl utu:AutoLayout.CounterAlignment="Start"
-														utu:AutoLayout.CounterLength="374"
-														Style="{StaticResource ElevatedCardContentControlStyle}">
-									<utu:CardContentControl.ContentTemplate>
-										<DataTemplate>
-											<!--<utu:AutoLayout Background="{ThemeResource SurfaceBrush}"
-															Padding="10,10,10,10"
-															CornerRadius="12">
-												<utu:AutoLayout>
-													<TextBlock TextWrapping="Wrap"
-															   Text="Popular on Goodreads in Non Fiction" />
-												</utu:AutoLayout>
-												<utu:AutoLayout Spacing="10"
-																Orientation="Horizontal"
-																utu:AutoLayout.PrimaryAlignment="Stretch">
-													<Image Source="https://picsum.photos/112/260"
-														   Stretch="UniformToFill"
-														   utu:AutoLayout.PrimaryLength="112" />
-													<utu:AutoLayout Spacing="10"
-																	Padding="5,5,5,5"
-																	utu:AutoLayout.PrimaryAlignment="Stretch">
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="The Community"
-																	   utu:AutoLayout.CounterAlignment="Start" />
-														</utu:AutoLayout>
-														<utu:AutoLayout>
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="by N. Jamiyla Chisholm"
-																	   utu:AutoLayout.CounterAlignment="Start"
-																	   Style="{StaticResource BodySmall}" />
-														</utu:AutoLayout>
-														<utu:AutoLayout utu:AutoLayout.PrimaryLength="56">
-															<utu:AutoLayout>
-																<utu:AutoLayout>
-																	<utu:AutoLayout Background="{ThemeResource SecondaryBrush}"
-																					Spacing="16"
-																					Padding="16,8,16,8"
-																					CornerRadius="4"
-																					Orientation="Horizontal"
-																					utu:AutoLayout.CounterAlignment="Start"
-																					utu:AutoLayout.PrimaryLength="40">
-																		<utu:AutoLayout PrimaryAxisAlignment="Center"
-																						utu:AutoLayout.CounterAlignment="Center">
-																			<TextBlock Foreground="{ThemeResource SurfaceBrush}"
-																					   Text="Want to Read"
-																					   utu:AutoLayout.CounterAlignment="Start"
-																					   Style="{StaticResource BodyLarge}" />
-																		</utu:AutoLayout>
-																		<PathIcon Data="{StaticResource Icon_Arrow_Drop_Down}"
-																				  Foreground="{ThemeResource SurfaceBrush}"
-																				  utu:AutoLayout.CounterAlignment="Center" />
-																	</utu:AutoLayout>
-																</utu:AutoLayout>
-															</utu:AutoLayout>
-														</utu:AutoLayout>
-														<utu:AutoLayout Spacing="16"
-																		Orientation="Horizontal">
-															<TextBlock Foreground="{ThemeResource OnSurfaceBrush}"
-																	   Text="Rate this book:"
-																	   utu:AutoLayout.CounterAlignment="Center"
-																	   Style="{StaticResource BodySmall}" />
-															<utu:AutoLayout Orientation="Horizontal"
-																			utu:AutoLayout.CounterAlignment="Center" />
-														</utu:AutoLayout>
-													</utu:AutoLayout>
-												</utu:AutoLayout>
-											</utu:AutoLayout>-->
-										</DataTemplate>
-									</utu:CardContentControl.ContentTemplate>
-								</utu:CardContentControl>
-							</utu:AutoLayout>
-						</utu:AutoLayout>
+												</DataTemplate>
+											</utu:CardContentControl.ContentTemplate>
+										</utu:CardContentControl>
+									</utu:AutoLayout>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
 					</utu:AutoLayout>
 				</ScrollViewer>
 			</utu:AutoLayout>
 			<utu:TabBar Style="{StaticResource BottomTabBarStyle}">
 				<utu:TabBarItem IsSelectable="True"
-								Content="Favorites"
+								Content="Home"
 								utu:AutoLayout.CounterAlignment="Start"
 								utu:AutoLayout.PrimaryAlignment="Stretch"
 								Style="{StaticResource BottomTabBarItemStyle}">
@@ -377,17 +179,7 @@
 					</utu:TabBarItem.Icon>
 				</utu:TabBarItem>
 				<utu:TabBarItem IsSelectable="True"
-								Content="Favorites"
-								utu:AutoLayout.CounterAlignment="Start"
-								utu:AutoLayout.PrimaryAlignment="Stretch"
-								utu:AutoLayout.CounterLength="56"
-								Style="{StaticResource BottomTabBarItemStyle}">
-					<utu:TabBarItem.Icon>
-						<PathIcon Data="{StaticResource Icon_Favorite}" />
-					</utu:TabBarItem.Icon>
-				</utu:TabBarItem>
-				<utu:TabBarItem IsSelectable="True"
-								Content="Favorites"
+								Content="My Books"
 								utu:AutoLayout.CounterAlignment="Start"
 								utu:AutoLayout.PrimaryAlignment="Stretch"
 								utu:AutoLayout.CounterLength="56"
@@ -397,7 +189,17 @@
 					</utu:TabBarItem.Icon>
 				</utu:TabBarItem>
 				<utu:TabBarItem IsSelectable="True"
-								Content="Favorites"
+								Content="Discover"
+								utu:AutoLayout.CounterAlignment="Start"
+								utu:AutoLayout.PrimaryAlignment="Stretch"
+								utu:AutoLayout.CounterLength="56"
+								Style="{StaticResource BottomTabBarItemStyle}">
+					<utu:TabBarItem.Icon>
+						<PathIcon Data="{StaticResource Icon_Favorite}" />
+					</utu:TabBarItem.Icon>
+				</utu:TabBarItem>
+				<utu:TabBarItem IsSelectable="True"
+								Content="Search"
 								utu:AutoLayout.CounterAlignment="Start"
 								utu:AutoLayout.PrimaryAlignment="Stretch"
 								utu:AutoLayout.CounterLength="56"
@@ -408,6 +210,5 @@
 				</utu:TabBarItem>
 			</utu:TabBar>
 		</utu:AutoLayout>
-
 	</Grid>
 </Page>
