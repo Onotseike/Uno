@@ -108,6 +108,7 @@ namespace POCUnoOnnx
                 {
                     var sourceImage = await GetBytesFromFile(photo);
                     var result = await _classifier.GetClassificationAsync(sourceImage);
+                    content.Text = $"The Result is: {result}";
                 }
             }
             catch (Exception exception)
