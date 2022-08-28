@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "POCUnoOnnx.Shared", "POCUnoOnnx\POCUnoOnnx.Shared\POCUnoOnnx.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{86DF6BDB-7EDB-4404-9079-0E2D865053BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCUnoOnnx.Mobile", "POCUnoOnnx\POCUnoOnnx.Mobile\POCUnoOnnx.Mobile.csproj", "{9A33B3DB-6FD4-4026-9379-8291B1B9422A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A33B3DB-6FD4-4026-9379-8291B1B9422A} = {86DF6BDB-7EDB-4404-9079-0E2D865053BC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {563B1082-5089-4244-AE7C-E114F89AA8CB}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		POCUnoOnnx\POCUnoOnnx.Shared\POCUnoOnnx.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
+		POCUnoOnnx\POCUnoOnnx.Shared\POCUnoOnnx.Shared.projitems*{9a33b3db-6fd4-4026-9379-8291b1b9422a}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
