@@ -1,19 +1,8 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
+﻿using Microsoft.UI.Xaml.Controls;
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using OnnxSamples.Views;
 
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Uno.Toolkit.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -27,6 +16,27 @@ namespace OnnxSamples
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void TabBar_SelectionChanged(TabBar sender, TabBarSelectionChangedEventArgs args)
+        {
+            if (args.NewItem == sender.Items[0])
+            {
+                ContentFrame.Navigate(typeof(ImageClassifier));
+            }
+            else if (args.NewItem == sender.Items[1])
+            {
+                ContentFrame.Navigate(typeof(ObjectDetection));
+            }
+            else if (args.NewItem == sender.Items[2])
+            {
+                ContentFrame.Navigate(typeof(ImageClassifier));
+            }
+            else
+            {
+                ContentFrame.Navigate(typeof(ObjectDetection));
+            }
+
         }
     }
 }
