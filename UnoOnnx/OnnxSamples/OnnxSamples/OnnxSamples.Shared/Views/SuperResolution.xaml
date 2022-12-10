@@ -18,7 +18,7 @@
 		<Image x:Name="BasicImage"
 			   HorizontalAlignment="Stretch"
 			   VerticalAlignment="Stretch"
-			   Source="ms-appx:///Content/PyTorch/fishh.jpeg" />
+			   Source="ms-appx:///Content/Pytorch/fishh.jpeg" />
 
 		<Button x:Name="RunButton"
 				Grid.Row="1"
