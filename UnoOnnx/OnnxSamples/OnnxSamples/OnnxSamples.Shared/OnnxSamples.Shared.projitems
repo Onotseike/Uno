@@ -21,8 +21,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\OnnxImageClassifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PytorchSuperResolution.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TensorflowMNISTClassifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ImageClassifier.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MNISTClassifier.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ObjectDetection.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SuperResolution.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
@@ -33,16 +38,38 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MNISTClassifier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ObjectDetection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SuperResolution.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\mobilenetv2-7.onnx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\super_resolution.onnx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Tensorflow\mnist_model.onnx" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\Onnx\chicken.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\chickenn.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Onnx\dog.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\dogg.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\imagenet_classes.txt" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\fish.jpeg" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Pytorch\fishh.jpeg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Tensorflow\handwritten.jpeg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Tensorflow\handwrittenn.jpeg" />
   </ItemGroup>
   <Import Project="OnnxSamples.Shared.globs.props" Condition="'$(IsCodeSharingProject)'!='true'" />
 </Project>

@@ -26,11 +26,11 @@ namespace OnnxSamples
             }
             else if (args.NewItem == sender.Items[1])
             {
-                ContentFrame.Navigate(typeof(ObjectDetection));
+                ContentFrame.Navigate(typeof(SuperResolution));
             }
             else if (args.NewItem == sender.Items[2])
             {
-                ContentFrame.Navigate(typeof(ImageClassifier));
+                ContentFrame.Navigate(typeof(MNISTClassifier));
             }
             else
             {
