@@ -26,11 +26,11 @@ namespace OnnxSamples.Views
         {
             try
             {
-                var sampleImage = await _classifier.GetSampleImageAsync();
+                var sampleImage = _classifier.GetSampleImage();
                 var result = await _classifier.GetPredictionAsync(sampleImage);
 
                 var dialog = new ContentDialog();
-                dialog.Content = result;
+                dialog.Content = $"The result is : {result}";
                 dialog.CloseButtonText = "Done";
 
                 var dialogResult = await dialog.ShowAsync();

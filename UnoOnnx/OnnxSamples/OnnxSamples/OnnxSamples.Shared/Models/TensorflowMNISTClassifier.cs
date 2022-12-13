@@ -16,8 +16,8 @@ namespace OnnxSamples.Models
 
         const int DimBatchSize = 1;
         const int DimNumberOfChannels = 3;
-        const int ImageSizeX = 28;
-        const int ImageSizeY = 28;
+        const int ImageSizeX = 14;//28;
+        const int ImageSizeY = 14;//28;
         const string ModelInputName = "dense_6_input";
         const string ModelOutputName = "output";
 
@@ -42,17 +42,13 @@ namespace OnnxSamples.Models
             using var modelStream = assembly.GetManifestResourceStream(modelResource);
             using var modelMemoryStream = new MemoryStream();
 
-            modelStream.CopyTo(modelMemoryStream);
+            await modelStream.CopyToAsync(modelMemoryStream);
             _model = modelMemoryStream.ToArray();
 
-            // Create InferenceSession (runtime representation of the model with optional SessionOptions)
-            // This can be reused for multiple inferences to avoid unnecessary allocation/dispose overhead
-            // https://onnxruntime.ai/docs/api/csharp-api#inferencesession
-            // https://onnxruntime.ai/docs/api/csharp-api#sessionoptions
             _session = new InferenceSession(_model);
 
             // Get sample image
-            var imageResource = EmbeddedResources.First(item => item.EndsWith("handwritten.jpeg"));
+            var imageResource = EmbeddedResources.First(item => item.EndsWith("handwrittenn.jpeg"));
             using var sampleImageStream = assembly.GetManifestResourceStream(imageResource);
             using var sampleImageMemoryStream = new MemoryStream();
 
@@ -86,10 +82,9 @@ namespace OnnxSamples.Models
                 bytesPerPixel = scaledBitmap.BytesPerPixel;
             }
 
-            //var bytesPerPixel = sourceBitmap.BytesPerPixel;
             var rowLength = ImageSizeX * bytesPerPixel;
             var channelLength = ImageSizeX * ImageSizeY;
-            var channelData = new float[channelLength * 3];
+            var channelData = new float[channelLength * 4];
             var channelDataIndex = 0;
 
             for (int y = 0; y < ImageSizeY; y++)
@@ -115,15 +110,11 @@ namespace OnnxSamples.Models
                     channelDataIndex++;
                 }
             }
-            var floatArray = pixels.Select(x => Convert.ToSingle(x / 255.0)).ToArray();
-            //var matrix = floatArray.ToTensor().Reshape(new[] { ImageSizeX, ImageSizeY });
-            var input = new DenseTensor<float>(floatArray, _session.InputMetadata[ModelInputName].Dimensions);
-            //var input = new DenseTensor<byte>(pixels, new[] { DimBatchSize, 4, ImageSizeX, ImageSizeY });
-            //var input = new DenseTensor<float>(channelData, new[] { DimBatchSize, 1, ImageSizeX, ImageSizeY });
-            var inputmetat = _session.InputMetadata;
+            
+            var input = new DenseTensor<float>(channelData, new int[] { 1, 28*28 });
             using var results = _session.Run(new List<NamedOnnxValue> { NamedOnnxValue.CreateFromTensor(ModelInputName, input) });
 
-            var output = results.FirstOrDefault(i => i.Name == ModelOutputName);
+            var output = results.FirstOrDefault(i => i.Name.StartsWith("dense"));
 
             if (output == null)
                 return "Unknown";
@@ -135,9 +126,9 @@ namespace OnnxSamples.Models
             return highestScoreIndex.ToString();
         }
 
-        public async Task<byte[]> GetSampleImageAsync()
+        public byte[] GetSampleImage()
         {
-            await InitAsync().ConfigureAwait(false);
+            _ = InitAsync();
             return _sampleImage;
         }
 
