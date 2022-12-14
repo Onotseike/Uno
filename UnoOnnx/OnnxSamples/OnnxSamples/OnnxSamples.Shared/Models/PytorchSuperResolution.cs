@@ -15,7 +15,7 @@ namespace OnnxSamples.Models
         #region Variable(s)
 
         const int DimBatchSize = 1;
-        const int DimNumberOfChannels = 3;
+        const int DimNumberOfChannels = 1;
         const int ImageSizeX = 224;
         const int ImageSizeY = 224;
         const string ModelInputName = "input";
@@ -118,7 +118,7 @@ namespace OnnxSamples.Models
             var bytesPerPixel = sourceBitmap.BytesPerPixel;
             var rowLength = ImageSizeX * bytesPerPixel;
             var channelLength = ImageSizeX * ImageSizeY;
-            var channelData = new float[channelLength * 3];
+            var channelData = new float[channelLength];
             var channelDataIndex = 0;
 
             for (int y = 0; y < ImageSizeY; y++)
