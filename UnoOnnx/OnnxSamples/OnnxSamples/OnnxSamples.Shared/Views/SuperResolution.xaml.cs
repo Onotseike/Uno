@@ -1,8 +1,11 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 using OnnxSamples.Models;
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 
@@ -35,9 +38,13 @@ namespace OnnxSamples.Views
             {
                 var sampleImage = await superResolution.GetSampleImageAsync("fish.jpeg");
                 var result = await superResolution.GetSuperResolutionImage(sampleImage, "fish.jpeg");
+                var resultantImage = new Image();
+                var bitmapImage = new BitmapImage();
+                bitmapImage.SetSource(new MemoryStream(result.Item2).AsRandomAccessStream());
+                resultantImage.Source = bitmapImage;
 
                 var dialog = new ContentDialog();
-                dialog.Content = result;
+                dialog.Content = resultantImage;
                 dialog.CloseButtonText = "Done";
 
                 var dialogResult = await dialog.ShowAsync();
@@ -52,7 +59,7 @@ namespace OnnxSamples.Views
 
                 var dialogResult = await dialog.ShowAsync();
             }
-        }
+         }
 
         private async void RunButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {

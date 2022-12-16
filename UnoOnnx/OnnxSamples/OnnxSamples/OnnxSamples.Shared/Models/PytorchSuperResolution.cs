@@ -87,7 +87,7 @@ namespace OnnxSamples.Models
             await InitAsync(filename).ConfigureAwait(false);
             using var sourceBitmap = SKBitmap.Decode(image);
             var pixels = sourceBitmap.Bytes;
-
+            SKBitmap grayScaleBitmap = sourceBitmap;
 
             //Preprocessing
             if (sourceBitmap.Width != ImageSizeX || sourceBitmap.Height != ImageSizeY)
@@ -111,39 +111,16 @@ namespace OnnxSamples.Models
                 using SKImage currentImage = SKImage.FromBitmap(scaledBitmap);
                 using SKImage croppedImage = currentImage.Subset(cropRect);
                 using SKBitmap croppedBitmap = SKBitmap.FromImage(croppedImage);
-
-                pixels = croppedBitmap.Bytes;
+                croppedBitmap.CopyTo(grayScaleBitmap, SKColorType.Gray8);
+                pixels = grayScaleBitmap.Bytes;
             }
 
             var bytesPerPixel = sourceBitmap.BytesPerPixel;
             var rowLength = ImageSizeX * bytesPerPixel;
             var channelLength = ImageSizeX * ImageSizeY;
             var channelData = new float[channelLength];
-            var channelDataIndex = 0;
-
-            for (int y = 0; y < ImageSizeY; y++)
-            {
-                var rowOffset = y * rowLength;
-
-                for (int x = 0, columnOffset = 0; x < ImageSizeX; x++, columnOffset += bytesPerPixel)
-                {
-                    var pixelOffset = rowOffset + columnOffset;
-
-                    var pixelR = pixels[pixelOffset];
-                    var pixelG = pixels[pixelOffset + 1];
-                    var pixelB = pixels[pixelOffset + 2];
-
-                    var rChannelIndex = channelDataIndex;
-                    var gChannelIndex = channelDataIndex + channelLength;
-                    var bChannelIndex = channelDataIndex + (channelLength * 2);
-
-                    channelData[rChannelIndex] = (pixelR / 255f - 0.485f) / 0.229f;
-                    channelData[gChannelIndex] = (pixelG / 255f - 0.456f) / 0.224f;
-                    channelData[bChannelIndex] = (pixelB / 255f - 0.406f) / 0.225f;
-
-                    channelDataIndex++;
-                }
-            }
+            channelData = pixels.Select(pixel => pixel / 255f).ToArray();
+           
 
             var input = new DenseTensor<float>(channelData, new[] { DimBatchSize, DimNumberOfChannels, ImageSizeX, ImageSizeY });
 
@@ -154,8 +131,11 @@ namespace OnnxSamples.Models
             if (output == null)
                 return (false, image);
 
-            var outputData = output.AsTensor<byte>().ToArray();
-            return (true, outputData);
+            var outputData = output.AsTensor<float>().ToArray();
+            var outputBytes = outputData.Select(pixel => (byte)(pixel * 255)).ToArray();
+          //  using var outputBitmap = SKBitmap.Decode(outputBytes);
+           // var outputImage = SKImage.FromBitmap(outputBitmap);
+            return (true, outputBytes);
         }
 
         #endregion

@@ -21,22 +21,22 @@
 					SelectionChanged="TabBar_SelectionChanged"
 					Style="{StaticResource BottomTabBarStyle}">
 			<utu:TabBar.Items>
-				<utu:TabBarItem Content="Home">
+				<utu:TabBarItem Content="Onnx">
 					<utu:TabBarItem.Icon>
-						<FontIcon Glyph="&#xE80F;" />
+						<FontIcon Glyph="&#xe88a;" />
 					</utu:TabBarItem.Icon>
 				</utu:TabBarItem>
-				<utu:TabBarItem Content="Search">
+				<utu:TabBarItem Content="PyTorch">
 					<utu:TabBarItem.Icon>
 						<FontIcon Glyph="&#xe721;" />
 					</utu:TabBarItem.Icon>
 				</utu:TabBarItem>
-				<utu:TabBarItem Content="Support">
+				<utu:TabBarItem Content="Tensorflow">
 					<utu:TabBarItem.Icon>
 						<FontIcon Glyph="&#xE8F2;" />
 					</utu:TabBarItem.Icon>
 				</utu:TabBarItem>
-				<utu:TabBarItem Content="About">
+				<utu:TabBarItem Content="Keras">
 					<utu:TabBarItem.Icon>
 						<FontIcon Glyph="&#xE946;" />
 					</utu:TabBarItem.Icon>
