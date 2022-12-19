@@ -19,6 +19,7 @@ namespace OnnxSamples.Views
     public sealed partial class SuperResolution : Page
     {
         PytorchSuperResolution superResolution;
+        PytorchBertQnA bertQnA;
 
         public string[] EmbeddedResources { get; } = typeof(MainPage).Assembly.GetManifestResourceNames();
 
@@ -26,6 +27,7 @@ namespace OnnxSamples.Views
         {
             InitializeComponent();
             superResolution = new PytorchSuperResolution();
+            bertQnA = new PytorchBertQnA();
             foreach (var item in EmbeddedResources)
             {
                 Console.WriteLine(item);
@@ -42,6 +44,8 @@ namespace OnnxSamples.Views
                 var bitmapImage = new BitmapImage();
                 bitmapImage.SetSource(new MemoryStream(result.Item2).AsRandomAccessStream());
                 resultantImage.Source = bitmapImage;
+                resultantImage.Stretch = Stretch.Fill;
+                resultantImage.Height = Math.Sqrt(result.Item2.Length);
 
                 var dialog = new ContentDialog();
                 dialog.Content = resultantImage;
@@ -59,13 +63,38 @@ namespace OnnxSamples.Views
 
                 var dialogResult = await dialog.ShowAsync();
             }
-         }
+        }
+
+        async Task RunBertQnAAsync(string question , string context)
+        {
+            try
+            {
+                var result = await bertQnA.GetAnswerFromBert(question, context);
+                var dialog = new ContentDialog();
+                dialog.Title = $"Answer to {question}";
+                dialog.Content = $"Answer is : {result.Item2}";
+                dialog.CloseButtonText = "Done";
+
+                var dialogResult = await dialog.ShowAsync();
+            }
+            catch (Exception exception)
+            {
+
+                var dialog = new ContentDialog();
+                dialog.Content = $"ERROR:{exception.Message}";
+                dialog.CloseButtonText = "Done";
+
+                var dialogResult = await dialog.ShowAsync();
+            }
+        }
+
 
         private async void RunButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             var runButton = sender as Button;
             runButton.IsEnabled = false;
-            await RunSuperResolutionAsync();
+            await RunBertQnAAsync("Who was Jim Henson?", "Jim Henson was a nice puppet");
+            //await RunSuperResolutionAsync();
             runButton.IsEnabled = true;
         }
 

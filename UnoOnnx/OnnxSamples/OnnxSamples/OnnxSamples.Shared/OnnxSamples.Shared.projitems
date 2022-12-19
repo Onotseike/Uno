@@ -22,6 +22,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\OnnxImageClassifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PytorchBertQnA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PytorchSuperResolution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TensorflowMNISTClassifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ImageClassifier.xaml.cs" />
@@ -56,6 +57,8 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\mobilenetv2-7.onnx" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\super_resolution.onnx" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Tensorflow\mnist_model.onnx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\bert_QnA.onnx" />
+    <None Include="$(MSBuildThisFileDirectory)Models\BertInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
