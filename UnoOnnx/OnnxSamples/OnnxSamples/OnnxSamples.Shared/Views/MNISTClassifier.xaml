@@ -12,16 +12,21 @@
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
+			<RowDefinition Height="3*" />
+			<RowDefinition Height="2*" />
 		</Grid.RowDefinitions>
 
+		<TextBlock Text="Image Classification"
+				   HorizontalTextAlignment="Center"
+				   FontSize="18" />
 		<Image x:Name="BasicImage"
+			   Grid.Row="1"
 			   HorizontalAlignment="Stretch"
 			   VerticalAlignment="Stretch"
 			   Source="ms-appx:///Content/Tensorflow/handwritten.jpeg" />
 
 		<Button x:Name="RunButton"
-				Grid.Row="1"
+				Grid.Row="2"
 				Content="Run Hand Writing Detection"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Center"

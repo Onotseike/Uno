@@ -36,11 +36,6 @@
 						<FontIcon Glyph="&#xE8F2;" />
 					</utu:TabBarItem.Icon>
 				</utu:TabBarItem>
-				<utu:TabBarItem Content="Keras">
-					<utu:TabBarItem.Icon>
-						<FontIcon Glyph="&#xE946;" />
-					</utu:TabBarItem.Icon>
-				</utu:TabBarItem>
 			</utu:TabBar.Items>
 		</utu:TabBar>
 	</Grid>

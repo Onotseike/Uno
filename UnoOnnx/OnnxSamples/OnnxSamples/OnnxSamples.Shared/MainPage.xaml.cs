@@ -26,7 +26,7 @@ namespace OnnxSamples
             }
             else if (args.NewItem == sender.Items[1])
             {
-                ContentFrame.Navigate(typeof(SuperResolution));
+                ContentFrame.Navigate(typeof(BertQnA));
             }
             else if (args.NewItem == sender.Items[2])
             {
@@ -34,7 +34,7 @@ namespace OnnxSamples
             }
             else
             {
-                ContentFrame.Navigate(typeof(ObjectDetection));
+                ContentFrame.Navigate(typeof(ImageClassifier));
             }
 
         }

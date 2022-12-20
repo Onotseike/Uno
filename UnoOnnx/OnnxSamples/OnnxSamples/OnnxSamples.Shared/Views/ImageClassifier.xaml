@@ -10,30 +10,35 @@
 
 	<Grid>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
 			<RowDefinition Height="4*" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="4*" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
+		<TextBlock Text="MNIST Classifier (Hand writing)"
+				   HorizontalTextAlignment="Center"
+				   FontSize="18" />
 		<Image x:Name="PreloadedImage1"
+			   Grid.Row="1"
 			   HorizontalAlignment="Stretch"
 			   VerticalAlignment="Stretch"
 			   Source="ms-appx:///Content/Onnx/dog.jpg" />
 		<Button x:Name="RunButton"
-				Grid.Row="1"
+				Grid.Row="2"
 				Content="Predict Image Above"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Center"
 				Click="RunButton_Click" />
 
 		<Image x:Name="PreLoadImage2"
-			   Grid.Row="2"
+			   Grid.Row="3"
 			   HorizontalAlignment="Center"
 			   VerticalAlignment="Center"
 			   Source="ms-appx:///Content/Onnx/chicken.jpg" />
 		<Button x:Name="LoadButton"
-				Grid.Row="3"
+				Grid.Row="4"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Center"
 				Content="Predict Image Above"

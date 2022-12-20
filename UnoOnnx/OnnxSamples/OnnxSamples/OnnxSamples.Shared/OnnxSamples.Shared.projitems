@@ -27,8 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\TensorflowMNISTClassifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ImageClassifier.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MNISTClassifier.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\ObjectDetection.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\SuperResolution.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BertQnA.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
@@ -43,11 +42,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\ObjectDetection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\SuperResolution.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\BertQnA.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -55,7 +50,6 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\mobilenetv2-7.onnx" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\super_resolution.onnx" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Tensorflow\mnist_model.onnx" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\bert_QnA.onnx" />
     <None Include="$(MSBuildThisFileDirectory)Models\BertInput.cs" />
@@ -69,8 +63,6 @@
     <Content Include="$(MSBuildThisFileDirectory)Content\Onnx\dog.jpg" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\dogg.jpg" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Onnx\imagenet_classes.txt" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Pytorch\fish.jpeg" />
-    <Content Include="$(MSBuildThisFileDirectory)Content\Pytorch\fishh.jpeg" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Tensorflow\handwritten.jpeg" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Content\Tensorflow\handwrittenn.jpeg" />
   </ItemGroup>
