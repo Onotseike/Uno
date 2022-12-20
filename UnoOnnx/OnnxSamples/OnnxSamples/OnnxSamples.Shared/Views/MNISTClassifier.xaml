@@ -16,7 +16,7 @@
 			<RowDefinition Height="2*" />
 		</Grid.RowDefinitions>
 
-		<TextBlock Text="Image Classification"
+		<TextBlock Text="MNIST Classifier (Hand writing)"
 				   HorizontalTextAlignment="Center"
 				   FontSize="18" />
 		<Image x:Name="BasicImage"
