@@ -14,12 +14,9 @@ namespace OnnxSamples.Models
     {
         #region Variable(s)
 
-        const int DimBatchSize = 1;
-        const int DimNumberOfChannels = 3;
-        const int ImageSizeX = 14;//28;
-        const int ImageSizeY = 14;//28;
+        const int ImageSizeX = 14;
+        const int ImageSizeY = 14;
         const string ModelInputName = "dense_6_input";
-        const string ModelOutputName = "output";
 
         byte[] _model;
         byte[] _sampleImage;

@@ -23,7 +23,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\OnnxImageClassifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PytorchBertQnA.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\PytorchSuperResolution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TensorflowMNISTClassifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ImageClassifier.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MNISTClassifier.xaml.cs" />
