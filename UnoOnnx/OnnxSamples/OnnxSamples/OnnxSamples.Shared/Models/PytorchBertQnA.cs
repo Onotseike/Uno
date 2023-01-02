@@ -59,9 +59,7 @@ namespace OnnxSamples.Models
         BertInput PreProcessInput(string question, string context)
         {
             var sentence = "{\"question\": \" " + question + "\", \"context\": \"" + context + "\"}";
-            Console.WriteLine(sentence);
-            Console.WriteLine("{\"question\": \"Where is Bob Dylan From?\", \"context\": \"Bob Dylan is from Duluth, Minnesota and is an American singer-songwriter\"}");
-
+           
             tokenizer = new BertUncasedLargeTokenizer();
             tokens = tokenizer.Tokenize(sentence);
             var encoded = tokenizer.Encode(tokens.Count(), sentence);
@@ -78,11 +76,6 @@ namespace OnnxSamples.Models
         Tensor<long> GetInputTensor(long[] input, int dimensions)
         {
             var inputTensor = new DenseTensor<long>(input, new[] { DimBatchSize, dimensions });
-
-            //for (int i = 0; i < input.Length; i++)
-            //{
-            //    inputTensor[0, i] = inputTensor[i];
-            //}
 
             return inputTensor;
         }
