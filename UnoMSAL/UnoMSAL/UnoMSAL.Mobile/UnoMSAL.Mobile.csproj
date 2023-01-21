@@ -69,4 +69,11 @@
     </When>
   </Choose>
   <Import Project="..\UnoMSAL.Shared\UnoMSAL.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <Compile Remove="C:\Repos\GitHub\Uno\UnoMSAL\UnoMSAL\UnoMSAL.Shared\Models\AzureADConfig.cs" />
+    <Compile Remove="C:\Repos\GitHub\Uno\UnoMSAL\UnoMSAL\UnoMSAL.Shared\Models\MSGraphHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="C:\Repos\GitHub\Uno\UnoMSAL\UnoMSAL\UnoMSAL.Shared\Models\MSGraphHelper.cs" />
+  </ItemGroup>
 </Project>

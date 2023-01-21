@@ -59,4 +59,10 @@
 	</ItemGroup>
 	
 	<Import Project="..\UnoMSAL.Shared\UnoMSAL.Shared.projitems" Label="Shared" />
+	
+	<ItemGroup>
+	  <_Globbed_Compile Remove="Exception.cs" />
+	  <_Globbed_Compile Remove="MSGraphApiConfig.cs" />
+	  <_Globbed_Compile Remove="PlatformConfig.cs" />
+	</ItemGroup>
 </Project>

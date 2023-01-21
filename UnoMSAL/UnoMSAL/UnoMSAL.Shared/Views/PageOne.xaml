@@ -7,11 +7,25 @@
 	  mc:Ignorable="d"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="9*" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		
-	</Grid>
+	<StackPanel>
+		<TextBlock Text="Azure Active Directory"
+				   HorizontalAlignment="Center" />
+
+		<TextBlock Text="Authentication Mobile"
+				   HorizontalAlignment="Center" />
+
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Center">
+			<CheckBox x:Name="useEmbedded"
+					  VerticalAlignment="Center" />
+			<TextBlock Text="Use Embedded"
+					   VerticalAlignment="Center" />
+		</StackPanel>
+
+		<Button x:Name="SignInButton"
+				Content="Sign In"
+				Click="OnSignInClicked"
+				HorizontalAlignment="Center"
+				IsEnabled="False" />
+	</StackPanel>
 </Page>
