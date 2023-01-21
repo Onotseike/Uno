@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "UnoMSAL.Windows": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
