@@ -1,5 +1,5 @@
-﻿<Application
-    x:Class="UnoMSAL.App"
+﻿<local:App
+	x:Class="UnoMSAL.AppHead"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UnoMSAL">
@@ -8,10 +8,14 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <!-- Add resource dictionaries here -->                
-            </ResourceDictionary.MergedDictionaries>
-            <!-- Add resources here -->
+
+				<ResourceDictionary Source="ms-appx:///UnoMSAL/AppResources.xaml" />
+				
+                <!-- Include additional resource dictionaries here, or in UnoMSAL/AppResources.xaml -->				
+			</ResourceDictionary.MergedDictionaries>
+			
+			<!-- Include additional resources here, or in UnoMSAL/AppResources.xaml -->
         </ResourceDictionary>
     </Application.Resources>
 
-</Application>
+</local:App>

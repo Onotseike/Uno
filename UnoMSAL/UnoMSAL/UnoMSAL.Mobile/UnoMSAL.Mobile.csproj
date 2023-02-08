@@ -2,7 +2,7 @@
   <PropertyGroup>
 		<TargetFrameworks>net7.0-android</TargetFrameworks>
 		<TargetFrameworks>$(TargetFrameworks);net7.0-ios</TargetFrameworks>
-		<TargetFrameworks>$(TargetFrameworks);net7.0-maccatalyst</TargetFrameworks>
+		
 
 		
 
@@ -14,7 +14,7 @@
     <ApplicationTitle>UnoMSAL</ApplicationTitle>
     <!-- App Identifier -->
     <ApplicationId>com.companyname.UnoMSAL</ApplicationId>
-    <ApplicationIdGuid>3bafbe3f-b33d-4cd8-9279-78c179c83f2f</ApplicationIdGuid>
+    <ApplicationIdGuid>699cea4e-32d8-4a00-8d51-8e9b0988ef9d</ApplicationIdGuid>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
@@ -78,12 +78,9 @@
         <PackageReference Include="Uno.Extensions.Logging.OSLog" Version="1.4.0" />
       </ItemGroup>
     </When>
-    <When Condition="'$(TargetFramework)'=='net7.0-macos'">
-      <PropertyGroup>
-        <TrimMode Condition="'$(Configuration)'=='Release'">link</TrimMode>
-      </PropertyGroup>
-    </When>
-  </Choose>
+
+		
+	</Choose>
   <ItemGroup>
     <ProjectReference Include="..\UnoMSAL\UnoMSAL.csproj" />
   </ItemGroup>

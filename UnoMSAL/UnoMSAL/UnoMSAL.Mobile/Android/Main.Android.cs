@@ -26,7 +26,7 @@ namespace UnoMSAL.Droid
     public class Application : Microsoft.UI.Xaml.NativeApplication
     {
         public Application(IntPtr javaReference, JniHandleOwnership transfer)
-            : base(() => new App(), javaReference, transfer)
+            : base(() => new AppHead(), javaReference, transfer)
         {
             ConfigureUniversalImageLoader();
         }
