@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Investigations", "Investigations\Investigations.csproj", "{119D095E-5A27-4C1C-B2C4-10DE025A7379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Investigations", "Investigations\Investigations.csproj", "{119D095E-5A27-4C1C-B2C4-10DE025A7379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Investigations.DataContracts", "Investigations.DataContracts\Investigations.DataContracts.csproj", "{447E5F2F-7DC1-42CB-903F-CA6AF3E8F7B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Investigations.DataContracts", "Investigations.DataContracts\Investigations.DataContracts.csproj", "{447E5F2F-7DC1-42CB-903F-CA6AF3E8F7B9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{586407BD-6FDB-49A6-89AD-BFA253D10637}"
 EndProject
@@ -24,6 +24,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Investigations.Windows", "Investigations.Windows\Investigations.Windows.csproj", "{2B3AE6EB-D07D-4578-A336-E3D41445EC0F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Investigations.Wasm", "Investigations.Wasm\Investigations.Wasm.csproj", "{49F7ABCE-C1E3-4168-8E9D-C80BFA2186B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59CF981F-364A-4320-9B45-EC5CE0D88720}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

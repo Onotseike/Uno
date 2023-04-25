@@ -11,7 +11,40 @@
 	  NavigationCacheMode="Required"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Grid>
+	<Page.Resources>
+
+		<DataTemplate x:Key="OCRSample">
+			<StackPanel>
+				<Button x:Name="CameraBtn"
+						Content="Open Camera"
+						Width="150"
+						Height="50"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Click="CameraBtn_Click"/>
+				<Image x:Name="ImageViewControl" />
+			</StackPanel>
+		</DataTemplate>
+		
+		
+	</Page.Resources>
+
+	<NavigationView x:Name="nvSample"
+					Header="This is Header Text"
+					PaneDisplayMode="Top">
+		<NavigationView.MenuItems>
+			<NavigationViewItem  ContentTemplate="{StaticResource OCRSample}"
+								 Tag="SamplePage1" />
+			<NavigationViewItem  Content="Menu Item2"
+								 Tag="SamplePage2" />
+			<NavigationViewItem  Content="Menu Item3"
+								 Tag="SamplePage3" />
+			<NavigationViewItem  Content="Menu Item4"
+								 Tag="SamplePage4" />
+		</NavigationView.MenuItems>
+		<Frame x:Name="contentFrame" />
+	</NavigationView>
+	<!--<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
@@ -28,5 +61,5 @@
 					not_skia:AutomationProperties.AutomationId="SecondPageButton"
 					Command="{Binding GoToSecond}" />
 		</StackPanel>
-	</Grid>
+	</Grid>-->
 </Page>
