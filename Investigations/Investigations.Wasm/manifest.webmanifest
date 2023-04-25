@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "Investigations",
+  "display": "standalone",
+  "name": "Investigations",
+  "short_name": "Investigations",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
