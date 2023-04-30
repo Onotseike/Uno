@@ -45,6 +45,8 @@
 		<string>This app needs access to use your camera</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs access to use your photo library</string>
+		<key>CFBundleIdentifier</key>
+	    <string>xmode.moonlight-dev</string>
 		<!--
 		Adjust this to your application's encryption usage.
 		<key>ITSAppUsesNonExemptEncryption</key>
