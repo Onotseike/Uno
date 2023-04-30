@@ -9,32 +9,21 @@
 	  xmlns:utu="using:Uno.Toolkit.UI"
 	  xmlns:not_skia="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  NavigationCacheMode="Required"
+	  Padding="0,50"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<Page.Resources>
 
-		<DataTemplate x:Key="OCRSample">
-			<StackPanel>
-				<Button x:Name="CameraBtn"
-						Content="Open Camera"
-						Width="150"
-						Height="50"
-						HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						Click="CameraBtn_Click"/>
-				<Image x:Name="ImageViewControl" />
-			</StackPanel>
-		</DataTemplate>
-		
 		
 	</Page.Resources>
 
 	<NavigationView x:Name="nvSample"
 					Header="This is Header Text"
-					PaneDisplayMode="Top">
+					PaneDisplayMode="Top"
+					SelectionChanged="nvSample_SelectionChanged">
 		<NavigationView.MenuItems>
-			<NavigationViewItem  ContentTemplate="{StaticResource OCRSample}"
-								 Tag="SamplePage1" />
+			<NavigationViewItem  Content="OCRSample"
+								 Tag="OCRSample" />
 			<NavigationViewItem  Content="Menu Item2"
 								 Tag="SamplePage2" />
 			<NavigationViewItem  Content="Menu Item3"
