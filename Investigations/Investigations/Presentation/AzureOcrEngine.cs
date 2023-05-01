@@ -8,17 +8,19 @@ namespace Investigations.Presentation
 {
 	internal class AzureOcrEngine : IOcrEngine
 	{
-		private string subscriptionKey = "provide subscription key here";
-		private string endpoint = "provide endpoint link here";
+		private string subscriptionKey = "e7e897ac7a9b49c1bd6ec2c613bcd580";
+		private string endpoint = "https://xmodedevelopersocr.cognitiveservices.azure.com/";
+
+		public ComputerVisionClient client;
+        public AzureOcrEngine()
+        {
+			client = Authenticate();
+		}
 
 		public OCRLayoutResult PerformOCR(Stream imgStream)
 		{
-			ComputerVisionClient client = Authenticate();
-			ReadResult azureOcrResult = ReadFileUrl(client, imgStream).Result;
-
-
+			ReadResult azureOcrResult = ReadFileUrl(client, imgStream).ConfigureAwait(false).GetAwaiter().GetResult();
 			OCRLayoutResult result = ConvertAzureVisionOcrToOcrLayoutResult(azureOcrResult);
-
 			return result;
 		}
 
@@ -33,24 +35,34 @@ namespace Investigations.Presentation
 
 		public async Task<ReadResult> ReadFileUrl(ComputerVisionClient client, Stream stream)
 		{
-			stream.Position = 0;
-			var textHeaders = await client.ReadInStreamAsync(stream);
-			string operationLocation = textHeaders.OperationLocation;
-
-			const int numberOfCharsInOperationId = 36;
-
-			string operationId = operationLocation.Substring(operationLocation.Length - numberOfCharsInOperationId);
-			//Extract the text.
-			ReadOperationResult results;
-			do
+			try
 			{
-				results = await client.GetReadResultAsync(Guid.Parse(operationId));
+				stream.Position = 0;
+
+				var textHeaders = await client.ReadInStreamAsync(stream);
+				string operationLocation = textHeaders.OperationLocation;
+
+				const int numberOfCharsInOperationId = 36;
+
+				string operationId = operationLocation.Substring(operationLocation.Length - numberOfCharsInOperationId);
+				//Extract the text.
+				ReadOperationResult results;
+				do
+				{
+					results = await client.GetReadResultAsync(Guid.Parse(operationId));
+				}
+				while ((results.Status == OperationStatusCodes.Running || results.Status == OperationStatusCodes.NotStarted));
+
+				ReadResult azureOcrResult = results.AnalyzeResult.ReadResults[0];
+
+				return azureOcrResult;
 			}
-			while ((results.Status == OperationStatusCodes.Running || results.Status == OperationStatusCodes.NotStarted));
-
-			ReadResult azureOcrResult = results.AnalyzeResult.ReadResults[0];
-
-			return azureOcrResult;
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex);
+				throw;
+			}
+			
 		}
 
 		private OCRLayoutResult ConvertAzureVisionOcrToOcrLayoutResult(ReadResult azureVisionOcr)

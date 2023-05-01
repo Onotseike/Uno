@@ -12,10 +12,6 @@
 	  Padding="0,50"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<Page.Resources>
-
-		
-	</Page.Resources>
 
 	<NavigationView x:Name="nvSample"
 					Header="This is Header Text"

@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Betalgo.OpenAI" Version="6.8.5" />
 		<PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.ComputerVision" Version="7.0.1" />
 		<PackageReference Include="Syncfusion.PDF.OCR.NET" Version="21.1.41" />
 		<PackageReference Include="Uno.WinUI" Version="4.8.24" />
@@ -69,11 +70,17 @@
 	<ItemGroup>
 		<UnoImage Include="Assets\**\*.svg" />
 		<EmbeddedResource Include="appsettings.json" />
+		<EmbeddedResource Include="Assets\audio-sample-1.mp3" />
 		<EmbeddedResource Include="appsettings.*.json" DependentUpon="appsettings.json" />
 		<UpToDateCheckInput Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="Assets\audio-sample-1.mp3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Assets\audio-sample-1.mp3" />
 	  <None Remove="Presentation\OCRSample.xaml" />
 	</ItemGroup>
 

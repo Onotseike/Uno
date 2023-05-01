@@ -1,7 +1,10 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Investigations.Business;
+
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -21,6 +24,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Capture;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,15 +35,26 @@ namespace Investigations.Presentation
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
 	public sealed partial class OCRSample : Microsoft.UI.Xaml.Controls.Page
-    {
+	{
 		public OCRSample()
 		{
 			this.InitializeComponent();
 		}
 
-		private void CameraBtn_Click(object sender, RoutedEventArgs e)
+		private async void CameraBtn_Click(object sender, RoutedEventArgs e)
 		{
-			TakePhoto();
+			//TakePhoto();
+			// SelectPhoto();
+			await GenerateChatCompletion();
+		}
+
+		private async Task GenerateChatCompletion()
+		{
+			var client = new OpenAPIClient();
+			//var result = await client.CreateCompletions("This is a test in");
+			var result = await client.TranscribeAudio();
+			ocrResult.Text = result;
+
 		}
 
 		private async void TakePhoto()
@@ -82,30 +98,53 @@ namespace Investigations.Presentation
 			}
 		}
 
-		private void ConvertPDF(ImageModel imageModel)
+		private async void SelectPhoto()
 		{
-			Task.Run(() =>
+			try
 			{
-				PdfDocument finalDocument = new PdfDocument();
-				using (OCRProcessor processor = new OCRProcessor())
+				var filePicker = new FileOpenPicker();
+				filePicker.ViewMode = PickerViewMode.Thumbnail;
+				filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+				filePicker.FileTypeFilter.AddRange(new string[] { ".jpg", ".jpeg", ".png" });
+				var photo = await filePicker.PickSingleFileAsync();
+				if (photo == null)
 				{
-					processor.ExternalEngine = new AzureOcrEngine();
-					FileStream imageStream = new FileStream(imageModel.OriginalImagePath, FileMode.Open);
-					PdfDocument pdfDocument = processor.PerformOCR(imageStream);
-					MemoryStream saveStream = new MemoryStream();
-					pdfDocument.Save(saveStream);
-					pdfDocument.Close();
-					PdfDocument.Merge(finalDocument, saveStream);
+					return;
 				}
+				else
+				{
 
+					var localPath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, Path.GetFileName(photo.Path));
+					using Stream sourceStream = await photo.OpenStreamForReadAsync();
 
-				MemoryStream fileSave = new MemoryStream();
-				finalDocument.Save(fileSave);
-				fileSave.Position = 0;
-				finalDocument.Close(true);
+					await ConvertPDF(sourceStream);
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine(ex);
+			}
+		}
 
+		private async Task ConvertPDF(Stream imageStream)
+		{
+			var engine = new AzureOcrEngine();
+			engine.Authenticate();
+			var readResult = await engine.ReadFileUrl(engine.client, imageStream);
+			ocrResult.TextWrapping = TextWrapping.Wrap;
 
-			});
+			var texts = readResult.Lines.Select(line => line.Text).ToList();
+            foreach (var line in readResult.Lines)
+            {
+                var count = line.BoundingBox.Count;
+            }
+
+            foreach (var text in texts)
+			{
+				var newParagraph = new Paragraph();
+				newParagraph.Inlines.Add(new Run() { Text = text });
+				ocrResult.Text += text + "\n";
+			}
 		}
 
 
