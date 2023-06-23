@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType Condition="'$(Configuration)'=='Release'">WinExe</OutputType>
+    <OutputType Condition="'$(Configuration)'=='Debug'">Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup Condition="exists('..\CameraPreviewUWP.UWP')">
+    <EmbeddedResource Include="..\CameraPreviewUWP.UWP\Package.appxmanifest" LogicalName="Package.appxmanifest" />
+    <Content Include="..\CameraPreviewUWP.UWP\Assets\StoreLogo.png" Link="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Include="..\CameraPreviewUWP.Shared\**\*.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Uno.Microsoft.Toolkit.Uwp.UI.Controls" Version="7.1.11" />
+    <PackageReference Include="Uno.UI.Skia.Linux.FrameBuffer" Version="4.9.20" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="4.9.20" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.9.20" />
+  </ItemGroup>
+  <Import Project="..\CameraPreviewUWP.Shared\CameraPreviewUWP.Shared.projitems" Label="Shared" />
+</Project>

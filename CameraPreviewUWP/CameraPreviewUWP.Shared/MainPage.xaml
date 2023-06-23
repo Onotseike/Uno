@@ -1,0 +1,50 @@
+﻿<Page x:Class="CameraPreviewUWP.MainPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:CameraPreviewUWP"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	  mc:Ignorable="d"
+	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Page.Resources>
+		<Style x:Name="ErrorMessageStyle"
+			   TargetType="TextBlock">
+			<Setter Property="FontSize"
+					Value="14" />
+			<Setter Property="FontWeight"
+					Value="Bold" />
+			<Setter Property="Foreground"
+					Value="Red" />
+		</Style>
+	</Page.Resources>
+
+	<Grid HorizontalAlignment="Stretch"
+		  VerticalAlignment="Stretch"
+		  Padding="5"
+		  RowSpacing="5">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<controls:CameraPreview x:Name="CameraPreviewControl"
+								IsFrameSourceGroupButtonVisible="True">
+
+		</controls:CameraPreview>
+		<TextBlock x:Name="ErrorMessage"
+				   Grid.Row="1"
+				   Style="{StaticResource ErrorMessageStyle}" />
+		<Image x:Name="CurrentFrameImage"
+			   HorizontalAlignment="Center"
+			   Grid.Row="2" />
+
+		<Button x:Name="CaptureButton"
+				Grid.Row="3"
+				HorizontalAlignment="Center"
+				Content="Capture Frame"
+				Click="CaptureButton_Click" />
+	</Grid>
+</Page>
