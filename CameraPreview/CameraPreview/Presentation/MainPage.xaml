@@ -21,29 +21,57 @@
 			<Setter Property="Foreground"
 					Value="Red" />
 		</Style>
+		<DataTemplate x:Key="PhotoTemplate">
+			<Grid>
+				<Image HorizontalAlignment="Center"
+					   Stretch="UniformToFill"
+					   Source="{Binding ImageSource}">
+				</Image>
+				<Border VerticalAlignment="Bottom">
+					<Border.Background>
+						<LinearGradientBrush EndPoint="0,1">
+							<GradientStop Offset="0"
+										  Color="Transparent" />
+							<GradientStop Offset="1"
+										  Color="#33000000" />
+						</LinearGradientBrush>
+					</Border.Background>
+					<TextBlock Margin="5,20,5,5"
+							   VerticalAlignment="Bottom"
+							   Foreground="White"
+							   Text="{Binding TextString}" />
+				</Border>
+			</Grid>
+		</DataTemplate>
 	</Page.Resources>
 
-	<StackPanel Grid.Row="1"
-				HorizontalAlignment="Center"
+	<StackPanel HorizontalAlignment="Center"
 				VerticalAlignment="Center"
-				Spacing="16">
+				Spacing="16"
+				Padding="10">
 		<controls:CameraPreview x:Name="CameraPreviewControl"
-								IsFrameSourceGroupButtonVisible="False">
+									IsFrameSourceGroupButtonVisible="False">
 
-		</controls:CameraPreview>
-		<TextBlock x:Name="ErrorMessage"
-				   Style="{StaticResource ErrorMessageStyle}" />
-		<Image x:Name="CurrentFrameImage"
-			   MinWidth="300"
-			   Width="400"
-			   HorizontalAlignment="Left"></Image>
+			</controls:CameraPreview>
+			<TextBlock x:Name="ErrorMessage"
+					   Style="{StaticResource ErrorMessageStyle}" />
+			<Image x:Name="CurrentFrameImage"
+				   MinWidth="300"
+				   Width="400"
+				   HorizontalAlignment="Left"></Image>
 
 		<Button x:Name="CaptureButton"
-				Content="Capture Frame"
-				Click="CaptureButton_Click" />
-		<MediaPlayerElement x:Name="CameraPreviewVideoFeed"
-							AutoPlay="True"
-							Width ="400"/>
+					Content="Capture Frame"
+					Click="CaptureButton_Click" />
+		<TextBlock Text="Jeeheheh"/>
 
+		<!--<controls:RotatorTile x:Name="CarouselView"
+							  MinHeight="500"
+							  Background="LightGray"
+							  RotationDelay="0:0:1.5"
+							  ExtraRandomDuration="0:0:1"
+							  Direction="Left"
+							  ItemsSource="{Binding CarouselObjects}"
+							  ItemTemplate="{StaticResource PhotoTemplate}" />-->
 	</StackPanel>
 </Page>

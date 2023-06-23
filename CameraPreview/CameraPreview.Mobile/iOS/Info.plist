@@ -33,7 +33,8 @@
 		<string>Assets.xcassets/iconapp.appiconset</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
-
+		<key>NSCameraUsageDescription</key>
+		<string>This app is using the camera</string>
 		<!--
 		Adjust this to your application's encryption usage.
 		<key>ITSAppUsesNonExemptEncryption</key>

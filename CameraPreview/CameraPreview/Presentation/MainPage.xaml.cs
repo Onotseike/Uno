@@ -48,10 +48,7 @@ namespace CameraPreview.Presentation
 
             CurrentFrameImage.Source = _softwareBitmapSource;
 
-            if(CameraPreviewControl?.CameraHelper?.PreviewFrameSource != null)
-            {
-                CameraPreviewVideoFeed.Source = MediaSource.CreateFromMediaFrameSource(CameraPreviewControl.CameraHelper.PreviewFrameSource);
-            }
+           
             
         }
 
