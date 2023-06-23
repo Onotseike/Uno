@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"CameraPreview.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"CameraPreview.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}

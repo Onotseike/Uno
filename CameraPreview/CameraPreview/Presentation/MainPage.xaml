@@ -1,0 +1,49 @@
+<Page x:Class="CameraPreview.Presentation.MainPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:CameraPreview.Presentation"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  mc:Ignorable="d"
+	  xmlns:uen="using:Uno.Extensions.Navigation.UI"
+	  xmlns:utu="using:Uno.Toolkit.UI"
+	  NavigationCacheMode="Required"
+	  xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+	  Background="{ThemeResource BackgroundBrush}">
+
+	<Page.Resources>
+		<Style x:Name="ErrorMessageStyle"
+			   TargetType="TextBlock">
+			<Setter Property="FontSize"
+					Value="14" />
+			<Setter Property="FontWeight"
+					Value="Bold" />
+			<Setter Property="Foreground"
+					Value="Red" />
+		</Style>
+	</Page.Resources>
+
+	<StackPanel Grid.Row="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Spacing="16">
+		<controls:CameraPreview x:Name="CameraPreviewControl"
+								IsFrameSourceGroupButtonVisible="False">
+
+		</controls:CameraPreview>
+		<TextBlock x:Name="ErrorMessage"
+				   Style="{StaticResource ErrorMessageStyle}" />
+		<Image x:Name="CurrentFrameImage"
+			   MinWidth="300"
+			   Width="400"
+			   HorizontalAlignment="Left"></Image>
+
+		<Button x:Name="CaptureButton"
+				Content="Capture Frame"
+				Click="CaptureButton_Click" />
+		<MediaPlayerElement x:Name="CameraPreviewVideoFeed"
+							AutoPlay="True"
+							Width ="400"/>
+
+	</StackPanel>
+</Page>

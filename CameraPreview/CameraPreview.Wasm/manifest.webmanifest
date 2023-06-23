@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "CameraPreview",
+  "display": "standalone",
+  "name": "CameraPreview",
+  "short_name": "CameraPreview",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
