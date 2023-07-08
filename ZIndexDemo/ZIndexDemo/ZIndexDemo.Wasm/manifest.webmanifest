@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "ZIndexDemo",
+  "display": "standalone",
+  "name": "ZIndexDemo",
+  "short_name": "ZIndexDemo",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="UnoWinUI.Presentation.LoaderControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnoWinUI.Presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="75"
+    d:DesignWidth="400"
+	Loaded="UserControl_Loaded">
+
+	<UserControl.Resources>
+		<Storyboard x:Name="LoaderAnimation">
+			<ColorAnimation Storyboard.TargetName="RectItemBrush"
+							Storyboard.TargetProperty="Color"
+							From="LightCoral"
+							To="DarkSlateGray"
+							AutoReverse="True"
+							RepeatBehavior="Forever"
+							Duration="0:0:2" />
+		</Storyboard>
+	</UserControl.Resources>
+    <Grid Padding="1">
+		<Rectangle x:Name="RectItem"
+				   Height="50"
+				   Width="200">
+			<Rectangle.Fill>
+				<!--<LinearGradientBrush StartPoint="0,0"
+									 EndPoint="1,0">
+					<GradientStop Color="Yellow" 
+								  Offset="0.1"
+								  x:Name="StopOne"/>
+					<GradientStop Color="Pink"
+								  Offset="0.0" />
+				</LinearGradientBrush>-->
+				<SolidColorBrush Color="LightCoral"
+								 x:Name="RectItemBrush" />
+			</Rectangle.Fill>
+		</Rectangle>
+	</Grid>
+</UserControl>

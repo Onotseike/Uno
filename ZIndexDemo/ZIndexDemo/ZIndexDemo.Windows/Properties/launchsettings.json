@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"ZIndexDemo.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"ZIndexDemo.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}
