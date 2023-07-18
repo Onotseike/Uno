@@ -69,17 +69,17 @@ namespace ZIndexDemo.Business.Interfaces
         /// </summary>
         public void StartWorker(Func<Task> backgroundWork)
         {
-            BackgroundWork = backgroundWork;
-            var intent = new Intent(Application.Context, typeof(BackgroundService));
+            //BackgroundWork = backgroundWork;
+            //var intent = new Intent(Application.Context, typeof(BackgroundService));
 
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
-            {
-                Application.Context.StartForegroundService(intent);
-            }
-            else
-            {
-                Application.Context.StartService(intent);
-            }
+            //if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            //{
+            //    Application.Context.StartForegroundService(intent);
+            //}
+            //else
+            //{
+            //    Application.Context.StartService(intent);
+            //}
         }
 
         /// <summary>
