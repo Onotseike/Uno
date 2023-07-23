@@ -1,0 +1,10 @@
+{
+  "profiles": {
+	"BackgroundWork.Windows (Package)": {
+	  "commandName": "MsixPackage"
+	},
+	"BackgroundWork.Windows (Unpackaged)": {
+	  "commandName": "Project"
+	}
+  }
+}

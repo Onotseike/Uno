@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "BackgroundWork",
+  "display": "standalone",
+  "name": "BackgroundWork",
+  "short_name": "BackgroundWork",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
