@@ -21,6 +21,12 @@
 		<IsUnoHead>true</IsUnoHead>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Uno.WinUI" />
 		<PackageReference Include="CommunityToolkit.Mvvm" />
@@ -28,7 +34,7 @@
 		<PackageReference Include="Uno.Extensions.Logging.WinUI" />
 		<PackageReference Include="Uno.Material.WinUI" />
 		<PackageReference Include="Uno.Toolkit.WinUI.Material" />
-		<PackageReference Include="Uno.Extensions.Toolkit.WinUI"/>
+		<PackageReference Include="Uno.Extensions.Toolkit.WinUI" />
 		<PackageReference Include="Uno.Toolkit.WinUI" />
 		<PackageReference Include="Uno.Extensions.Hosting.WinUI" />
 		<PackageReference Include="Uno.Extensions.Localization.WinUI" />

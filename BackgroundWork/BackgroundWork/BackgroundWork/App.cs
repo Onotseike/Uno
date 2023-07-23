@@ -1,3 +1,5 @@
+using BackgroundWork.Business.Interfaces;
+
 namespace BackgroundWork
 {
     public class App : Application
@@ -56,6 +58,7 @@ namespace BackgroundWork
                     {
                         // TODO: Register your services
                         //services.AddSingleton<IMyService, MyService>();
+                        services.AddSingleton<IBackgroundWorker, BackgroundWorker>();
                     })
                     .UseNavigation(RegisterRoutes)
                 );

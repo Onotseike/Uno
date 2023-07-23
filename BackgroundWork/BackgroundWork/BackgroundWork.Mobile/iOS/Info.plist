@@ -39,5 +39,20 @@
 		<key>ITSAppUsesNonExemptEncryption</key>
 		<false/>
 		-->
+		 <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need access to your location because ...</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need to track your location because ...</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need to track your location because ...</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>location</string>
+        <string>fetch</string>
+    </array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.companyname.sample.refresh</string>
+    </array>
 	</dict>
 </plist>

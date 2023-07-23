@@ -7,6 +7,9 @@
 		<GenerateLibraryLayout>true</GenerateLibraryLayout>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <WarningLevel>4</WarningLevel>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Uno.Dsp.Tasks" />
 		<PackageReference Include="Uno.WinUI" />
@@ -52,18 +55,22 @@
 				<Compile Update="**\*.xaml.cs">
 					<DependentUpon>%(Filename)</DependentUpon>
 				</Compile>
-				<PRIResource Include ="**\*.resw" />
+				<PRIResource Include="**\*.resw" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>
 
 	<ItemGroup>
-		<UnoDspImportColors Include="Styles\*.zip"
-												Generator="Xaml" />
+		<UnoDspImportColors Include="Styles\*.zip" Generator="Xaml" />
 		<UnoImage Include="Assets\**\*.svg" />
 		<EmbeddedResource Include="appsettings.json" />
-		<EmbeddedResource Include="appsettings.*.json"
-											DependentUpon="appsettings.json" />
+		<EmbeddedResource Include="appsettings.*.json" DependentUpon="appsettings.json" />
 		<UpToDateCheckInput Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Business\Interfaces\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Business\Interfaces\" />
 	</ItemGroup>
 </Project>
