@@ -15,11 +15,15 @@ using BackgroundTasks;
 using Foundation;
 #endif
 
+#if __ANDROID__
+using XamarinBackgroundWorker.Droid;
+#endif
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Application = Windows.UI.Xaml.Application;
 
 namespace XamarinBackgroundWorker
 {
@@ -54,6 +58,10 @@ namespace XamarinBackgroundWorker
             services.AddSingleton<ILocationBackgroundWorker, LocationBackgroundWorker>();
             services.AddSingleton<IBackgroundWorker, BackgroundWorker>();
             services.AddSingleton<IRegionMonitor, RegionMonitor>();
+#elif __ANDROID__
+            //services.AddSingleton<ILocationBackgroundWorker, LocationBackgroundWorker>();
+            services.AddSingleton<IBackgroundWorker, BackgroundWorker>();
+            //services.AddSingleton<IRegionMonitor, RegionMonitor>();
 #endif
             return services.BuildServiceProvider();
         }
@@ -222,7 +230,7 @@ namespace XamarinBackgroundWorker
         }
 
 #if __IOS__
-        private const string REFRESH_IDENTIFIER = "com.companyname.sample.refresh";
+        private const string REFRESH_IDENTIFIER = "com.companyname.XamarinBackgroundWorker";
 
         private IBackgroundWorker _backgroundWorker;
         /// <summary>
@@ -266,7 +274,7 @@ namespace XamarinBackgroundWorker
         /// </summary>
         public override void DidEnterBackground(UIApplication uiApplication)
         {
-            base.DidEnterBackground(uiApplication);
+            //base.DidEnterBackground(uiApplication);
 
             var request = new BGAppRefreshTaskRequest(REFRESH_IDENTIFIER);
             request.EarliestBeginDate = NSDate.FromTimeIntervalSinceNow(5);

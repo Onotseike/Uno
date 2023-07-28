@@ -28,3 +28,21 @@ using Android.App;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+// Add some common permissions, these can be removed if not needed
+//[assembly: UsesPermission(Android.Manifest.Permission.Internet)]
+//[assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
+
+//[assembly: UsesPermission(Android.Manifest.Permission.AccessCoarseLocation)]
+//[assembly: UsesPermission(Android.Manifest.Permission.AccessFineLocation)]
+//[assembly: UsesPermission(Android.Manifest.Permission.AccessLocationExtraCommands)]
+//[assembly: UsesPermission(Android.Manifest.Permission.AccessMockLocation)]
+//[assembly: UsesPermission(Android.Manifest.Permission.AccessBackgroundLocation)]
+//[assembly: UsesPermission(Android.Manifest.Permission.ControlLocationUpdates)]
+//[assembly: UsesPermission(Android.Manifest.Permission.AccessWifiState)]
+//[assembly: UsesPermission(Android.Manifest.Permission.ForegroundService)]
+//[assembly: UsesPermission(Android.Manifest.Permission.ReceiveBootCompleted)]
+
+//[assembly: UsesFeature("android.hardware.location", Required = true)]
+//[assembly: UsesFeature("android.hardware.location.gps", Required = true)]
+//[assembly: UsesFeature("android.hardware.location.network", Required = true)]
