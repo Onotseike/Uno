@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <LangVersion>latest</LangVersion>
-    <ProjectGuid>d589904a-dab6-43ff-a95c-2b162dda1aed</ProjectGuid>
+    <ProjectGuid>{D589904A-DAB6-43FF-A95C-2B162DDA1AED}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>XamarinBackgroundWorker.macOS</RootNamespace>
@@ -70,10 +70,19 @@
     <Reference Include="System.Memory" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Uno.UI" Version="4.9.17" />
-    <PackageReference Include="Uno.UI.RemoteControl" Version="4.9.17" Condition="'$(Configuration)'=='Debug'" />
-    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.9.17" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="SimpleInjector">
+      <Version>5.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="Uno.UI" Version="4.9.45" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="4.9.45" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.9.45" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Xamarin.Essentials">
+      <Version>1.7.7</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="..\XamarinBackgroundWorker.Shared\XamarinBackgroundWorker.Shared.projitems" Label="Shared" />
   <ItemGroup>
@@ -93,9 +102,7 @@
     <ImageAsset Include="Assets.xcassets\unologo.imageset\unoplatform.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="Resources\Fonts\" />
-    <Folder Include="Assets.xcassets\unologo.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

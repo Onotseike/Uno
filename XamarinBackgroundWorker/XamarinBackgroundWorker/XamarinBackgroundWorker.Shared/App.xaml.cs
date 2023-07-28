@@ -1,21 +1,24 @@
-﻿using Microsoft.Extensions.Logging;
+﻿
+
+using CommunityToolkit.Mvvm.DependencyInjection;
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+
+#if __IOS__
+using UIKit;
+using CoreFoundation;
+using BackgroundTasks;
+using Foundation;
+#endif
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace XamarinBackgroundWorker
@@ -25,12 +28,44 @@ namespace XamarinBackgroundWorker
     /// </summary>
     public sealed partial class App : Application
     {
+
+        /// <summary>
+        /// Gets the current <see cref="App"/> instance in use
+        /// </summary>
+        public new static App Current => (App)Application.Current;
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; }
+
+
+        /// <summary>
+        /// Configures the services for the application.
+        /// </summary>
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            services.AddTransient<MainPageViewModel>();
+
+            services.AddSingleton<IPermissionHandler, PermissionHandler>();
+#if __IOS__
+            services.AddSingleton<ILocationBackgroundWorker, LocationBackgroundWorker>();
+            services.AddSingleton<IBackgroundWorker, BackgroundWorker>();
+            services.AddSingleton<IRegionMonitor, RegionMonitor>();
+#endif
+            return services.BuildServiceProvider();
+        }
+
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
+            Services = ConfigureServices();
             InitializeLogging();
 
             this.InitializeComponent();
@@ -185,5 +220,89 @@ namespace XamarinBackgroundWorker
 			global::Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
 #endif
         }
+
+#if __IOS__
+        private const string REFRESH_IDENTIFIER = "com.companyname.sample.refresh";
+
+        private IBackgroundWorker _backgroundWorker;
+        /// <summary>
+        /// Background Worker to Run Background Updates during Perform Fetch
+        /// </summary>
+        private IBackgroundWorker BackgroundWorker =>
+            _backgroundWorker ??= Ioc.Default.GetRequiredService<IBackgroundWorker>();
+
+        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        {
+            
+
+            BGTaskScheduler.Shared.Register(REFRESH_IDENTIFIER, DispatchQueue.CurrentQueue, task =>
+            {
+                var queue = NSOperationQueue.CurrentQueue;
+                task.ExpirationHandler = () =>
+                {
+                    queue.CancelAllOperations();
+                };
+                queue.AddOperation(() => _ = StartSynchronisationWork());
+            });
+
+            UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
+
+            return base.FinishedLaunching(app, options);
+        }
+
+        /// <summary>
+        /// Perform App Background Fetch
+        /// </summary>
+        public override async void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            var dataAvailableToSync = await StartSynchronisationWork();
+            completionHandler?.Invoke(dataAvailableToSync
+                ? UIBackgroundFetchResult.NewData
+                : UIBackgroundFetchResult.NoData);
+        }
+
+        /// <summary>
+        /// App Just Enter Background
+        /// </summary>
+        public override void DidEnterBackground(UIApplication uiApplication)
+        {
+            base.DidEnterBackground(uiApplication);
+
+            var request = new BGAppRefreshTaskRequest(REFRESH_IDENTIFIER);
+            request.EarliestBeginDate = NSDate.FromTimeIntervalSinceNow(5);
+
+            try
+            {
+                BGTaskScheduler.Shared.Submit(request, out var error);
+                //if you try this on simulator you will get net error:
+                //Error Domain=BGTaskSchedulerErrorDomain Code=1 "(null)"
+                //but in real device with proper certificates you should get no error!!!
+                if (error is not null)
+                {
+                    //todo Logger.LogError(new Exception(error.Description));
+                }
+            }
+            catch (Exception ex)
+            {
+                //todo Logger.LogError(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Check if we need to start BG Work and start if any data is available
+        /// </summary>
+        private async Task<bool> StartSynchronisationWork()
+        {
+            var dataAvailableToSync = await BackgroundWorker.IsDataAvailableToSync();
+            if (dataAvailableToSync)
+            {
+                _ = BackgroundWorker.BackgroundWork?.Invoke();
+            }
+
+            return dataAvailableToSync;
+        }
+#endif
+
     }
 }

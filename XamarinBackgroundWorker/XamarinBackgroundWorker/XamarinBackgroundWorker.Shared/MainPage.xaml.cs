@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +28,7 @@ namespace XamarinBackgroundWorker
         public MainPage()
         {
             this.InitializeComponent();
+            DataContext = App.Current.Services.GetService(typeof(MainPageViewModel));
         }
     }
 }
