@@ -5,7 +5,7 @@ namespace BackgroundWork
     public class App : Application
     {
         protected Window? MainWindow { get; private set; }
-        protected IHost? Host { get; private set; }
+        public IHost? Host { get; private set; }
 
         protected async override void OnLaunched(LaunchActivatedEventArgs args)
         {
@@ -59,6 +59,9 @@ namespace BackgroundWork
                         // TODO: Register your services
                         //services.AddSingleton<IMyService, MyService>();
                         services.AddSingleton<IBackgroundWorker, BackgroundWorker>();
+#if ANDROID
+                        services.AddSingleton<Business.Models.BackgroundService>();
+#endif
                     })
                     .UseNavigation(RegisterRoutes)
                 );

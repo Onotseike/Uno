@@ -26,6 +26,22 @@
 			<Button Content="Go to Second Page"
 					AutomationProperties.AutomationId="SecondPageButton"
 					Command="{Binding GoToSecond}" />
+
+			<ListView ItemsSource="{Binding BackgroundUpdates}">
+
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding Name}" />
+							<TextBlock Text=" - " />
+							<TextBlock Text="{Binding Status}" />
+							<TextBlock Text=" - " />
+							<TextBlock Text="{Binding Started}" />
+						</StackPanel>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+
+			</ListView>
 		</StackPanel>
 	</Grid>
 </Page>
