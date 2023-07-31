@@ -138,7 +138,11 @@ namespace XamarinBackgroundWorker.Droid
             intent.AddFlags(ActivityFlags.NoUserAction);
             intent.PutExtra("Title", "Message");
 
-            var pendingIntent = PendingIntent.GetActivity(Uno.UI.ContextHelper.Current, 0, intent, PendingIntentFlags.UpdateCurrent);
+            var pendingIntentFlags = (Build.VERSION.SdkInt >= BuildVersionCodes.S)
+                ? PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Mutable
+                : PendingIntentFlags.UpdateCurrent;
+
+            var pendingIntent = PendingIntent.GetActivity(Uno.UI.ContextHelper.Current, 0, intent, pendingIntentFlags);
 
             var notificationBuilder = new NotificationCompat.Builder(Uno.UI.ContextHelper.Current, SERVICE_NOTIFICATION_CHANNEL_ID)
                 .SetContentTitle("Name of BG Work")

@@ -14,8 +14,8 @@ namespace XamarinBackgroundWorker
 {
     public partial class MainPageViewModel : ObservableObject
     {
-        private readonly ILocationBackgroundWorker _locationBackgroundWorker;
-        private readonly IRegionMonitor _regionMonitor;
+        //private readonly ILocationBackgroundWorker _locationBackgroundWorker;
+        //private readonly IRegionMonitor _regionMonitor;
         private readonly IBackgroundWorker _backgroundWorker;
         private readonly IPermissionHandler _permissionHandler;
 
@@ -25,18 +25,16 @@ namespace XamarinBackgroundWorker
         protected DispatcherQueue Dispatcher => DispatcherQueue.GetForCurrentThread();
 
         public MainPageViewModel(
-            ILocationBackgroundWorker locationBackgroundWorker,
-            IRegionMonitor regionMonitor,
             IBackgroundWorker backgroundWorker,
             IPermissionHandler permissionHandler)
         {
-            _locationBackgroundWorker = locationBackgroundWorker;
-            _regionMonitor = regionMonitor;
+            //_locationBackgroundWorker = locationBackgroundWorker;
+            //_regionMonitor = regionMonitor;
             _backgroundWorker = backgroundWorker;
             _permissionHandler = permissionHandler;
 
-            _locationBackgroundWorker.LocationUpdated += LocationBackgroundWorkerOnLocationUpdated;
-            _regionMonitor.MonitorNotifications += RegionMonitorOnMonitorNotifications;
+            //_locationBackgroundWorker.LocationUpdated += LocationBackgroundWorkerOnLocationUpdated;
+            //_regionMonitor.MonitorNotifications += RegionMonitorOnMonitorNotifications;
 
             //StartUpdatesCommand = new Command(ExecuteStartUpdates);
             LocationUpdates = new ObservableCollection<string>();
@@ -97,8 +95,8 @@ namespace XamarinBackgroundWorker
         {
             //StartUpdatesCommand = null;
             _permissionHandler.RequestPermission<Permissions.LocationAlways>();
-            _regionMonitor.StartRegionUpdates();
-            _locationBackgroundWorker.StartLocationUpdates(TimeSpan.FromSeconds(5));
+            //_regionMonitor.StartRegionUpdates();
+            //_locationBackgroundWorker.StartLocationUpdates(TimeSpan.FromSeconds(5));
         }
     }
 }
