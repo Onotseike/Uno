@@ -8,20 +8,22 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 
-	<StackPanel>
-		<TextBlock
-			Margin="20"
-			FontSize="30"
-			Text="Hello, world!" />
-		<Button Command="{Binding StartUpdatesCommand}" Content="Press To Start" />
-		<ListView ItemsSource="{Binding LocationUpdates}">
-			<ListView.ItemTemplate>
-				<DataTemplate x:DataType="x:String">
-					<StackPanel>
-						<TextBlock Text="{Binding .}" />
-					</StackPanel>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
-	</StackPanel>
+	<ScrollViewer>
+		<StackPanel Padding="5,20">
+			<TextBlock
+				Margin="20"
+				FontSize="30"
+				Text="Hello, world!" />
+			<Button Command="{Binding StartUpdatesCommand}" Content="Press To Start" />
+			<ListView ItemsSource="{Binding LocationUpdates}">
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="x:String">
+						<StackPanel>
+							<TextBlock Text="{Binding .}" />
+						</StackPanel>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackPanel>
+	</ScrollViewer>
 </Page>
