@@ -47,26 +47,32 @@
 					</Grid.RowDefinitions>
 
 					<TextBlock Text="{Binding Address.AddressOne}"
+							   Foreground="WhiteSmoke"
 							   FontSize="18" />
 
 					<TextBlock Grid.Row="1"
 							   Text="{Binding Address.AddressTwo}"
+							   Foreground="WhiteSmoke"
 							   FontSize="18" />
 
 					<TextBlock Grid.Row="2"
 							   Text="{Binding Address.PostalCode}"
+							   Foreground="WhiteSmoke"
 							   FontSize="18" />
 					
 					<TextBlock Grid.Row="3"
 							   Text="{Binding Address.Country}"
+							   Foreground="WhiteSmoke"
 							   FontSize="18" />
 					
 					<TextBlock Grid.Row="4"
 							   Text="{Binding Address.State}"
+							   Foreground="WhiteSmoke"
 							   FontSize="18" />
 					
 					<TextBlock Grid.Row="5"
 							   Text="{Binding Address.City}"
+							   Foreground="WhiteSmoke"
 							   FontSize="18" />
 				</Grid>
 			</Grid>
