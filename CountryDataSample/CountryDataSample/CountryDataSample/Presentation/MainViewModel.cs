@@ -7,6 +7,9 @@ namespace CountryDataSample.Presentation
         [ObservableProperty]
         private string? name;
 
+        [ObservableProperty]
+        private Address? address;
+
         public MainViewModel(
             IStringLocalizer localizer,
             IOptions<AppConfig> appInfo,
@@ -17,6 +20,16 @@ namespace CountryDataSample.Presentation
             Title += $" - {localizer["ApplicationName"]}";
             Title += $" - {appInfo?.Value?.Environment}";
             GoToSecond = new AsyncRelayCommand(GoToSecondView);
+
+            Address = new Address
+            {
+                AddressOne = string.Empty,
+                AddressTwo = string.Empty,
+                State = string.Empty,
+                Country = string.Empty,
+                City = string.Empty,
+                PostalCode = string.Empty
+            };
         }
         public string? Title { get; }
 
