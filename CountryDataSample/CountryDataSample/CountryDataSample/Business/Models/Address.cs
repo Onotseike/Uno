@@ -6,14 +6,6 @@
     public class Address
     {
         /// <summary>
-        /// Gets or sets unique identifier of Address record.
-        /// </summary>
-        public Guid Id
-        {
-            get; set;
-        }
-
-        /// <summary>
         /// Gets or sets first line of the Address record.
         /// </summary>
         public string AddressOne

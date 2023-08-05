@@ -38,7 +38,7 @@ namespace CountryDataSample.Presentation
 
         private async Task GoToSecondView()
         {
-            await _navigator.NavigateViewModelAsync<SecondViewModel>(this, data: new Entity(Name!));
+            await _navigator.NavigateViewModelAsync<SecondViewModel>(this, data: Address);
         }
 
     }

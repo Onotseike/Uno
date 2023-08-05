@@ -69,7 +69,7 @@ namespace CountryDataSample
             views.Register(
                 new ViewMap(ViewModel: typeof(ShellViewModel)),
                 new ViewMap<MainPage, MainViewModel>(),
-                new DataViewMap<SecondPage, SecondViewModel, Entity>()
+                new DataViewMap<SecondPage, SecondViewModel, Address>()
             );
 
             routes.Register(
