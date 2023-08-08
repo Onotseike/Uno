@@ -20,6 +20,7 @@
 		<StackPanel Grid.Row="1"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
+					Background="Black"
 					Spacing="16">
 			<TextBox Text="{Binding Name, Mode=TwoWay}"
 					 PlaceholderText="Enter your name:" />
@@ -27,5 +28,6 @@
 					AutomationProperties.AutomationId="SecondPageButton"
 					Command="{Binding GoToSecond}" />
 		</StackPanel>
+		<ListView />
 	</Grid>
 </Page>
