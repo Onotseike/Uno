@@ -53,6 +53,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="DataTemplateSelector\" />
+	  <Content Remove="Assets\Background.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UnoImage Include="Assets\background.jpg" />
 	</ItemGroup>
 </Project>
