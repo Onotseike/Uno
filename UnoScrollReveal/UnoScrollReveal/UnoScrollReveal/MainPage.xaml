@@ -62,11 +62,11 @@
 											 DefaultTemplate="{StaticResource EmptyCell}"/>
 	</Page.Resources>
 
-	<Grid Padding="10"
-		  Background="WhiteSmoke">
+	<Grid Background="WhiteSmoke">
 		<StackPanel>
-			<Image Source="Assets/background.jpg"
-				   Stretch="Uniform" />
+			<Image x:Name="backgroundImg"
+				   Source="Assets/background.jpg"	
+				   Stretch="Fill" />
 		</StackPanel>
 		<RefreshContainer RefreshRequested="OnPullToRefresh"
 						  PullDirection="BottomToTop">

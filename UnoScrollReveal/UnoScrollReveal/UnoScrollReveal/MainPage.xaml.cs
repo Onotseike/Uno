@@ -76,8 +76,11 @@ namespace UnoScrollReveal
 
         public MainPage()
         {
-            this.InitializeComponent();           
-            
+            this.InitializeComponent();
+#if ANDROID || IOS
+            backgroundImg.Height = 900;
+#endif
+
             Items.AddRange(items);
 
         }
@@ -87,7 +90,7 @@ namespace UnoScrollReveal
             Items.Add(emptyItem);
             Items.AddRange(items);
             Items.AddRange(items);
-            
+
         }
 
 
